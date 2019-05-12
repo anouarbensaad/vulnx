@@ -32,17 +32,9 @@ month= now.strftime('%m')
 headers = {
             "Connection": "keep-alive",
             "User-Agent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.31 (KHTML, like Gecko) Chrome/26.0.1410.63 Safari/537.31",
-            "Keep-Alive": "timeout=15"
+            "Keep-Alive": "timeout=15",
+            "verify" : False
 }
-#url = "http://www.AmnPardaz.com/"
-#url = "http://www.curtiswrightoutfitters.com"
-#url = "https://www.maplatine.com"
-#url = "https://www.diginov.tech"
-#url = "https://drupalcommerce.org"
-#url = 'https://www.harvestplus.org'
-url = 'http://www.adrianweisse.com'
-#url = 'https://mediadragon.de'
-
 ################ BANNER #####################
 
 def banner():
@@ -66,56 +58,70 @@ def parse_args():
     parser = argparse.ArgumentParser(epilog='\tExample: \r\npython ' + sys.argv[0] + " -u google.com")
     parser.error = parser_error
     parser._optionals.title = "OPTIONS"
-    parser.add_argument('-u', '--url', help="Url scanned for", required=True)
-    parser.add_argument('-f', '--file', help='Insert your file to scanning for')
+    parser.add_argument('-u', '--url', help="Url scanned for")
+    parser.add_argument('-f', '--file', help='Insert your file to scanning for',required=False)
     parser.add_argument('-d', '--domain-info', help='Get Info from WEB')
     parser.add_argument('-o', '--output', help='Save the results to text file')
     return parser.parse_args()
+
+################ Check Files #####################
+
+#def pathfile():
+
+#    with open (file_name) as sites:
+
+#        for url in sites:
+
+#            detect_cms()
 
 ################ DETECT CMS #####################
 
 def detect_cms():
     id = 0
-    r=requests.get(url, headers)
-    content = r.text
-    joomla = re.findall("com_content | Joomla!", content)
-    wordpress = re.findall("wp-content|[w,W]ord[p,P]ress", content)
-    drupal = re.findall("Drupal|drupal|sites\/all|drupal.org", content)
-    prestashop = re.findall("[P,p]restashop", content)
-    if joomla:
-        print ('%s[%i] Target -> %s %s CMS : Joomla \n\n' % (W,id,url,G))
-        print ('%s [~] Check Vulnerability %s' %(Y,W))
-    elif prestashop:
-        print ('%s[%i] %s %s CMS : Prestashop \n\n' % (W,id,url,G))
-        print ('%s [~] Check Vulnerability %s' %(Y,W))
-    elif wordpress:
-        print ('%s Target[%i] -> %s \n\n '% (W,id,url))
-        print ('%s [+] CMS : Wordpress%s' % (G,W))
-        wp_version()
-        domain_info()
-        print ('%s [~] Check Vulnerability %s' %(Y,W))
-        #WP_PLUGIN_EXPLOITS CALLFUNCTIONS
-        wp_blaze()
-        wp_catpro()
-        wp_cherry()
-        wp_dm()
-        wp_fromcraft()
-        wp_jobmanager()
-        wp_showbiz()
-        wp_synoptic()
-        wp_shop()
-        wp_injection()
-        wp_powerzoomer()
-        wp_revslider()
-    elif drupal:
-        print ('%s Target[%i] -> %s \n\n '% (W,id,url))
-        print ('%s [+] CMS : Drupal%s' % (G,W))
-        drupal_version()
-        domain_info()
-        print ('%s [~] Check Vulnerability %s' %(Y,W))
-    else:
-        print ('%s[%i] %s %s CMS : Unknown \n\n' % (W,id,url,G))
-        print ('%s [~] Check Vulnerability %s' %(Y,W))
+    try:
+        r=requests.get(url, headers)
+        content = r.text
+        joomla = re.findall("com_content | Joomla!", content)
+        wordpress = re.findall("wp-content|[w,W]ord[p,P]ress", content)
+        drupal = re.findall("Drupal|drupal|sites\/all|drupal.org", content)
+        prestashop = re.findall("[P,p]restashop", content)
+        if joomla:
+            print ('%s[%i] Target -> %s %s CMS : Joomla \n\n' % (W,id,url,G))
+            print ('%s [~] Check Vulnerability %s' %(Y,W))
+        elif prestashop:
+            print ('%s[%i] %s %s CMS : Prestashop \n\n' % (W,id,url,G))
+            print ('%s [~] Check Vulnerability %s' %(Y,W))
+        elif wordpress:
+            print ('%s Target[%i] -> %s \n\n '% (W,id,url))
+            print ('%s [+] CMS : Wordpress%s' % (G,W))
+            wp_version()
+            domain_info()
+            print ('%s [~] Check Vulnerability %s' %(Y,W))
+            #WP_PLUGIN_EXPLOITS CALLFUNCTIONS
+            wp_blaze()
+            wp_catpro()
+            wp_cherry()
+            wp_dm()
+            wp_fromcraft()
+            wp_jobmanager()
+            wp_showbiz()
+            wp_synoptic()
+            wp_shop()
+            wp_injection()
+            wp_powerzoomer()
+            wp_revslider()
+        elif drupal:
+            print ('%s Target[%i] -> %s \n\n '% (W,id,url))
+            print ('%s [+] CMS : Drupal%s' % (G,W))
+            drupal_version()
+            domain_info()
+            print ('%s [~] Check Vulnerability %s' %(Y,W))
+        else:
+            print ('%s[%i] %s %s CMS : Unknown \n\n' % (W,id,url,G))
+            print ('%s [~] Check Vulnerability %s' %(Y,W))
+    except Exception as e:
+        print ('%s\n\nerror : %s' % (R,e))
+        
 
 ################ WP Version #####################
 def wp_version():
@@ -496,6 +502,8 @@ def wp_revslider():
     else:
         print ('%s [%s-%s] Revslider Plugin%s ---------- %s FAIL' %(W,R,W,W,R))
 if __name__ == "__main__":
-    #site = args.file
+    args = parse_args()
+    url = args.url
+    file_name = args.file
     banner()
     detect_cms()
