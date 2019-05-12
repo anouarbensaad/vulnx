@@ -15,11 +15,15 @@ import json
 import urllib
 import urllib.request
 
-B = '\033[94m' #blue
-R = '\033[91m' # red
-W = '\033[0m'  # white
-Y = '\033[93m' # yellow
-G = '\033[92m' # green
+#BannerCOLOR
+red = '\033[91m'
+green = '\033[1;32m'
+#DEFAULTCOLOR
+B = '\033[1;3;94m' #blue
+R = '\033[1;3;91m' # red
+W = '\033[1;97m'  # white
+Y = '\033[1;3;93m' # yellow
+G = '\033[1;3;92m' # green
 
 os.system('clear')
 now = datetime.datetime.now()
@@ -43,13 +47,13 @@ url = 'http://www.adrianweisse.com'
 
 def banner():
     print("""%s
-                   __     __     _      __  __
-                   \ \   / /   _| |_ __ \ \/ /
-                    \ \ / / | | | | '_ \ \  / 
-                     \ V /| |_| | | | | |/  \ 
-                      \_/  \__,_|_|_| |_/_/\_\%s%s
-                # Coded By Anouar Ben Saad - @anouarbensaad
-    """ % (G, W, R))
+                   __     __     _    %s  __  __%s
+                   \ \   / /   _| |_ __%s \ \/ /%s
+                    \ \ / / | | | | '_ \%s \  / %s
+                     \ V /| |_| | | | | |%s/  \ %s
+                      \_/  \__,_|_|_| |_%s/_/\_\%s
+                # Coded By Anouar Ben Saad -%s @anouarbensaad
+    """ % (red,green,red,green,red,green,red,green,red,green,W,W))
 
 def parser_error(errmsg):
     banner()
