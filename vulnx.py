@@ -93,8 +93,14 @@ def detect_cms():
         elif wordpress:
             print ('%s Target[%i] -> %s%s \n\n '% (W,id,url,W))
             print ('%s [+] CMS : Wordpress%s' % (G,W))
+            
             wp_version()
+            wp_themes()
+            wp_user()
+            wp_plugin()
+
             domain_info()
+
             print ('%s [~] Check Vulnerability %s' %(Y,W))
             #WP_PLUGIN_EXPLOITS CALLFUNCTIONS
             wp_wysija()
@@ -127,23 +133,69 @@ def detect_cms():
         print ('%s\n\nerror : %s%s' % (R,e,W))
         
 
-################ WP Version #####################
+################ WP GRAB INFO #####################
 def wp_version():
+
     headers = {
         'User-Agent' : 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.31 (KHTML, like Gecko) Chrome/26.0.1410.63 Safari/537.31'
         }
     ep = url
-    uknownversion = "UKNOWN"
     response = requests.get(ep,headers)
-    regex = '[W,w]ord[P,p]ress \d{1,7}.\d{0,9}'
-    regex = re.compile(regex)
-    matches = regex.findall(response.text)
-    if len(matches) > 0 and matches[0] != None and matches[0] != "":
+    #content=\"WordPress 5.1.1\"
+    regexv1 = 'content=\"WordPress \d{0,9}.\d{0,9}.\d{0,9}\"'
+    regexv1 = re.compile(regexv1)
+    content = 'content=\"WordPress '
+    endcontent = '\"$'
+    matches = regexv1.findall(response.text)
+    if matches and len(matches) > 0 and matches[0] != None and matches[0] != "":
         version = matches[0]
-        return print ('%s [*] WordPress Version : %s %s' %(B,version,W))
+        sub1 = re.sub(content,'',version)
+        sub2 = re.sub (endcontent,'',sub1)
+        return print ('%s [*] Version : %s %s' %(B,sub2,W))
 
-    else:
-        return print ('%s [!] WordPress Version : %s %s' %(R,uknownversion,W))
+def wp_themes():
+    headers = {
+        'User-Agent' : 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.31 (KHTML, like Gecko) Chrome/26.0.1410.63 Safari/537.31'
+        }
+    ep = url
+    response = requests.get(ep,headers)
+    #content=\"WordPress 5.1.1\"
+    regexv1 = 'themes/(.+?)/'
+    regexv1 = re.compile(regexv1)
+    matches = regexv1.findall(response.text)
+    if matches and len(matches) > 0 and matches[0] != None and matches[0] != "":
+        Theme = matches[0]
+        return print ('%s [*] Themes : %s %s' %(B,Theme,W))
+
+
+def wp_user():
+    headers = {
+        'User-Agent' : 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.31 (KHTML, like Gecko) Chrome/26.0.1410.63 Safari/537.31'
+        }
+    ep = url + '/?author=1'
+    response = requests.get(ep,headers)
+    #content=\"WordPress 5.1.1\"
+    regexv1 = 'author/(.+?)/'
+    regexv1 = re.compile(regexv1)
+    matches = regexv1.findall(response.text)
+    if matches and len(matches) > 0 and matches[0] != None and matches[0] != "":
+        User = matches[0]
+        return print ('%s [*] User : %s %s' %(B,User,W))
+
+
+def wp_plugin():
+    headers = {
+        'User-Agent' : 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.31 (KHTML, like Gecko) Chrome/26.0.1410.63 Safari/537.31'
+        }
+    ep = url
+    response = requests.get(ep,headers)
+    #content=\"WordPress 5.1.1\"
+    regexv1 = 'wp-content/plugins/(.+?)/'
+    regexv1 = re.compile(regexv1)
+    matches = regexv1.findall(response.text)
+    if matches and len(matches) > 0 and matches[0] != None and matches[0] != "":
+        Plugins = matches[0]
+        return print ('%s [*] Plugins : %s %s' %(B,Plugins,W))
 
 ################ Drupal Version #####################
 def drupal_version():
@@ -238,10 +290,10 @@ def wp_blaze():
     if check_blaze:
         uploadfolder = check_blaze.group(1)
         dump_data = url + "/wp-content/uploads/blaze/"+uploadfolder+"/big/VulnX.php?Vuln=X"
-        print ('%s [%s+%s] Blaze Plugin%s -------------- %s VULN%s' %(W,G,W,W,G,W))
+        print ('%s [%s+%s] Blaze Plugin%s =============> %s VULN%s' %(W,G,W,W,G,W))
         print ('%s [*] Injected Successfully \n %s%s[*] Found ->%s %s %s' % ( G,W,B,W, dump_data,W ))
     else: 
-        print ('%s [%s-%s] Blaze Plugin%s -------------- %s FAIL%s' %(W,R,W,W,R,W))    
+        print ('%s [%s-%s] Blaze Plugin%s =============> %s FAIL%s' %(W,R,W,W,R,W))    
 
 ################ Catpro Plugin #####################
 
