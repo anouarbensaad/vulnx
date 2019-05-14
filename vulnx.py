@@ -187,15 +187,18 @@ def wp_plugin():
     headers = {
         'User-Agent' : 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.31 (KHTML, like Gecko) Chrome/26.0.1410.63 Safari/537.31'
         }
+    plugins_array = []
     ep = url
-    response = requests.get(ep,headers)
+    id=1
+    getplugin = requests.get(ep,headers)
     #content=\"WordPress 5.1.1\"
-    regexv1 = 'wp-content/plugins/(.+?)/'
+    regexv1 = r'wp-content/plugins/(.+?)/'
     regexv1 = re.compile(regexv1)
-    matches = regexv1.findall(response.text)
-    if matches and len(matches) > 0 and matches[0] != None and matches[0] != "":
-        Plugins = matches[0]
-        return print ('%s [*] Plugins : %s %s' %(B,Plugins,W))
+    matches = regexv1.findall(getplugin.text)
+    for plug in matches:
+        if plug not in plugins_array:
+            plugins_array.append(plug)
+            print ('%s [*] Plugins : %s %s' %(B,plugins_array,W))
 
 ################ Drupal Version #####################
 def drupal_version():
