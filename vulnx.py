@@ -198,7 +198,7 @@ def wp_plugin():
     for plug in matches:
         if plug not in plugins_array:
             plugins_array.append(plug)
-            print ('%s [*] Plugins : %s %s' %(B,plugins_array,W))
+    print ('%s [*] Plugins : %s %s' %(B," \n [*] Plugins : ".join(plugins_array),W))
 
 ################ Drupal Version #####################
 def drupal_version():
