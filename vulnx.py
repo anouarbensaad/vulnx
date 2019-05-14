@@ -93,14 +93,14 @@ def detect_cms():
         elif wordpress:
             print ('%s Target[%i] -> %s%s \n\n '% (W,id,url,W))
             print ('%s [+] CMS : Wordpress%s' % (G,W))
-            
+            webhosting_info()
+            domain_info()
+
             wp_version()
             wp_themes()
             wp_user()
             wp_plugin()
-
-            domain_info()
-
+            
             print ('%s [~] Check Vulnerability %s' %(Y,W))
             #WP_PLUGIN_EXPLOITS CALLFUNCTIONS
             wp_wysija()
@@ -181,8 +181,7 @@ def wp_user():
     if matches and len(matches) > 0 and matches[0] != None and matches[0] != "":
         User = matches[0]
         return print ('%s [*] User : %s %s' %(B,User,W))
-
-
+        
 def wp_plugin():
     headers = {
         'User-Agent' : 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.31 (KHTML, like Gecko) Chrome/26.0.1410.63 Safari/537.31'
@@ -238,43 +237,36 @@ def prestashop_version():
 ################ SCAN DOMAIN INFO #####################
 
 def domain_info():
-    print ('%s [~] Domain Info %s' %(Y,W))
-    http = '^http://www.'
-    https= '^https://www.'
-    httpw= '^http://'
-    httpsw= '^https://'
-    check_httpw = re.findall(httpw,url)
-    check_httpsw= re.findall(httpsw,url)
-    check_http = re.findall(http,url)
-    check_https= re.findall(https,url)
-    try:
-        if check_http:
-            regex = re.compile(http)
-            domain = re.sub(regex,'',url)
-            ip = socket.gethostbyname(domain)
-            print ('%s [*] IP  : %s%s' %(B,ip,W))
-            print ('%s [*] DOMAIN  : %s%s' %(B,domain,W))
-        elif check_https:
-            regex = re.compile(https)
-            domain = re.sub(regex,'',url)
-            ip = socket.gethostbyname(domain)
-            print ('%s [*] IP  : %s%s' %(B,ip,W))
-            print ('%s [*] DOMAIN  : %s%s' %(B,domain,W))
-        elif check_httpw:
-            regex = re.compile(httpw)
-            domain = re.sub(regex,'',url)
-            ip = socket.gethostbyname(domain)
-            print ('%s [*] IP  : %s%s' %(B ,ip,W))
-            print ('%s [*] DOMAIN  : %s%s' %(B,domain,W))
-        elif check_httpsw:
-            regex = re.compile(httpsw)
-            domain = re.sub(regex,'',url)
-            ip = socket.gethostbyname(domain)
-            print ('%s [*] IP  : %s%s' %(B ,ip,W))
-            print ('%s [*] DOMAIN  : %s%s' %(B,domain,W))
-    except Exception as e:
-        print ('%s [!] IP  : %s%s' %(R,e,W))
-        print ('%s [*] DOMAIN  : %s%s' %(B,url,W))
+    print ('%s [~] Search for SubDomains %s' %(Y,W))
+    searchurl = "https://www.pagesinventory.com/search/?s=" + url
+    getinfo = requests.get(searchurl,headers).text
+    domains = []
+    regex_domain = "<td><a href=\"\/domain\/(.*?).html\">"
+    regex_ip = "<a href=\"/ip\/(.*?).html\">"
+    regex_domain = re.compile(regex_domain)
+    regex_ip = re.compile(regex_ip)
+    matches_domain = regex_domain.findall(getinfo)
+    match_ip = regex_ip.findall(getinfo)
+    for domain in matches_domain:
+        if domain not in domains:
+            domains.append(domain)
+    print ('%s [*] SubDomains : %s %s' %(B," \n [*] SubDomains : ".join(domains),W))
+    if match_ip and len(match_ip) > 0 and match_ip[0] != None and match_ip[0] != "":
+        IP = match_ip[0]
+        print ('%s [*] IP : %s %s' %(B,IP,W))
+
+
+
+################ Web Hosting Information #####################
+
+def webhosting_info():
+    print ('%s [~] Web Hosting Information %s' %(Y,W))
+    searchurl = "https://myip.ms/" + url
+    getinfo = requests.get(searchurl,headers).text
+
+
+#    reverse_dns = "Hosting Company: <\/td><td valign='middle' class='bold'> <span class='nounderline'><a title='(.*?)'"
+#    reverse_dns = re.compile(reverse_dns)
 
 ################ Blaze Plugin #####################
 
