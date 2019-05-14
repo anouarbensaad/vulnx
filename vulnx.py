@@ -95,7 +95,7 @@ def detect_cms():
             print ('%s [+] CMS : Wordpress%s' % (G,W))
             webhosting_info()
             domain_info()
-
+            print ('%s [~] CMS Gathering %s' %(Y,W))
             wp_version()
             wp_themes()
             wp_user()
@@ -261,8 +261,64 @@ def domain_info():
 
 def webhosting_info():
     print ('%s [~] Web Hosting Information %s' %(Y,W))
-    searchurl = "https://myip.ms/" + url
-    getinfo = requests.get(searchurl,headers).text
+    http = '^http://www.'
+    https= '^https://www.'
+    httpw= '^http://'
+    httpsw= '^https://'
+    check_httpw = re.findall(httpw,url)
+    check_httpsw= re.findall(httpsw,url)
+    check_http = re.findall(http,url)
+    check_https= re.findall(https,url)
+    try:
+        if check_http:
+            regex = re.compile(http)
+            domain = re.sub(regex,'',url)
+            urldate = "https://input.payapi.io/v1/api/fraud/domain/age/" + domain
+            getinfo = requests.get(urldate,headers).text
+            regex_date = r'Date: (.+?)-(.+?)'
+            regex_date = re.compile(regex_date)
+            matches = re.search(regex_date,getinfo)
+            if matches:
+                print ( '%s [*] Domain Created on : %s' % (B,matches.group(1)))
+        elif check_https:
+            regex = re.compile(https)
+            domain = re.sub(regex,'',url)
+            urldate = "https://input.payapi.io/v1/api/fraud/domain/age/" + domain
+            getinfo = requests.get(urldate,headers).text
+            regex_date = r'Date: (.+?)-(.+?)'
+            regex_date = re.compile(regex_date)
+            matches = re.search(regex_date,getinfo)
+            if matches:
+                print ( '%s [*] Domain Created on : %s' % (B,matches.group(1)))
+        elif check_httpw:
+            regex = re.compile(httpw)
+            domain = re.sub(regex,'',url)
+            urldate = "https://input.payapi.io/v1/api/fraud/domain/age/" + domain
+            getinfo = requests.get(urldate,headers).text
+            regex_date = r'Date: (.+?)-(.+?)'
+            regex_date = re.compile(regex_date)
+            matches = re.search(regex_date,getinfo)
+            if matches:
+                print ( '%s [*] Domain Created on : %s' % (B,matches.group(1)))
+        elif check_httpsw:
+            regex = re.compile(httpsw)
+            domain = re.sub(regex,'',url)
+            urldate = "https://input.payapi.io/v1/api/fraud/domain/age/" + domain
+            getinfo = requests.get(urldate,headers).text
+            regex_date = r'Date: (.+?)-(.+?)'
+            regex_date = re.compile(regex_date)
+            matches = re.search(regex_date,getinfo)
+            if matches:
+                print ( '%s [*] Domain Created on : %s' % (B,matches.group(1)))
+    except Exception as e:
+        print ('%s [!] IP  : %s' %(R , e))
+        print ('%s [*] DOMAIN  : %s' %(B , url)) 
+        print ('%s [!] IP  : %s%s' %(R,e,W))
+        print ('%s [*] DOMAIN  : %s%s' %(B,url,W))
+
+
+
+
 
 
 #    reverse_dns = "Hosting Company: <\/td><td valign='middle' class='bold'> <span class='nounderline'><a title='(.*?)'"
