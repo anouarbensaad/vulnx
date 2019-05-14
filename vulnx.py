@@ -38,13 +38,25 @@ headers = {
 
 def banner():
     print("""%s
-                   __     __     _      %s__  __%s
-                   \ \   / /   _| |_ __ %s\ \/ /%s
-                    \ \ / / | | | | '_ \ %s\  /%s
-                     \ V /| |_| | | | | |%s/  \%s
-                      \_/  \__,_|_|_| |_%s/_/\_\%s
-                # Coded By Anouar Ben Saad -%s @anouarbensaad
-    """ % (red,green,red,green,red,green,red,green,red,green,G,W))
+%sVVVVVVVV           VVVVVVVV               lllllll                %sXXXXXXX       XXXXXXX
+%sV::::::V           V::::::V               l:::::l                %sX:::::X       X:::::X
+%sV::::::V           V::::::V               l:::::l                %sX:::::X       X:::::X
+%sV::::::V           V::::::V               l:::::l                %sX::::::X     X::::::X
+%s V:::::V           V:::::uuuuuu    uuuuuu  l::::nnnn  nnnnnnnn   %sXXX:::::X   X:::::XXX
+%s  V:::::V         V:::::Vu::::u    u::::u  l::::n:::nn::::::::nn  %s  X:::::X X:::::X   
+%s   V:::::V       V:::::V u::::u    u::::u  l::::n::::::::::::::nn %s   X:::::X:::::X    
+%s    V:::::V     V:::::V  u::::u    u::::u  l::::nn:::::::::::::::n %s   X:::::::::X     
+%s     V:::::V   V:::::V   u::::u    u::::u  l::::l n:::::nnnn:::::n %s   X:::::::::X     
+%s      V:::::V V:::::V    u::::u    u::::u  l::::l n::::n    n::::n %s  X:::::X:::::X    
+%s       V:::::V:::::V     u::::u    u::::u  l::::l n::::n    n::::n %s X:::::X X:::::X   
+%s        V:::::::::V      u:::::uuuu:::::u  l::::l n::::n    n::::X%sXX:::::X   X:::::XXX
+%s         V:::::::V       u:::::::::::::::ul::::::ln::::n    n::::%sX::::::X     X::::::X
+%s          V:::::V         u:::::::::::::::l::::::ln::::n    n::::%sX:::::X       X:::::X
+%s           V:::V           uu::::::::uu:::l::::::ln::::n    n::::%sX:::::X       X:::::X
+%s            VVV              uuuuuuuu  uuullllllllnnnnnn    nnnnn%sXXXXXXX       XXXXXXX
+                                                                                      
+                       # Coded By Anouar Ben Saad -%s @anouarbensaad
+    """ % (green,green,red,green,red,green,red,green,red,green,red,green,red,green,red,green,red,green,red,green,red,green,red,green,red,green,red,green,red,green,red,green,red,W))
 
 def parser_error(errmsg):
     banner()
@@ -95,6 +107,7 @@ def detect_cms():
             print ('%s [+] CMS : Wordpress%s' % (G,W))
             webhosting_info()
             domain_info()
+
             print ('%s [~] CMS Gathering %s' %(Y,W))
             wp_version()
             wp_themes()
@@ -255,8 +268,6 @@ def domain_info():
         IP = match_ip[0]
         print ('%s [*] IP : %s %s' %(B,IP,W))
 
-
-
 ################ Web Hosting Information #####################
 
 def webhosting_info():
@@ -315,14 +326,6 @@ def webhosting_info():
         print ('%s [*] DOMAIN  : %s' %(B , url)) 
         print ('%s [!] IP  : %s%s' %(R,e,W))
         print ('%s [*] DOMAIN  : %s%s' %(B,url,W))
-
-
-
-
-
-
-#    reverse_dns = "Hosting Company: <\/td><td valign='middle' class='bold'> <span class='nounderline'><a title='(.*?)'"
-#    reverse_dns = re.compile(reverse_dns)
 
 ################ Blaze Plugin #####################
 
