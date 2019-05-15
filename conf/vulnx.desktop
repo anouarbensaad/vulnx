@@ -1,0 +1,12 @@
+[Desktop Entry]
+Name=VulnX
+Comment=VulnX 🕷️ CMS-Detector and Vulnerability Scanner & exec automatic exploit process. 
+Encoding=UTF-8
+Exec=sh -c "VulnX;${SHELL:-bash}"
+Icon=vulnxicon.png
+StartupNotify=false
+Terminal=true
+Type=Application
+Categories=02-Vulnerability-Analysis;
+X-Kali-Package=Th3inspector
+Name[C]=Th3inspector
