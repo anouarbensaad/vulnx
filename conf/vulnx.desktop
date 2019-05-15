@@ -8,5 +8,5 @@ StartupNotify=false
 Terminal=true
 Type=Application
 Categories=02-Vulnerability-Analysis;
-X-Kali-Package=Th3inspector
-Name[C]=Th3inspector
+X-Kali-Package=VulnX
+Name[C]=VulnX
