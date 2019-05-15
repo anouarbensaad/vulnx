@@ -16,8 +16,8 @@ if [ -d "/usr/share/VulnX" ]; then
     read replace
     if [ "$replace" = "y" ]; then
       sudo rm -r "/usr/share/VulnX"
-      sudo rm "/usr/share/icons/VulnX.png"
-      sudo rm "/usr/share/applications/VulnX.desktop"
+      sudo rm "/usr/share/icons/vulnxicon.png"
+      sudo rm "/usr/share/applications/vulnx.desktop"
       sudo rm "/usr/local/bin/VulnX"
 
 else
@@ -36,11 +36,11 @@ python3 /usr/share/VulnX/vulnx.py" '${1+"$@"}' > "VulnX";
     sudo cp "install.sh" "/usr/share/VulnX"
     sudo cp "update.sh" "/usr/share/VulnX"
     sudo chmod +x /usr/share/VulnX/update.sh
-    sudo cp "VulnX.py" "/usr/share/VulnX"
+    sudo cp "vulnx.py" "/usr/share/VulnX"
     sudo cp "conf/vulnxicon.png" "/usr/share/icons"
     sudo cp "conf/vulnx.desktop" "/usr/share/applications"
-    sudo cp "vulnx" "/usr/local/bin/"
-    rm "vulnx";
+    sudo cp "VulnX" "/usr/local/bin/"
+    rm "VulnX";
 
 if [ -d "/usr/share/VulnX" ] ;
 then
