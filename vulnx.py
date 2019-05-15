@@ -71,6 +71,12 @@ def parse_args():
     parser._optionals.title = "OPTIONS"
     parser.add_argument('-u', '--url', help="Url scanned for")
     parser.add_argument('-f', '--file', help='Insert your file to scanning for',required=False)
+    parser.add_argument('-d', '--subdomains', help='Get Info from WEB')
+    parser.add_argument('-c', '--cms', help='Get Info from WEB')
+    parser.add_argument('-p', '--plugins', help='Get Info from WEB')
+    parser.add_argument('-t', '--themes', help='Get Info from WEB')
+    parser.add_argument('-U', '--user', help='Get Info from WEB')
+    parser.add_argument('-g', '--geo', help='Get Info from WEB')
     parser.add_argument('-d', '--domain-info', help='Get Info from WEB')
     parser.add_argument('-o', '--output', help='Save the results to text file')
     return parser.parse_args()
@@ -226,7 +232,6 @@ def drupal_version():
     if len(matches) > 0 and matches[0] != None and matches[0] != "":
         version = matches[0]
         return print ('%s [*] Drupal Version : %s %s' %(B,version,W))
-
     else:
         return print ('%s [!] Drupal Version : %s %s' %(R,uknownversion,W))
 
