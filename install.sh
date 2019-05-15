@@ -56,5 +56,5 @@ fi
 if [ -d "/usr/bin/" ];then
 banner
 echo -e "$red [$green+$red]$off VulnX Will Be Installed In Your System";
-linux
+install
 fi
