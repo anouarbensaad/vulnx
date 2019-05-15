@@ -268,10 +268,9 @@ def domain_info():
         IP = match_ip[0]
         print ('%s [*] IP : %s %s' %(B,IP,W))
 
-################ Web Hosting Information #####################
+##################### URL TO DOMAIN ##########################
 
-def webhosting_info():
-    print ('%s [~] Web Hosting Information %s' %(Y,W))
+def urltodomain():
     http = '^http://www.'
     https= '^https://www.'
     httpw= '^http://'
@@ -280,53 +279,45 @@ def webhosting_info():
     check_httpsw= re.findall(httpsw,url)
     check_http = re.findall(http,url)
     check_https= re.findall(https,url)
-    try:
-        if check_http:
-            regex = re.compile(http)
-            domain = re.sub(regex,'',url)
-            urldate = "https://input.payapi.io/v1/api/fraud/domain/age/" + domain
-            getinfo = requests.get(urldate,headers).text
-            regex_date = r'Date: (.+?)-(.+?)'
-            regex_date = re.compile(regex_date)
-            matches = re.search(regex_date,getinfo)
-            if matches:
-                print ( '%s [*] Domain Created on : %s' % (B,matches.group(1)))
-        elif check_https:
-            regex = re.compile(https)
-            domain = re.sub(regex,'',url)
-            urldate = "https://input.payapi.io/v1/api/fraud/domain/age/" + domain
-            getinfo = requests.get(urldate,headers).text
-            regex_date = r'Date: (.+?)-(.+?)'
-            regex_date = re.compile(regex_date)
-            matches = re.search(regex_date,getinfo)
-            if matches:
-                print ( '%s [*] Domain Created on : %s' % (B,matches.group(1)))
-        elif check_httpw:
-            regex = re.compile(httpw)
-            domain = re.sub(regex,'',url)
-            urldate = "https://input.payapi.io/v1/api/fraud/domain/age/" + domain
-            getinfo = requests.get(urldate,headers).text
-            regex_date = r'Date: (.+?)-(.+?)'
-            regex_date = re.compile(regex_date)
-            matches = re.search(regex_date,getinfo)
-            if matches:
-                print ( '%s [*] Domain Created on : %s' % (B,matches.group(1)))
-        elif check_httpsw:
-            regex = re.compile(httpsw)
-            domain = re.sub(regex,'',url)
-            urldate = "https://input.payapi.io/v1/api/fraud/domain/age/" + domain
-            getinfo = requests.get(urldate,headers).text
-            regex_date = r'Date: (.+?)-(.+?)'
-            regex_date = re.compile(regex_date)
-            matches = re.search(regex_date,getinfo)
-            if matches:
-                print ( '%s [*] Domain Created on : %s' % (B,matches.group(1)))
-    except Exception as e:
-        print ('%s [!] IP  : %s' %(R , e))
-        print ('%s [*] DOMAIN  : %s' %(B , url)) 
-        print ('%s [!] IP  : %s%s' %(R,e,W))
-        print ('%s [*] DOMAIN  : %s%s' %(B,url,W))
+    if check_http:
+        regex = re.compile(http)
+        domain = re.sub(regex,'',url)
+        return domain
+    elif check_https:
+        regex = re.compile(https)
+        domain = re.sub(regex,'',url)
+        return domain
+    elif check_httpw:
+        regex = re.compile(httpw)
+        domain = re.sub(regex,'',url)
+        return domain
+    elif check_httpsw:
+        regex = re.compile(httpsw)
+        domain = re.sub(regex,'',url)
+        return domain
 
+################ Web Hosting Information #####################
+
+def webhosting_info():
+    print ('%s [~] Web Hosting Information %s' %(Y,W))
+    urldate = "https://input.payapi.io/v1/api/fraud/domain/age/" + urltodomain()
+    getinfo = requests.get(urldate,headers).text
+    regex_date = r'Date: (.+?)-(.+?)'
+    regex_date = re.compile(regex_date)
+    matches = re.search(regex_date,getinfo)
+    if matches:
+        print ( '%s [*] Domain Created on : %s' % (B,matches.group(1)))
+    ip = socket.gethostbyname(urltodomain())
+    print ( '%s [*] CloudFlare IP : %s' % (B,ip))
+    ipinfo = "http://ipinfo.io/" + ip + "/json"
+    getipinfo = requests.get(ipinfo,headers).text
+    country = re.search(re.compile(r'country\": \"(.+?)\"'),getipinfo)
+    region = re.search(re.compile(r'region\": \"(.+?)\"'),getipinfo)
+    if country:
+        print('%s [*] Country : %s' % (B,country.group(1)))
+    if region:
+        print('%s [*] Region : %s' % (B,region.group(1)))
+    
 ################ Blaze Plugin #####################
 
 def wp_blaze():
