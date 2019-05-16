@@ -7,6 +7,8 @@
 </h1>
 
 <h4 align="center">VulnX 🕷️ CMS-Detector and Vulnerability Scanner & exec automatic exploit process.</h4>
+
+
 ### CMS
 #### Joomla
 #### Wordpress

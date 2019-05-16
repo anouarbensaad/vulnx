@@ -13,7 +13,9 @@ import random
 import socket
 import urllib3
 
-
+bannerblue = '\033[34m'
+bannerblue2 = '\033[1;1;94m'
+yellowhead = '\033[1;1;94m'
 #BannerCOLOR
 red = '\033[91m'
 green = '\033[1;32m'
@@ -38,25 +40,46 @@ headers = {
 
 def banner():
     print("""%s
-%sVVVVVVVV           VVVVVVVV               lllllll                %sXXXXXXX       XXXXXXX
-%sV::::::V           V::::::V               l:::::l                %sX:::::X       X:::::X
-%sV::::::V           V::::::V               l:::::l                %sX:::::X       X:::::X
-%sV::::::V           V::::::V               l:::::l                %sX::::::X     X::::::X
-%s V:::::V           V:::::uuuuuu    uuuuuu  l::::nnnn  nnnnnnnn   %sXXX:::::X   X:::::XXX
-%s  V:::::V         V:::::Vu::::u    u::::u  l::::n:::nn::::::::nn  %s  X:::::X X:::::X   
-%s   V:::::V       V:::::V u::::u    u::::u  l::::n::::::::::::::nn %s   X:::::X:::::X    
-%s    V:::::V     V:::::V  u::::u    u::::u  l::::nn:::::::::::::::n %s   X:::::::::X     
-%s     V:::::V   V:::::V   u::::u    u::::u  l::::l n:::::nnnn:::::n %s   X:::::::::X     
-%s      V:::::V V:::::V    u::::u    u::::u  l::::l n::::n    n::::n %s  X:::::X:::::X    
-%s       V:::::V:::::V     u::::u    u::::u  l::::l n::::n    n::::n %s X:::::X X:::::X   
-%s        V:::::::::V      u:::::uuuu:::::u  l::::l n::::n    n::::X%sXX:::::X   X:::::XXX
-%s         V:::::::V       u:::::::::::::::ul::::::ln::::n    n::::%sX::::::X     X::::::X
-%s          V:::::V         u:::::::::::::::l::::::ln::::n    n::::%sX:::::X       X:::::X
-%s           V:::V           uu::::::::uu:::l::::::ln::::n    n::::%sX:::::X       X:::::X
-%s            VVV              uuuuuuuu  uuullllllllnnnnnn    nnnnn%sXXXXXXX       XXXXXXX
-                                                                                      
-                       # Coded By Anouar Ben Saad -%s @anouarbensaad
-    """ % (green,green,red,green,red,green,red,green,red,green,red,green,red,green,red,green,red,green,red,green,red,green,red,green,red,green,red,green,red,green,red,green,red,W))
+                                                      
+                    .:.        .:,                    
+                   xM;           XK.                  
+                  dx'            .lO.                 
+                 do                ,0.                
+             .c.lN'      ,  '.     .k0.:'             
+              xMMk;d;''cOM0kWXl,',locMMX.             
+              .NMK.   :WMMMMMMMx    dMMc              
+               lMMO  lWMMMMMMMMMO. lMMO               
+                cWMxxMMMMMMMMMMMMKlWMk                
+                 .xWMMMMMMMMMMMMMMM0,%s                 
+                   .,OMd,,,;0MMMO,.                   
+             .l0O.%sVXVX%sOX.%sVXVX%s0MO%sVXVX%s.0Kd,             
+            lWMMO0%sVXVX0%sOX.%sVXVX%sl%sVXVX%s.VXNMMO            
+           .MMX;.N0%sVXVX0%s0X.%sVXVXVX0%s.0M:.OMMl           
+          .OXc  ,MMO%sVXVX0%sVX%s .VXVX0%s0MMo  ,0X'          
+          0x.  :XMMMk%sVXVX.%sXO.%sVXVX%sdMMMWo.  :X'         
+         .d  'NMMMMMMk%sVXVX%s..%sVXVX0%s.XMMMMWl  ;c         
+            'NNoMMMMMMx%sVXVXVXVXVX0.%sXMMk0Mc            
+           .NMx OMMMMMMd%sVXVXVX%sl%sVXVX%s.NW.;MMc           
+          :NMMd .NMMMMMMd%sVXVX%sdMd,,,,oc ;MMWx          
+          .0MN,  'XMMMMMMo%sVX%soMMMMMMWl   0MW,          
+           .0.    .xWMMMMM:lMMMMMM0,     kc           
+            ,O.     .:dOKXXXNKOxc.      do            
+             '0c        -VulnX-       ,Ol             
+               ;.                     :.              
+                                           
+    %s# Coded By Anouar Ben Saad -%s @anouarbensaad
+    """ % (bannerblue,bannerblue2
+        ,W,bannerblue2,W,bannerblue2,W,bannerblue2,
+        W,bannerblue2,W,bannerblue2,W,bannerblue2,
+        W,bannerblue2,W,bannerblue2, 
+        W,bannerblue2,W,bannerblue2,
+        W,bannerblue2,W,bannerblue2,
+        W,bannerblue2,W,bannerblue2,
+        W,bannerblue2,
+        W,bannerblue2,W,bannerblue2,
+        W,bannerblue2,
+        W,bannerblue2,
+        yellowhead,Y))
 
 def parser_error(errmsg):
     banner()
@@ -71,14 +94,6 @@ def parse_args():
     parser._optionals.title = "OPTIONS"
     parser.add_argument('-u', '--url', help="Url scanned for")
     parser.add_argument('-f', '--file', help='Insert your file to scanning for',required=False)
-    parser.add_argument('-d', '--subdomains', help='Get Info from WEB')
-    parser.add_argument('-c', '--cms', help='Get Info from WEB')
-    parser.add_argument('-p', '--plugins', help='Get Info from WEB')
-    parser.add_argument('-t', '--themes', help='Get Info from WEB')
-    parser.add_argument('-U', '--user', help='Get Info from WEB')
-    parser.add_argument('-g', '--geo', help='Get Info from WEB')
-    parser.add_argument('-d', '--domain-info', help='Get Info from WEB')
-    parser.add_argument('-o', '--output', help='Save the results to text file')
     return parser.parse_args()
 
 ################ Check Files #####################
