@@ -23,7 +23,7 @@
 
 
 #### Wordpress
-
+###### Plugins 
 - [Wysija-Newsletters](https://www.exploit-db.com/exploits/33991)
 - [Simple Ads Manager](https://www.exploit-db.com/exploits/36614)
 - [InBoundio Marketing](https://www.rapid7.com/db/modules/exploit/unix/webapp/wp_inboundio_marketing_file_upload)
