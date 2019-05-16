@@ -47,3 +47,25 @@ make a local volume to view the results into a logfile
 ```bash
 $ docker run -it --name vulnx -v "$PWD/logs:/VulnX/logs" vulnx:latest -u http://exemple.com
 ```
+
+### Install VulnX
+
+
+```bash
+$ git clone https://github.com/anouarbensaad/VulnX.git
+$ cd VulnX
+$ chmod + x install.sh
+$ ./install.sh
+```
+
+### Contribution & License
+
+You can contribute in following ways:
+
+- [Report bugs & add issues](https://github.com/anouarbensaad/VulnX/issues/new)
+- Search for new vulnerability
+
+Do you want to have a conversation in private? email me : Bensaad.tig@gmail.com
+
+
+** VulnX is licensed under [MIT License](https://github.com/anouarbensaad/VulnX/blob/master/LICENSE) **
