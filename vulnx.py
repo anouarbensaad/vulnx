@@ -1,22 +1,23 @@
 #!/usr/bin/env python
-
 # Title : vulnx
 # Author: anouarbensaad
 # Desc  : CMS-Detector and Vulnerability Scanner & exploiter
-
 """The vulnx main part."""
 
 import sys
 import argparse
 import re
-import requests
 import os
 import socket
 import common
+import warnings
+
 from common.colors import red, green, bg, B, R, W, Y, G
 from common.banner import banner
-from common.uri_converter import convert_uri as uconvert
-from common.grabwp import wp_version, wp_plugin, wp_themes, wp_user
+from common.uri_converter import convert_uri as hostd
+from common.vxrequest import random_UserAgent
+from common.vxrequest import getrequest as vxget
+from common.grabwp import (wp_version,wp_plugin,wp_themes,wp_user)
 from common.wp_exploits import (wp_wysija,
                                 wp_blaze,
                                 wp_catpro,
@@ -33,14 +34,8 @@ from common.wp_exploits import (wp_wysija,
                                 wp_adsmanager,
                                 wp_inboundiomarketing
                                 )
-
+#cleaning screen
 os.system('clear')
-headers = {
-            "Connection": "keep-alive",
-            "User-Agent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.31 (KHTML, like Gecko) Chrome/26.0.1410.63 Safari/537.31",
-            "Keep-Alive": "timeout=15",
-            "verify" : False
-}
 
 def parser_error(errmsg):
     banner()
@@ -56,22 +51,38 @@ def parse_args():
     parser.add_argument('-u', '--url', help="Url scanned for")
     parser.add_argument('-f', '--file', help='Insert your file to scanning for',required=False)
     return parser.parse_args()
+
+#args declaration
+args = parse_args()
+#url args
+url = args.url
+#default headers.
+headers = {
+        'Host' : hostd(url),
+        'User-Agent' : random_UserAgent(),
+        'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8',
+        'Accept-Language': 'en-US,en;q=0.5',
+        'Connection': 'keep-alive',
+    }
+# Disable SSL related warnings
+warnings.filterwarnings('ignore')
+
 def detect_cms():
     id = 0
     try:
-        r=requests.get(url, headers)
-        content = r.text
-        joomla = re.search(re.compile(r'com_content | Joomla!'), content)
-        wordpress = re.search(re.compile(r'xmlrpc.php|wp-content|wordpress'), content)
-        drupal = re.search(re.compile(r'Drupal|drupal|sites/all|drupal.org'), content)
-        prestashop = re.search(re.compile(r'prestashop'), content)
-        if joomla:
+        content=vxget(url,headers)
+        #joomla searching content to detect.
+        if  re.search(re.compile(r'com_content | Joomla!'), content):
             print ('%s[%i] Target -> %s %s CMS : Joomla \n\n%s' % (W,id,url,G,W))
             print ('%s [~] Check Vulnerability %s' %(Y,W))
-        elif prestashop:
+        #prestashop searching content to detect.
+        elif re.search(re.compile(r'prestashop'), content):
             print ('%s[%i] %s %s CMS : Prestashop \n\n%s' % (W,id,url,G,W))
+            prestashop_version()
+            domain_info()
             print ('%s [~] Check Vulnerability %s' %(Y,W))
-        elif wordpress:
+        #wordpress searching content to detect.
+        elif re.search(re.compile(r'xmlrpc.php|wp-content|wordpress'), content):
             print ('%s Target[%i] -> %s%s \n\n '% (W,id,url,W))
             print ('%s [+] CMS : Wordpress%s' % (G,W))
             webhosting_info()
@@ -99,7 +110,8 @@ def detect_cms():
             wp_revslider(url,headers)
             wp_adsmanager(url,headers)
             wp_inboundiomarketing(url,headers)
-        elif drupal:
+        #Drupal searching content to detect.
+        elif re.search(re.compile(r'Drupal|drupal|sites/all|drupal.org'), content):
             print ('%s Target[%i] -> %s %s\n\n '% (W,id,url,W))
             print ('%s [+] CMS : Drupal%s' % (G,W))
             drupal_version()
@@ -107,58 +119,40 @@ def detect_cms():
             print ('%s [~] Check Vulnerability %s' %(Y,W))
         else:
             print ('%s[%i] %s %s CMS : Unknown \n\n%s' % (W,id,url,G,W))
-            prestashop_version()
+            webhosting_info()
             domain_info()
-            print ('%s [~] Check Vulnerability %s' %(Y,W))
     except Exception as e:
-        print ('%s\n\nerror : %s%s' % (R,e,W))
+        print ('%s\n\n error : %s%s' % (R,e,W))
         
 # drupal Version
 def drupal_version():
-    headers = {
-        'User-Agent' : 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.31 (KHTML, like Gecko) Chrome/26.0.1410.63 Safari/537.31'
-        }
-    ep = url
-    uknownversion = "UKNOWN"
-    response = requests.get(ep,headers)
+    response = vxget(url,headers,3)
     regex = 'Drupal \d{0,10}'
     regex = re.compile(regex)
-    matches = regex.findall(response.text)
+    matches = regex.findall(response)
     if len(matches) > 0 and matches[0] != None and matches[0] != "":
         version = matches[0]
-        return print ('%s [*] Drupal Version : %s %s' %(B,version,W))
-    else:
-        return print ('%s [!] Drupal Version : %s %s' %(R,uknownversion,W))
+        print ('%s [*] Drupal Version : %s %s' %(B,version,W))
 
 # Prestashop Version
 def prestashop_version():
-    headers = {
-        'User-Agent' : 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.31 (KHTML, like Gecko) Chrome/26.0.1410.63 Safari/537.31'
-    }
-    ep = url
-    uknownversion = "UKNOWN"
-    response = requests.get(ep,headers,Verify=False)
+    response = vxget(url,headers,3)
     regex = 'Prestashop \d{0,9}'
     regex = re.compile(regex)
     matches = regex.findall(response.text)
     if len(matches) > 0 and matches[0] != None and matches[0] != "":
         version = matches[0]
         return print ('%s [*] Prestashop Version : %s %s' %(B,version,W))
-    else:
-        return print ('%s [!] Prestashop Version : %s %s' %(R,uknownversion,W))
 
 # scan domain info
 def domain_info():
     print ('%s [~] Search for SubDomains %s' %(Y,W))
     searchurl = "https://www.pagesinventory.com/search/?s=" + url
-    getinfo = requests.get(searchurl,headers).text
+    getinfo = vxget(searchurl,headers,3)
     domains = []
-    regex_domain = "<td><a href=\"\/domain\/(.*?).html\">"
-    regex_ip = "<a href=\"/ip\/(.*?).html\">"
-    regex_domain = re.compile(regex_domain)
-    regex_ip = re.compile(regex_ip)
-    matches_domain = regex_domain.findall(getinfo)
-    match_ip = regex_ip.findall(getinfo)
+    #searching domain from pages inventory
+    matches_domain = re.findall(re.compile(r'<td><a href=\"\/domain\/(.*?).html\">'),getinfo)
+    match_ip = re.findall(re.compile(r'<a href=\"/ip\/(.*?).html\">'),getinfo)
     for domain in matches_domain:
         if domain not in domains:
             domains.append(domain)
@@ -170,17 +164,17 @@ def domain_info():
 # Web Hosting Information
 def webhosting_info():
     print ('%s [~] Web Hosting Information %s' %(Y,W))
-    urldate = "https://input.payapi.io/v1/api/fraud/domain/age/" + uconvert(url)
-    getinfo = requests.get(urldate,headers).text
+    urldate = "https://input.payapi.io/v1/api/fraud/domain/age/" + hostd(url)
+    getinfo = vxget(urldate,headers,3)
     regex_date = r'Date: (.+?)-(.+?)'
     regex_date = re.compile(regex_date)
     matches = re.search(regex_date,getinfo)
     if matches:
         print ( '%s [*] Domain Created on : %s' % (B,matches.group(1)))
-    ip = socket.gethostbyname(uconvert(url))
+    ip = socket.gethostbyname(hostd(url))
     print ( '%s [*] CloudFlare IP : %s' % (B,ip))
     ipinfo = "http://ipinfo.io/" + ip + "/json"
-    getipinfo = requests.get(ipinfo,headers).text
+    getipinfo = vxget(ipinfo,headers,3)
     country = re.search(re.compile(r'country\": \"(.+?)\"'),getipinfo)
     region = re.search(re.compile(r'region\": \"(.+?)\"'),getipinfo)
     if country:
@@ -190,8 +184,5 @@ def webhosting_info():
 
 #main
 if __name__ == "__main__":
-    args = parse_args()
-    url = args.url
-    file_name = args.file
     banner()
     detect_cms()

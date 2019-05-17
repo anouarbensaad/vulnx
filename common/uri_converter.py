@@ -1,6 +1,11 @@
 import sys
 import re
 
+def rmre(regex,url):
+    compiling = re.compile(regex)
+    remove_re = re.sub(compiling,'',url)
+    return remove_re
+
 def convert_uri(url):
     http = '^http://www.'
     https= '^https://www.'
@@ -11,18 +16,10 @@ def convert_uri(url):
     check_http = re.findall(http,url)
     check_https= re.findall(https,url)
     if check_http:
-        regex = re.compile(http)
-        domain = re.sub(regex,'',url)
-        return domain
+        return rmre(http,url)
     elif check_https:
-        regex = re.compile(https)
-        domain = re.sub(regex,'',url)
-        return domain
+        return rmre(https,url)
     elif check_httpw:
-        regex = re.compile(httpw)
-        domain = re.sub(regex,'',url)
-        return domain
+        return rmre(httpw,url)
     elif check_httpsw:
-        regex = re.compile(httpsw)
-        domain = re.sub(regex,'',url)
-        return domain
+        return rmre(httpsw,url)

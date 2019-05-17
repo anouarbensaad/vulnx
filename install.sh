@@ -15,7 +15,7 @@ if [ -d "/usr/share/VulnX" ]; then
     echo -e "$red [$green+$red]$off A Directory VulnX Was Found! Do You Want To Replace It? [Y/n]:" ;
     read replace
     if [ "$replace" = "y" ]; then
-      sudo rm -r "/usr/share/VulnX"
+      sudo rm -r "/usr/share/vulnx"
       sudo rm "/usr/share/icons/vulnxicon.png"
       sudo rm "/usr/share/applications/vulnx.desktop"
       sudo rm "/usr/local/bin/VulnX"
@@ -30,24 +30,24 @@ fi
 echo -e "$red [$green+$red]$off Installing ...";
 echo -e "$red [$green+$red]$off Creating Symbolic Link ...";
 echo -e "#!/bin/bash
-python3 /usr/share/VulnX/vulnx.py" '${1+"$@"}' > "VulnX";
-    chmod +x "VulnX";
-    sudo mkdir "/usr/share/VulnX"
-    sudo cp "install.sh" "/usr/share/VulnX"
-    sudo cp "update.sh" "/usr/share/VulnX"
-    sudo chmod +x /usr/share/VulnX/update.sh
-    sudo cp "vulnx.py" "/usr/share/VulnX"
+python3 /usr/share/vulnx/vulnx.py" '${1+"$@"}' > "vulnx";
+    chmod +x "vulnx";
+    sudo mkdir "/usr/share/vulnx"
+    sudo cp "install.sh" "/usr/share/vulnx"
+    sudo cp "update.sh" "/usr/share/vulnx"
+    sudo chmod +x /usr/share/vulnx/update.sh
+    sudo cp "vulnx.py" "/usr/share/vulnx"
     sudo cp "conf/vulnxicon.png" "/usr/share/icons"
     sudo cp "conf/vulnx.desktop" "/usr/share/applications"
-    sudo cp "VulnX" "/usr/local/bin/"
-    rm "VulnX";
+    sudo cp "vulnx" "/usr/local/bin/"
+    rm "vulnx";
 
-if [ -d "/usr/share/VulnX" ] ;
+if [ -d "/usr/share/vulnx" ] ;
 then
 echo -e "$red [$green+$red]$off Tool Successfully Installed And Will Start In 5s!";
-echo -e "$red [$green+$red]$off You can execute tool by typing VulnX"
+echo -e "$red [$green+$red]$off You can execute tool by typing vulnx"
 sleep 5;
-VulnX
+vulnx
 else
 echo -e "$red [$green✘$red]$off Tool Cannot Be Installed On Your System! Use It As Portable !";
     exit
@@ -55,6 +55,6 @@ fi
 }
 if [ -d "/usr/bin/" ];then
 banner
-echo -e "$red [$green+$red]$off VulnX Will Be Installed In Your System";
+echo -e "$red [$green+$red]$off vulnx Will Be Installed In Your System";
 install
 fi
