@@ -11,6 +11,7 @@ import os
 import socket
 import common
 import warnings
+import signal
 
 from common.colors import red, green, bg, B, R, W, Y, G
 from common.banner import banner
@@ -123,7 +124,7 @@ def detect_cms():
             domain_info()
     except Exception as e:
         print ('%s\n\n error : %s%s' % (R,e,W))
-        
+
 # drupal Version
 def drupal_version():
     response = vxget(url,headers,3)
@@ -181,6 +182,11 @@ def webhosting_info():
         print('%s [*] Country : %s' % (B,country.group(1)))
     if region:
         print('%s [*] Region : %s' % (B,region.group(1)))
+#clean
+def signal_handler(signal,frame):
+    print("%s(ID: {}) Cleaning up...\n Exiting...".format(signal)%(W))
+    exit(0)
+signal.signal(signal.SIGINT, signal_handler)
 
 #main
 if __name__ == "__main__":
