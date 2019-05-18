@@ -19,22 +19,25 @@ from common.uri_converter import convert_uri as hostd
 from common.vxrequest import random_UserAgent
 from common.vxrequest import getrequest as vxget
 from common.grabwp import (wp_version,wp_plugin,wp_themes,wp_user)
-from common.wp_exploits import (wp_wysija,
-                                wp_blaze,
-                                wp_catpro,
-                                wp_cherry,
-                                wp_dm,
-                                wp_fromcraft,
-                                wp_jobmanager,
-                                wp_showbiz,
-                                wp_synoptic,
-                                wp_shop,
-                                wp_injection,
-                                wp_powerzoomer,
-                                wp_revslider,
-                                wp_adsmanager,
-                                wp_inboundiomarketing
+from common.wp_exploits import(   wp_wysija,
+                                  wp_blaze,
+                                  wp_catpro,
+                                  wp_cherry,
+                                  wp_dm,
+                                  wp_fromcraft,
+                                  wp_jobmanager,
+                                  wp_showbiz,
+                                  wp_synoptic,
+                                  wp_shop,
+                                  wp_injection,
+                                  wp_powerzoomer,
+                                  wp_revslider,
+                                  wp_adsmanager,
+                                  wp_inboundiomarketing,
+                                  wp_levoslideshow,
+                                  wp_adblockblocker,
                                 )
+from common.joomla_exploits import(joomla_comjce)
 #cleaning screen
 os.system('clear')
 
@@ -76,6 +79,13 @@ def detect_cms():
         if  re.search(re.compile(r'com_content | Joomla!'), content):
             print ('%s[%i] Target -> %s %s CMS : Joomla \n\n%s' % (W,id,url,G,W))
             print ('%s [~] Check Vulnerability %s' %(Y,W))
+            #joomla_exploits imported from folder[./common/joomla_exploits.py]
+            
+            joomla_comjce(url,headers)
+            
+
+
+
         #prestashop searching content to detect.
         elif re.search(re.compile(r'prestashop'), content):
             print ('%s[%i] %s %s CMS : Prestashop \n\n%s' % (W,id,url,G,W))
@@ -111,6 +121,8 @@ def detect_cms():
             wp_revslider(url,headers)
             wp_adsmanager(url,headers)
             wp_inboundiomarketing(url,headers)
+            wp_adblockblocker(url,headers)
+            wp_levoslideshow(url,headers)
         #Drupal searching content to detect.
         elif re.search(re.compile(r'Drupal|drupal|sites/all|drupal.org'), content):
             print ('%s Target[%i] -> %s %s\n\n '% (W,id,url,W))

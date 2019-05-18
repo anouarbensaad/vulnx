@@ -37,11 +37,11 @@ def searchengine(xname):
     webs = []
     bingquery = 'https://www.google.com/search?q=' + getdorksbyname(xname)
     res = requests.get(bingquery,headers).text
-    dorks = re.findall(re.compile(r'........./wp-content/plugins/+?'),res)
+    dorks = re.findall(re.compile(r'\w+/wp-content'),res)
     for plug in dorks:
         if plug not in webs:
             webs.append(plug)
             print ('%s [*] Plugins : %s %s' %(B," \n [*] Plugins : ".join(webs),W))
 
 
-searchengine('revslider')
+searchengine('adsmanager')
