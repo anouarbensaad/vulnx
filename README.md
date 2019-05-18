@@ -20,11 +20,10 @@
 ### Exploits
 
 #### Joomla
-
+- [ComJCE](#)
 
 #### Wordpress
 ###### Plugins 
-- [Wysija-Newsletters](https://www.exploit-db.com/exploits/33991)
 - [Simple Ads Manager](https://www.exploit-db.com/exploits/36614)
 - [InBoundio Marketing](https://www.rapid7.com/db/modules/exploit/unix/webapp/wp_inboundio_marketing_file_upload)
 - [WPshop eCommerce](https://www.rapid7.com/db/modules/exploit/unix/webapp/wp_wpshop_ecommerce_file_upload)
@@ -37,7 +36,8 @@
 - [CherryFramework](https://www.exploit-db.com/exploits/45896)
 - [Catpro](https://vulners.com/zdt/1337DAY-ID-20256)
 - [Blaze SlideShow](https://0day.today/exploits/18500)
- 
+ ###### Themes
+- [Wysija-Newsletters](https://www.exploit-db.com/exploits/33991)
 
 #### Prestashop
 
