@@ -28,6 +28,9 @@ wpdorks = {
         'adsmanager'        : 'inurl:"/wp-content/plugins/simple-ads-manager/"',
         'inboundiomarketing': 'inurl:"/wp-content/plugins/inboundio-marketing/"',
 }
+joomla = {
+        'comjce'            : 'inurl":index.php?option=com_jce"'
+}
 
 def getdorksbyname(xname):
     if xname in wpdorks:
