@@ -1,64 +1,45 @@
-
+""" WordPress Information Gathering """
 import re
 import requests
 from common.colors import B,W
 
+#searching for the wordpress version
 def wp_version(url,headers):
-
-    headers = {
-        'User-Agent' : 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.31 (KHTML, like Gecko) Chrome/26.0.1410.63 Safari/537.31'
-        }
     ep = url
-    response = requests.get(ep,headers)
-    regexv1 = 'content=\"WordPress \d{0,9}.\d{0,9}.\d{0,9}\"'
-    regexv1 = re.compile(regexv1)
-    content = 'content=\"WordPress '
-    endcontent = '\"$'
-    matches = regexv1.findall(response.text)
-    if matches and len(matches) > 0 and matches[0] != None and matches[0] != "":
-        version = matches[0]
-        sub1 = re.sub(content,'',version)
-        sub2 = re.sub (endcontent,'',sub1)
-        return print ('%s [*] Version : %s %s' %(B,sub2,W))
+    getversion = requests.get(ep,headers).text
+    #searching version content from the http response. \d{:digit} version form 0.0.0
+    matches = re.search(re.compile(r'content=\"WordPress (\d{0,9}.\d{0,9}.\d{0,9})?\"'),getversion)
+    if matches:
+        version = matches.group(1)
+        return print ('%s [*] Version : %s %s' %(B,version,W))
 
+#searching for the wordpress themes
 def wp_themes(url,headers):
-    headers = {
-        'User-Agent' : 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.31 (KHTML, like Gecko) Chrome/26.0.1410.63 Safari/537.31'
-        }
     ep = url
-    response = requests.get(ep,headers)
-    regexv1 = 'themes/(.+?)/'
-    regexv1 = re.compile(regexv1)
-    matches = regexv1.findall(response.text)
-    if matches and len(matches) > 0 and matches[0] != None and matches[0] != "":
-        Theme = matches[0]
-        return print ('%s [*] Themes : %s %s' %(B,Theme,W))
+    themes_array = []
+    getthemes = requests.get(ep,headers).text
+    matches = re.findall(re.compile(r'themes/(\w+)?/'),getthemes)
+    #loop for matching themes.
+    for theme in matches:
+        if theme not in themes_array:
+            themes_array.append(theme)
+    print ('%s [*] Themes : %s %s' %(B," \n [*] Themes : ".join(themes_array),W))
 
-
+#searching for the wordpress user
 def wp_user(url,headers):
-    headers = {
-        'User-Agent' : 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.31 (KHTML, like Gecko) Chrome/26.0.1410.63 Safari/537.31'
-        }
     ep = url + '/?author=1'
-    response = requests.get(ep,headers)
-    regexv1 = 'author/(.+?)/'
-    regexv1 = re.compile(regexv1)
-    matches = regexv1.findall(response.text)
-    if matches and len(matches) > 0 and matches[0] != None and matches[0] != "":
-        User = matches[0]
-        return print ('%s [*] User : %s %s' %(B,User,W))
-        
+    getuser = requests.get(ep,headers).text
+    matches = re.search(re.compile(r'author/(\w+)?/'),getuser)
+    if matches:
+        user = matches.group(1)
+        return print ('%s [*] User : %s %s' %(B,user,W))
+
+#searching for the wordpress plugins
 def wp_plugin(url,headers):
-    headers = {
-        'User-Agent' : 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.31 (KHTML, like Gecko) Chrome/26.0.1410.63 Safari/537.31'
-        }
     plugins_array = []
     ep = url
-    id=1
-    getplugin = requests.get(ep,headers)
-    regexv1 = r'wp-content/plugins/(.+?)/'
-    regexv1 = re.compile(regexv1)
-    matches = regexv1.findall(getplugin.text)
+    getplugin = requests.get(ep,headers).text
+    matches = re.findall(re.compile(r'wp-content/plugins/(\w+)?/'),getplugin)
     for plug in matches:
         if plug not in plugins_array:
             plugins_array.append(plug)
