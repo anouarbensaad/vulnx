@@ -19,6 +19,7 @@ from common.uri_converter import convert_uri as hostd
 from common.vxrequest import random_UserAgent
 from common.vxrequest import getrequest as vxget
 from common.grabwp import (wp_version,wp_plugin,wp_themes,wp_user)
+from common.vx_dorks import (searchengine,getdorksbyname,wp_contentdorks)
 from common.wp_exploits import(   wp_wysija,
                                   wp_blaze,
                                   wp_catpro,
@@ -39,7 +40,6 @@ from common.wp_exploits import(   wp_wysija,
                                 )
 from common.joomla_exploits import(joomla_comjce)
 #cleaning screen
-os.system('clear')
 
 def parser_error(errmsg):
     banner()
@@ -53,16 +53,23 @@ def parse_args():
     parser.error = parser_error
     parser._optionals.title = "OPTIONS"
     parser.add_argument('-u', '--url', help="Url scanned for")
+    parser.add_argument('-D', '--dorks', help='searching dorks', dest='dorks')
+    parser.add_argument('-e', '--exploit', help='run exploit', dest='exploit')
     parser.add_argument('-f', '--file', help='Insert your file to scanning for',required=False)
     return parser.parse_args()
 
 #args declaration
 args = parse_args()
-#url args
+#url arg
 url = args.url
+#dorks arg
+dorks = args.dorks
+#run exploit
+exploit = args.exploit
+
 #default headers.
 headers = {
-        'Host' : hostd(url),
+#        'Host' : hostd(url),
         'User-Agent' : random_UserAgent(),
         'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8',
         'Accept-Language': 'en-US,en;q=0.5',
@@ -80,12 +87,7 @@ def detect_cms():
             print ('%s[%i] Target -> %s %s CMS : Joomla \n\n%s' % (W,id,url,G,W))
             print ('%s [~] Check Vulnerability %s' %(Y,W))
             #joomla_exploits imported from folder[./common/joomla_exploits.py]
-            
             joomla_comjce(url,headers)
-            
-
-
-
         #prestashop searching content to detect.
         elif re.search(re.compile(r'prestashop'), content):
             print ('%s[%i] %s %s CMS : Prestashop \n\n%s' % (W,id,url,G,W))
@@ -104,25 +106,29 @@ def detect_cms():
             wp_themes(url,headers)
             wp_user(url,headers)
             wp_plugin(url,headers)
-            print ('%s [~] Check Vulnerability %s' %(Y,W))
-            #wp_exploit methods from (dolder)[./common/wp_exploits.py]
-            wp_wysija(url,headers)
-            wp_blaze(url,headers)
-            wp_catpro(url,headers)
-            wp_cherry(url,headers)
-            wp_dm(url,headers)
-            wp_fromcraft(url,headers)
-            wp_jobmanager(url,headers)
-            wp_showbiz(url,headers)
-            wp_synoptic(url,headers)
-            wp_shop(url,headers)
-            wp_injection(url,headers)
-            wp_powerzoomer(url,headers)
-            wp_revslider(url,headers)
-            wp_adsmanager(url,headers)
-            wp_inboundiomarketing(url,headers)
-            wp_adblockblocker(url,headers)
-            wp_levoslideshow(url,headers)
+            
+            # vulnx -u http://example.com -e run | vulnx -u http://example --exploit run
+            if exploit == "run":
+                print ('%s [~] Check Vulnerability %s' %(Y,W))
+                #wp_exploit methods from (dolder)[./common/wp_exploits.py]
+                wp_wysija(url,headers)
+                wp_blaze(url,headers)
+                wp_catpro(url,headers)
+                wp_cherry(url,headers)
+                wp_dm(url,headers)
+                wp_fromcraft(url,headers)
+                wp_jobmanager(url,headers)
+                wp_showbiz(url,headers)
+                wp_synoptic(url,headers)
+                wp_shop(url,headers)
+                wp_injection(url,headers)
+                wp_powerzoomer(url,headers)
+                wp_revslider(url,headers)
+                wp_adsmanager(url,headers)
+                wp_inboundiomarketing(url,headers)
+                wp_adblockblocker(url,headers)
+                wp_levoslideshow(url,headers)
+
         #Drupal searching content to detect.
         elif re.search(re.compile(r'Drupal|drupal|sites/all|drupal.org'), content):
             print ('%s Target[%i] -> %s %s\n\n '% (W,id,url,W))
@@ -200,7 +206,10 @@ def signal_handler(signal,frame):
     exit(0)
 signal.signal(signal.SIGINT, signal_handler)
 
+#dorks table viewing
+
+
 #main
 if __name__ == "__main__":
     banner()
-    detect_cms()
+detect_cms()
