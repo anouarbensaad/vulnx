@@ -1,6 +1,25 @@
+import sys
 import re
-#convert url to domain_name. like http://www.exemple.com ---> exemple.com
+
+def rmre(regex,url):
+    compiling = re.compile(regex)
+    remove_re = re.sub(compiling,'',url)
+    return remove_re
+
 def convert_uri(url):
-    urlform = r'(https?://)(www\.)?((\w+)[a-zA-Z0-9-_.]?[a-zA-Z0-9-_.]?[a-zA-Z0-9-_.]?\.\w+)'
-    domain = re.search(urlform,url)
-    return domain.group(3)
+    http = '^http://www.'
+    https= '^https://www.'
+    httpw= '^http://'
+    httpsw= '^https://'
+    check_httpw = re.findall(httpw,url)
+    check_httpsw= re.findall(httpsw,url)
+    check_http = re.findall(http,url)
+    check_https= re.findall(https,url)
+    if check_http:
+        return rmre(http,url)
+    elif check_https:
+        return rmre(https,url)
+    elif check_httpw:
+        return rmre(httpw,url)
+    elif check_httpsw:
+        return rmre(httpsw,url)
