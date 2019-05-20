@@ -1,4 +1,3 @@
-
 #!/usr/bin/env python
 # Title : vulnx
 # Author: anouarbensaad
@@ -54,11 +53,27 @@ def parse_args():
     parser.error = parser_error
     parser._optionals.title = "OPTIONS"
     parser.add_argument('-u', '--url', help="Url scanned for")
-    parser.add_argument('-D', '--dorks', help='searching dorks', dest='dorks')
-    parser.add_argument('-e', '--exploit', help='run exploit', dest='exploit')
-    parser.add_argument('-f', '--file', help='Insert your file to scanning for',required=False)
-    return parser.parse_args()
+    parser.add_argument('-D', '--dorks', help='searching dorks', dest='dorks' , type=str)
+    parser.add_argument('-i', '--insert', help='Insert your file to scanning for',required=False)
+    parser.add_argument('-o', '--output', help='output directory',required=False)
 
+    #Switches
+    parser.add_argument('-e','--exploit', help='searching vulnerability & run exploits',
+    dest='exploit', action='store_true')
+    parser.add_argument('-t','--themes', help='searching themes of target',
+    dest='themes', action='store_true')
+    parser.add_argument('--user', help='searching user of target',
+    dest='user', action='store_true')
+    parser.add_argument('-p','--plugins', help='searching plugins of target',
+    dest='plugins', action='store_true')
+    parser.add_argument('-v','--version', help='searching version of target',
+    dest='version', action='store_true')
+    parser.add_argument('-H','--host-info', help='searching host info',
+    dest='hostinfo', action='store_true')
+    parser.add_argument('-d','--domain-info', help='searching domain info',
+    dest='domaininfo', action='store_true')
+    return parser.parse_args()
+#adding exploits arg start & dorks in main part
 #args declaration
 args = parse_args()
 #url arg
@@ -67,15 +82,18 @@ url = args.url
 dorks = args.dorks
 #run exploit
 exploit = args.exploit
+#cms gathering args
+version = args.version
+themes = args.themes
+user = args.user
+plugins = args.plugins
+# web hosting info
+hostinfo = args.hostinfo
+# domain info
+domaininfo = args.domaininfo
+# dorks search.
+dorks = args.dorks
 
-#default headers.
-headers = {
-#        'Host' : hostd(url),
-        'User-Agent' : random_UserAgent(),
-        'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8',
-        'Accept-Language': 'en-US,en;q=0.5',
-        'Connection': 'keep-alive',
-    }
 # Disable SSL related warnings
 warnings.filterwarnings('ignore')
 
@@ -99,17 +117,22 @@ def detect_cms():
         elif re.search(re.compile(r'xmlrpc.php|wp-content|wordpress'), content):
             print ('%s Target[%i] -> %s%s \n\n '% (W,id,url,W))
             print ('%s [+] CMS : Wordpress%s' % (G,W))
-            webhosting_info()
-            domain_info()
-            print ('%s [~] CMS Gathering %s' %(Y,W))
+            if hostinfo:
+                webhosting_info()
+            if domaininfo:
+                domain_info()
             #wp_grab methods info from (folder)[./common/grapwp.py]
-            wp_version(url,headers)
-            wp_themes(url,headers)
-            wp_user(url,headers)
-            wp_plugin(url,headers)
-            
-            # vulnx -u http://example.com -e run | vulnx -u http://example --exploit run
-            if exploit == "run":
+            if version:
+                    wp_version(url,headers)
+            if themes:
+                wp_themes(url,headers)
+            if user:
+                wp_user(url,headers)
+            if plugins:
+                wp_plugin(url,headers)
+
+            # vulnx -u http://example.com -e | vulnx -u http://example --exploit
+            if exploit:
                 print ('%s [~] Check Vulnerability %s' %(Y,W))
                 #wp_exploit methods from (dolder)[./common/wp_exploits.py]
                 wp_wysija(url,headers)
@@ -213,4 +236,15 @@ signal.signal(signal.SIGINT, signal_handler)
 #main
 if __name__ == "__main__":
     banner()
-detect_cms()
+    if url:
+        #default headers.
+        headers = {
+        'Host' : hostd(url),
+        'User-Agent' : random_UserAgent(),
+        'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8',
+        'Accept-Language': 'en-US,en;q=0.5',
+        'Connection': 'keep-alive',
+        }
+        detect_cms()
+    if dorks:
+        searchengine(dorks)
