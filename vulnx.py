@@ -77,6 +77,7 @@ def parse_args():
 vulnresults = set()  # results of vulnerability exploits. [success or failed]
 grabinfo = set()  # return cms_detected the version , themes , plugins , user .. 
 subdomains = set() # return subdomains & ip.
+hostinfo = set() # host info
 
 #args declaration
 args = parse_args()
@@ -118,16 +119,16 @@ def detect_cms():
         elif re.search(re.compile(r'Prestashop|prestashop'), content):
             print ('%s[%i] %s %s CMS : Prestashop \n\n%s' % (W,id,url,G,W))
             prestashop_version()
-            domain_info()
+            domain_info(subdomains)
             print ('%s [~] Check Vulnerability %s' %(Y,W))
         #wordpress searching content to detect.
         elif re.search(re.compile(r'wp-content|wordpress|xmlrpc.php'), content):
             print ('%s Target[%i] -> %s%s \n\n '% (W,id,url,W))
             print ('%s [+] CMS : Wordpress%s' % (G,W))
             if hostinfo:
-                webhosting_info()
+                webhosting_info(hostinfo)
             if domaininfo:
-                domain_info()
+                domain_info(subdomains)
             #wp_grab methods info from (folder)[./common/grapwp.py]
             if version:
                     wp_version(url,headers,grabinfo)
@@ -164,12 +165,12 @@ def detect_cms():
             print ('%s Target[%i] -> %s %s\n\n '% (W,id,url,W))
             print ('%s [+] CMS : Drupal%s' % (G,W))
             drupal_version()
-            domain_info()
+            domain_info(subdomains)
             print ('%s [~] Check Vulnerability %s' %(Y,W))
         else:
             print ('%s[%i] %s %s CMS : Unknown \n\n%s' % (W,id,url,G,W))
-            webhosting_info()
-            domain_info()
+            webhosting_info(hostinfo)
+            domain_info(subdomains)
     except Exception as e:
         print ('%s\n\n error : %s%s' % (R,e,W))
 
@@ -194,7 +195,7 @@ def prestashop_version():
         return print ('%s [+] Prestashop Version : %s %s' %(G,version,W))
 
 # scan domain info
-def domain_info():
+def domain_info(subdomains):
     print ('%s [~] Search for SubDomains %s' %(Y,W))
     searchurl = "https://www.pagesinventory.com/search/?s=" + url
     getinfo = vxget(searchurl,headers,timeout)
@@ -205,13 +206,15 @@ def domain_info():
     for domain in matches_domain:
         if domain not in domains:
             domains.append(domain)
+            subdomains.add('domain : '+domain)
     print ('%s [+] SubDomains : %s %s' %(G," \n [+] SubDomains : ".join(domains),W))
     if match_ip and len(match_ip) > 0 and match_ip[0] != None and match_ip[0] != "":
         IP = match_ip[0]
         print ('%s [+] IP : %s %s' %(G,IP,W))
+        subdomains.add('ip : '+IP)
 
 # Web Hosting Information
-def webhosting_info():
+def webhosting_info(hostinfo):
     print ('%s [~] Web Hosting Information %s' %(Y,W))
     urldate = "https://input.payapi.io/v1/api/fraud/domain/age/" + hostd(url)
     getinfo = vxget(urldate,headers,timeout)
@@ -228,25 +231,26 @@ def webhosting_info():
     region = re.search(re.compile(r'region\": \"(.+?)\"'),getipinfo)
     if country:
         print('%s [+] Country : %s' % (G,country.group(1)))
+        hostinfo.add('country : ' + country.group(1))
     if region:
         print('%s [+] Region : %s' % (G,region.group(1)))
-
+        hostinfo.add('Region : ' + region.group(1))
 # output
 output_dir = args.output or 'logs'
 
 if not os.path.exists(output_dir): # if the directory doesn't exist
     os.mkdir(output_dir) # create a new directory
 
-data = [ vulnresults, grabinfo, subdomains ]
+data = [ vulnresults, grabinfo, subdomains , hostinfo]
 
-data_names = ['vulnresults', 'grabinfo', 'subdomains']
+data_names = ['vulnresults', 'grabinfo', 'subdomains' , 'hostinfo']
 outlogs(data,data_names,output_dir)
 data = {
     'vulnresults':list(vulnresults),
     'grabinfo':list(grabinfo),
     'subdomains':list(subdomains),
+    'webinfo': list(hostinfo)
 }
-
 
 #clean
 def signal_handler(signal,frame):
