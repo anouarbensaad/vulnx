@@ -32,7 +32,7 @@ def banner():
 
     %s# Coded By Anouar Ben Saad -%s @anouarbensaad
 
-%s        =[         vulnx %sv1.0.0%s                ]
+%s        =[         vulnx %sv3.0.1%s                ]
 + −− −− =[      %s15%s Wordpress %sexploits%s          ]
 + −− −− =[       %s0%s Joomla %sexploits%s             ]
 + −− −− =[       %s0%s Drupal %sexploits%s             ]
