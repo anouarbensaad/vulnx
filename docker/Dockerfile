@@ -7,7 +7,7 @@ LABEL desc "CMS-Detector and Vulnerability Scanner & exploiter"
 
 RUN apk add git && git clone https://github.com/anouarbensaad/VulnX.git VulnX
 WORKDIR VulnX
-RUN pip install --upgrade pip ; pip install requests ;
+RUN pip install -r ./pip/requirements.txt
+
 VOLUME [ "/VulnX" ]
-ENTRYPOINT [ "python", "vulnx.py" ]
-CMD ["--help"]
+ENTRYPOINT [ "python3", "vulnx.py" ]

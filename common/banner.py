@@ -30,13 +30,7 @@ def banner():
              '0c        -VulnX-       ,Ol             
                ;.                     :.   
 
-    %s# Coded By Anouar Ben Saad -%s @anouarbensaad
-
-%s        =[         vulnx %sv3.0.1%s                ]
-+ −− −− =[      %s15%s Wordpress %sexploits%s          ]
-+ −− −− =[       %s0%s Joomla %sexploits%s             ]
-+ −− −− =[       %s0%s Drupal %sexploits%s             ]
-+ −− −− =[       %s0%s Prestashop %sexploits%s         ]           
+    %s# Coded By Anouar Ben Saad -%s @anouarbensaad      
                                            """ 
 % 
 (bannerblue,bannerblue2,
@@ -51,9 +45,4 @@ W,bannerblue2,W,bannerblue2,
 W,bannerblue2,
 W,bannerblue2,
 W,Y,
-W,R,W,
-W,Y,W,W,
-W,Y,W,W,
-W,Y,W,W,
-W,Y,W,W,
 ))

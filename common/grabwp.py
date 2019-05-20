@@ -1,7 +1,7 @@
 """ WordPress Information Gathering """
 import re
 import requests
-from common.colors import B,W,G
+from common.colors import B,W,G,good,bad
 
 #searching for the wordpress version
 def wp_version(url,headers,grabinfo):
@@ -11,7 +11,7 @@ def wp_version(url,headers,grabinfo):
     matches = re.search(re.compile(r'content=\"WordPress (\d{0,9}.\d{0,9}.\d{0,9})?\"'),getversion)
     if matches:
         version = matches.group(1)
-        return print ('%s [+] Version : %s %s' %(G,version,W))
+        return print (' %s Version : %s' %(good,version))
         grabinfo.add('Version - '+ version)
 #searching for the wordpress themes
 def wp_themes(url,headers,grabinfo):
@@ -20,11 +20,11 @@ def wp_themes(url,headers,grabinfo):
     getthemes = requests.get(ep,headers).text
     matches = re.findall(re.compile(r'themes/(\w+)?/'),getthemes)
     #loop for matching themes.
-    for theme in matches:
-        if theme not in themes_array:
-            themes_array.append(theme)
-    print ('%s [+] Themes : %s %s' %(G," \n [+] Themes : ".join(themes_array),W))
-    grabinfo.add('plugins - '+ themes_array)
+    if len(matches) > 0:
+        for theme in matches:
+            if theme not in themes_array:
+                themes_array.append(theme)
+        print (' %s Themes : %s ' %(good," \n                  ".join(themes_array)))
 #searching for the wordpress user
 def wp_user(url,headers,grabinfo):
     ep = url + '/?author=1'
@@ -32,7 +32,7 @@ def wp_user(url,headers,grabinfo):
     matches = re.search(re.compile(r'author/(\w+)?/'),getuser)
     if matches:
         user = matches.group(1)
-        return print ('%s [+] User : %s %s' %(G,user,W))
+        return print (' %s User : %s' %(good,user))
         grabinfo.add('user - '+ user)
 
 #searching for the wordpress plugins
@@ -41,8 +41,8 @@ def wp_plugin(url,headers,grabinfo):
     ep = url
     getplugin = requests.get(ep,headers).text
     matches = re.findall(re.compile(r'wp-content/plugins/(\w+)?/'),getplugin)
-    for plug in matches:
-        if plug not in plugins_array:
-            plugins_array.append(plug)
-    print ('%s [+] Plugins : %s %s' %(G," \n [+] Plugins : ".join(plugins_array),W))
-    grabinfo.add('plugins - '+ plugins_array)
+    if len(matches) > 0:
+        for plugs in matches:
+            if plugs not in plugins_array:
+                plugins_array.append(plugs)
+        print (' %s Plugins : %s ' %(good," \n                  ".join(plugins_array)))
