@@ -8,7 +8,7 @@
 
 <h4 align="center">VulnX 🕷️ CMS-Detector and Vulnerability Scanner & exec automatic exploit process.</h4>
 
-![demo](https://i.ibb.co/yQP80Ss/New-Project-2.jpg)
+![demo](https://i.ibb.co/wrZgjWn/New-Project-2.jpg)
 
 <p align="center">
   <a href="#">VulnX Wiki</a> •
