@@ -13,13 +13,12 @@ import common
 import warnings
 import signal
 
-from common.colors import red, green, bg, B, R, W, Y, G
+from common.colors import red, green, bg, G, R, W, Y, G
 from common.banner import banner
 from common.uri_converter import convert_uri as hostd
 from common.vxrequest import random_UserAgent
 from common.vxrequest import getrequest as vxget
 from common.grabwp import (wp_version,wp_plugin,wp_themes,wp_user)
-from common.vx_dorks import (searchengine,getdorksbyname,wp_contentdorks)
 from common.wp_exploits import(   wp_wysija,
                                   wp_blaze,
                                   wp_catpro,
@@ -40,7 +39,6 @@ from common.wp_exploits import(   wp_wysija,
                                 )
 from common.joomla_exploits import(joomla_comjce)
 #cleaning screen
-
 def parser_error(errmsg):
     banner()
     print("Usage: python " + sys.argv[0] + " [Options] use -h for help")
@@ -72,6 +70,8 @@ def parse_args():
     dest='hostinfo', action='store_true')
     parser.add_argument('-d','--domain-info', help='searching domain info',
     dest='domaininfo', action='store_true')
+    parser.add_argument('-l','--dork-list', help='listing names of exploits',
+    dest='dorkslist', action='store_true')
     return parser.parse_args()
 #adding exploits arg start & dorks in main part
 #args declaration
@@ -93,7 +93,7 @@ hostinfo = args.hostinfo
 domaininfo = args.domaininfo
 # dorks search.
 dorks = args.dorks
-
+dorkslist = args.dorkslist
 # Disable SSL related warnings
 warnings.filterwarnings('ignore')
 
@@ -175,7 +175,7 @@ def drupal_version():
     matches = regex.findall(response)
     if len(matches) > 0 and matches[0] != None and matches[0] != "":
         version = matches[0]
-        print ('%s [*] Drupal Version : %s %s' %(B,version,W))
+        print ('%s [+] Drupal Version : %s %s' %(G,version,W))
 
 # Prestashop Version
 def prestashop_version():
@@ -185,7 +185,7 @@ def prestashop_version():
     matches = regex.findall(response.text)
     if len(matches) > 0 and matches[0] != None and matches[0] != "":
         version = matches[0]
-        return print ('%s [*] Prestashop Version : %s %s' %(B,version,W))
+        return print ('%s [+] Prestashop Version : %s %s' %(G,version,W))
 
 # scan domain info
 def domain_info():
@@ -199,10 +199,10 @@ def domain_info():
     for domain in matches_domain:
         if domain not in domains:
             domains.append(domain)
-    print ('%s [*] SubDomains : %s %s' %(B," \n [*] SubDomains : ".join(domains),W))
+    print ('%s [+] SubDomains : %s %s' %(G," \n [+] SubDomains : ".join(domains),W))
     if match_ip and len(match_ip) > 0 and match_ip[0] != None and match_ip[0] != "":
         IP = match_ip[0]
-        print ('%s [*] IP : %s %s' %(B,IP,W))
+        print ('%s [+] IP : %s %s' %(G,IP,W))
 
 # Web Hosting Information
 def webhosting_info():
@@ -213,25 +213,22 @@ def webhosting_info():
     regex_date = re.compile(regex_date)
     matches = re.search(regex_date,getinfo)
     if matches:
-        print ( '%s [*] Domain Created on : %s' % (B,matches.group(1)))
+        print ( '%s [+] Domain Created on : %s' % (G,matches.group(1)))
     ip = socket.gethostbyname(hostd(url))
-    print ( '%s [*] CloudFlare IP : %s' % (B,ip))
+    print ( '%s [+] CloudFlare IP : %s' % (G,ip))
     ipinfo = "http://ipinfo.io/" + ip + "/json"
     getipinfo = vxget(ipinfo,headers,3)
     country = re.search(re.compile(r'country\": \"(.+?)\"'),getipinfo)
     region = re.search(re.compile(r'region\": \"(.+?)\"'),getipinfo)
     if country:
-        print('%s [*] Country : %s' % (B,country.group(1)))
+        print('%s [+] Country : %s' % (G,country.group(1)))
     if region:
-        print('%s [*] Region : %s' % (B,region.group(1)))
+        print('%s [+] Region : %s' % (G,region.group(1)))
 #clean
 def signal_handler(signal,frame):
     print("%s(ID: {}) Cleaning up...\n Exiting...".format(signal)%(W))
     exit(0)
 signal.signal(signal.SIGINT, signal_handler)
-
-#dorks table viewing
-
 
 #main
 if __name__ == "__main__":
@@ -247,4 +244,8 @@ if __name__ == "__main__":
         }
         detect_cms()
     if dorks:
+        from common.vx_dorks import (searchengine,getdorksbyname,wp_contentdorks)
         searchengine(dorks)
+    if dorkslist:
+        from common.dorks_list import dorkslist as lsdorks
+        lsdorks()
