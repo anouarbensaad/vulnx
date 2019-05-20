@@ -102,19 +102,19 @@ def detect_cms():
     try:
         content=vxget(url,headers)
         #joomla searching content to detect.
-        if  re.search(re.compile(r'com_content | Joomla!'), content):
+        if  re.search(re.compile(r'<script type=\"text/javascript\" src=\"/media/system/js/mootools.js\"></script>|/media/system/js/|com_content|Joomla!'), content):
             print ('%s[%i] Target -> %s %s CMS : Joomla \n\n%s' % (W,id,url,G,W))
             print ('%s [~] Check Vulnerability %s' %(Y,W))
             #joomla_exploits imported from folder[./common/joomla_exploits.py]
             joomla_comjce(url,headers)
         #prestashop searching content to detect.
-        elif re.search(re.compile(r'prestashop'), content):
+        elif re.search(re.compile(r'Prestashop|prestashop'), content):
             print ('%s[%i] %s %s CMS : Prestashop \n\n%s' % (W,id,url,G,W))
             prestashop_version()
             domain_info()
             print ('%s [~] Check Vulnerability %s' %(Y,W))
         #wordpress searching content to detect.
-        elif re.search(re.compile(r'xmlrpc.php|wp-content|wordpress'), content):
+        elif re.search(re.compile(r'wp-content|wordpress|xmlrpc.php'), content):
             print ('%s Target[%i] -> %s%s \n\n '% (W,id,url,W))
             print ('%s [+] CMS : Wordpress%s' % (G,W))
             if hostinfo:
