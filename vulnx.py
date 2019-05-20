@@ -19,6 +19,7 @@ from common.uri_converter import convert_uri as hostd
 from common.vxrequest import random_UserAgent
 from common.vxrequest import getrequest as vxget
 from common.grabwp import (wp_version,wp_plugin,wp_themes,wp_user)
+from common.output_wr import writelogs as outlogs
 from common.wp_exploits import(   wp_wysija,
                                   wp_blaze,
                                   wp_catpro,
@@ -29,7 +30,6 @@ from common.wp_exploits import(   wp_wysija,
                                   wp_showbiz,
                                   wp_synoptic,
                                   wp_shop,
-                                  wp_injection,
                                   wp_powerzoomer,
                                   wp_revslider,
                                   wp_adsmanager,
@@ -54,11 +54,11 @@ def parse_args():
     parser.add_argument('-D', '--dorks', help='searching dorks', dest='dorks' , type=str)
     parser.add_argument('-i', '--insert', help='Insert your file to scanning for',required=False)
     parser.add_argument('-o', '--output', help='output directory',required=False)
-
+    parser.add_argument('-t', '--timeout', help='http request timeout', dest='timeout',type=float)
     #Switches
     parser.add_argument('-e','--exploit', help='searching vulnerability & run exploits',
     dest='exploit', action='store_true')
-    parser.add_argument('-t','--themes', help='searching themes of target',
+    parser.add_argument('-T','--themes', help='searching themes of target',
     dest='themes', action='store_true')
     parser.add_argument('--user', help='searching user of target',
     dest='user', action='store_true')
@@ -73,7 +73,11 @@ def parse_args():
     parser.add_argument('-l','--dork-list', help='listing names of exploits',
     dest='dorkslist', action='store_true')
     return parser.parse_args()
-#adding exploits arg start & dorks in main part
+
+vulnresults = set()  # results of vulnerability exploits. [success or failed]
+grabinfo = set()  # return cms_detected the version , themes , plugins , user .. 
+subdomains = set() # return subdomains & ip.
+
 #args declaration
 args = parse_args()
 #url arg
@@ -94,6 +98,8 @@ domaininfo = args.domaininfo
 # dorks search.
 dorks = args.dorks
 dorkslist = args.dorkslist
+# timeout
+timeout = args.timeout or 3
 # Disable SSL related warnings
 warnings.filterwarnings('ignore')
 
@@ -106,7 +112,8 @@ def detect_cms():
             print ('%s[%i] Target -> %s %s CMS : Joomla \n\n%s' % (W,id,url,G,W))
             print ('%s [~] Check Vulnerability %s' %(Y,W))
             #joomla_exploits imported from folder[./common/joomla_exploits.py]
-            joomla_comjce(url,headers)
+            if exploit:
+                joomla_comjce(url,headers)
         #prestashop searching content to detect.
         elif re.search(re.compile(r'Prestashop|prestashop'), content):
             print ('%s[%i] %s %s CMS : Prestashop \n\n%s' % (W,id,url,G,W))
@@ -123,35 +130,34 @@ def detect_cms():
                 domain_info()
             #wp_grab methods info from (folder)[./common/grapwp.py]
             if version:
-                    wp_version(url,headers)
+                    wp_version(url,headers,grabinfo)
             if themes:
-                wp_themes(url,headers)
+                wp_themes(url,headers,grabinfo)
             if user:
-                wp_user(url,headers)
+                wp_user(url,headers,grabinfo)
             if plugins:
-                wp_plugin(url,headers)
+                wp_plugin(url,headers,grabinfo)
 
             # vulnx -u http://example.com -e | vulnx -u http://example --exploit
             if exploit:
                 print ('%s [~] Check Vulnerability %s' %(Y,W))
                 #wp_exploit methods from (dolder)[./common/wp_exploits.py]
-                wp_wysija(url,headers)
-                wp_blaze(url,headers)
-                wp_catpro(url,headers)
-                wp_cherry(url,headers)
-                wp_dm(url,headers)
-                wp_fromcraft(url,headers)
-                wp_jobmanager(url,headers)
-                wp_showbiz(url,headers)
-                wp_synoptic(url,headers)
-                wp_shop(url,headers)
-                wp_injection(url,headers)
-                wp_powerzoomer(url,headers)
-                wp_revslider(url,headers)
-                wp_adsmanager(url,headers)
-                wp_inboundiomarketing(url,headers)
-                wp_adblockblocker(url,headers)
-                wp_levoslideshow(url,headers)
+                wp_wysija(url,headers,timeout,vulnresults)
+                wp_blaze(url,headers,timeout,vulnresults)
+                wp_catpro(url,headers,timeout,vulnresults)
+                wp_cherry(url,headers,timeout,vulnresults)
+                wp_dm(url,headers,timeout,vulnresults)
+                wp_fromcraft(url,headers,timeout,vulnresults)
+                wp_jobmanager(url,headers,timeout,vulnresults)
+                wp_showbiz(url,headers,timeout,vulnresults)
+                wp_synoptic(url,headers,timeout,vulnresults)
+                wp_shop(url,headers,timeout,vulnresults)
+                wp_powerzoomer(url,headers,timeout,vulnresults)
+                wp_revslider(url,headers,timeout,vulnresults)
+                wp_adsmanager(url,headers,timeout,vulnresults)
+                wp_inboundiomarketing(url,headers,timeout,vulnresults)
+                wp_adblockblocker(url,headers,timeout,vulnresults)
+                wp_levoslideshow(url,headers,timeout,vulnresults)
 
         #Drupal searching content to detect.
         elif re.search(re.compile(r'Drupal|drupal|sites/all|drupal.org'), content):
@@ -169,7 +175,7 @@ def detect_cms():
 
 # drupal Version
 def drupal_version():
-    response = vxget(url,headers,3)
+    response = vxget(url,headers,timeout)
     regex = 'Drupal \d{0,10}'
     regex = re.compile(regex)
     matches = regex.findall(response)
@@ -179,7 +185,7 @@ def drupal_version():
 
 # Prestashop Version
 def prestashop_version():
-    response = vxget(url,headers,3)
+    response = vxget(url,headers,timeout)
     regex = 'Prestashop \d{0,9}'
     regex = re.compile(regex)
     matches = regex.findall(response.text)
@@ -191,7 +197,7 @@ def prestashop_version():
 def domain_info():
     print ('%s [~] Search for SubDomains %s' %(Y,W))
     searchurl = "https://www.pagesinventory.com/search/?s=" + url
-    getinfo = vxget(searchurl,headers,3)
+    getinfo = vxget(searchurl,headers,timeout)
     domains = []
     #searching domain from pages inventory
     matches_domain = re.findall(re.compile(r'<td><a href=\"\/domain\/(.*?).html\">'),getinfo)
@@ -208,7 +214,7 @@ def domain_info():
 def webhosting_info():
     print ('%s [~] Web Hosting Information %s' %(Y,W))
     urldate = "https://input.payapi.io/v1/api/fraud/domain/age/" + hostd(url)
-    getinfo = vxget(urldate,headers,3)
+    getinfo = vxget(urldate,headers,timeout)
     regex_date = r'Date: (.+?)-(.+?)'
     regex_date = re.compile(regex_date)
     matches = re.search(regex_date,getinfo)
@@ -217,13 +223,31 @@ def webhosting_info():
     ip = socket.gethostbyname(hostd(url))
     print ( '%s [+] CloudFlare IP : %s' % (G,ip))
     ipinfo = "http://ipinfo.io/" + ip + "/json"
-    getipinfo = vxget(ipinfo,headers,3)
+    getipinfo = vxget(ipinfo,headers,timeout)
     country = re.search(re.compile(r'country\": \"(.+?)\"'),getipinfo)
     region = re.search(re.compile(r'region\": \"(.+?)\"'),getipinfo)
     if country:
         print('%s [+] Country : %s' % (G,country.group(1)))
     if region:
         print('%s [+] Region : %s' % (G,region.group(1)))
+
+# output
+output_dir = args.output or 'logs'
+
+if not os.path.exists(output_dir): # if the directory doesn't exist
+    os.mkdir(output_dir) # create a new directory
+
+data = [ vulnresults, grabinfo, subdomains ]
+
+data_names = ['vulnresults', 'grabinfo', 'subdomains']
+outlogs(data,data_names,output_dir)
+data = {
+    'vulnresults':list(vulnresults),
+    'grabinfo':list(grabinfo),
+    'subdomains':list(subdomains),
+}
+
+
 #clean
 def signal_handler(signal,frame):
     print("%s(ID: {}) Cleaning up...\n Exiting...".format(signal)%(W))
