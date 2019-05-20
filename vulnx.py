@@ -12,7 +12,7 @@ import socket
 import common
 import warnings
 import signal
-
+from common.threading import threads
 from common.colors import red, green, bg, G, R, W, Y, G , good , bad , run , info , end
 from common.banner import banner
 from common.uri_converter import convert_uri as hostd
@@ -55,6 +55,7 @@ def parse_args():
     parser.add_argument('-o', '--output', help='output directory',required=False)
     parser.add_argument('-t', '--timeout', help='http request timeout', dest='timeout',type=float)
     parser.add_argument('-c', '--cms-info', help='http request timeout', dest='cms', choices=['user', 'themes','version','plugins','all'])
+    parser.add_argument('--threads', help="num threads working", dest='numthread', type=float)
     #Switches
     parser.add_argument('-e','--exploit', help='searching vulnerability & run exploits',
     dest='exploit', action='store_true')
@@ -89,6 +90,11 @@ dorks = args.dorks
 dorkslist = args.dorkslist
 # timeout
 timeout = args.timeout or 3
+#thread
+numthread = args.numthread or 1
+
+
+
 # Disable SSL related warnings
 warnings.filterwarnings('ignore')
 
@@ -317,7 +323,6 @@ data = {
     'subdomains':list(subdomains),
 }
 
-
 #clean  
 def signal_handler(signal,frame):
     print("%s(ID: {}) Cleaning up...\n Exiting...".format(signal)%(W))
@@ -336,7 +341,7 @@ if __name__ == "__main__":
         'Accept-Language': 'en-US,en;q=0.5',
         'Connection': 'keep-alive',
         }
-        detect_cms()
+        threads(detect_cms,numthread)
     if dorks:
         from common.vx_dorks import (searchengine,getdorksbyname,wp_contentdorks)
         searchengine(dorks)
