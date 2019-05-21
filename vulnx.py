@@ -37,7 +37,14 @@ from common.wp_exploits import(   wp_wysija,
                                   wp_levoslideshow,
                                   wp_adblockblocker,
                                 )
-from common.joomla_exploits import(joomla_comjce)
+from common.joomla_exploits import(joomla_comjce,
+                                  joomla_comedia,
+                                  joomla_comjdownloads,
+                                  joomla_comjdownloads2,
+                                  joomla_fabrik2,
+                                  joomla_fabrik2_d,
+                                  joomla_foxcontact,
+                                )
 #cleaning screen
 def parser_error(errmsg):
     print("Usage: python " + sys.argv[0] + " [Options] use -h for help")
@@ -49,7 +56,7 @@ def parse_args():
     banner()
     parser = argparse.ArgumentParser(epilog='\tExample: \r\npython ' + sys.argv[0] + " -u google.com")
     parser.error = parser_error
-    parser._optionals.title = "OPTIONS"
+    parser._optionals.title = "\nOPTIONS"
     parser.add_argument('-u', '--url', help="url target to scan")
     parser.add_argument('-D', '--dorks', help='search webs with dorks', dest='dorks' , type=str)
     parser.add_argument('-o', '--output', help='specify output directory',required=False)
@@ -112,7 +119,14 @@ def detect_cms():
             print (' %s Check Vulnerability' %(run))
             #joomla_exploits imported from folder[./common/joomla_exploits.py]
             if exploit:
-                joomla_comjce(url,headers)
+                joomla_comjce(url,headers,timeout)
+                joomla_comedia(url,headers,timeout)
+                joomla_comjdownloads(url,headers,timeout)
+                joomla_comjdownloads2(url,headers,timeout)
+                joomla_fabrik2(url,headers,timeout)
+                joomla_fabrik2_d(url,headers,timeout)
+                joomla_foxcontact(url,headers,timeout)
+                
         #prestashop searching content to detect.
         elif re.search(re.compile(r'Prestashop|prestashop'), content):
             print ('%s Target[%i] -> %s%s \n\n '% (W,id,url,end))
@@ -156,8 +170,6 @@ def detect_cms():
                 wp_user(url,headers,grabinfo)
                 wp_plugin(url,headers,grabinfo)
                 print ("-----------------------------------------------")
-
-
             # vulnx -u http://example.com -e | vulnx -u http://example --exploit
             if exploit:
                 print (' %s Check Vulnerability\n' %(run))
