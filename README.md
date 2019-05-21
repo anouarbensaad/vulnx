@@ -48,22 +48,70 @@ Instead of injecting shell and checking it works like all the other tools do, vu
 </h1>
 
 #### Joomla
-- [ ] [ComJCE](#) `2018`
+- [x] [Com Jce            ]('#')
+- [ ] [Com Jwallpapers    ]('#')
+- [ ] [Com Jdownloads     ]('#')
+- [ ] [Com Weblinks       ]('#')
+- [ ] [Com Fabrik         ]('#')
+- [ ] [Com Jdownloads Index]('#')
+- [ ] [Com Foxcontact     ]('#')
+- [ ] [Com Blog           ]('#')
+- [ ] [Com Users          ]('#')
+- [ ] [Com Ads Manager    ]('#')
+- [ ] [Com Sexycontactform]('#')
+- [ ] [Com Media          ]('#')
+- [ ] [Mod_simplefileupload]('#')
+- [ ] [Com Facileforms    ]('#')
 
 #### Wordpress
-- [x] [Simple Ads Manager](https://www.exploit-db.com/exploits/36614)
-- [x] [InBoundio Marketing](https://www.rapid7.com/db/modules/exploit/unix/webapp/wp_inboundio_marketing_file_upload) 
-- [x] [WPshop eCommerce](https://www.rapid7.com/db/modules/exploit/unix/webapp/wp_wpshop_ecommerce_file_upload)
-- [x] [Synoptic](https://cxsecurity.com/issue/WLB-2017030099) 
-- [x] [Showbiz Pro](https://www.exploit-db.com/exploits/35385) 
-- [x] [Job Manager](https://www.exploit-db.com/exploits/45031) 
-- [x] [Formcraft](https://www.exploit-db.com/exploits/30002)
-- [x] [PowerZoom](http://www.exploit4arab.org/exploits/399)
-- [x] [Download Manager](https://www.exploit-db.com/exploits/35533)
-- [x] [CherryFramework](https://www.exploit-db.com/exploits/45896)
-- [x] [Catpro](https://vulners.com/zdt/1337DAY-ID-20256)
-- [x] [Blaze SlideShow](https://0day.today/exploits/18500)
-- [x] [Wysija-Newsletters](https://www.exploit-db.com/exploits/33991)
+- [x] [Simple Ads Manager   ](https://www.exploit-db.com/exploits/36614)
+- [x] [InBoundio Marketing  ](https://www.rapid7.com/db/modules/exploit/unix/webapp/wp_inboundio_marketing_file_upload) 
+- [x] [WPshop eCommerce     ](https://www.rapid7.com/db/modules/exploit/unix/webapp/wp_wpshop_ecommerce_file_upload)
+- [x] [Synoptic             ](https://cxsecurity.com/issue/WLB-2017030099) 
+- [x] [Showbiz Pro          ](https://www.exploit-db.com/exploits/35385) 
+- [x] [Job Manager          ](https://www.exploit-db.com/exploits/45031) 
+- [x] [Formcraft            ](https://www.exploit-db.com/exploits/30002)
+- [x] [PowerZoom            ](http://www.exploit4arab.org/exploits/399)
+- [x] [Download Manager     ](https://www.exploit-db.com/exploits/35533)
+- [x] [CherryFramework      ](https://www.exploit-db.com/exploits/45896)
+- [x] [Catpro               ](https://vulners.com/zdt/1337DAY-ID-20256)
+- [x] [Blaze SlideShow      ](https://0day.today/exploits/18500)
+- [x] [Wysija-Newsletters   ](https://www.exploit-db.com/exploits/33991)
+
+#### Drupal
+- [ ] [Add Admin            ]('#')
+- [ ] [Drupal BruteForcer   ]('#')
+- [ ] [Drupal Geddon2       ]('#')
+
+#### PrestaShop
+- [ ] [attributewizardpro   ]('#')
+- [ ] [columnadverts        ]('#')
+- [ ] [soopamobile          ]('#')
+- [ ] [pk_flexmenu          ]('#')
+- [ ] [pk_vertflexmenu      ]('#')
+- [ ] [nvn_export_orders    ]('#')
+- [ ] [megamenu             ]('#')
+- [ ] [tdpsthemeoptionpanel ]('#')
+- [ ] [psmodthemeoptionpanel]('#')
+- [ ] [masseditproduct      ]('#')
+- [ ] [blocktestimonial     ]('#')
+- [ ] [soopabanners         ]('#')
+- [ ] [Vtermslideshow       ]('#')
+- [ ] [simpleslideshow      ]('#')
+- [ ] [productpageadverts   ]('#')
+- [ ] [homepageadvertise    ]('#')
+- [ ] [homepageadvertise2   ]('#')
+- [ ] [jro_homepageadvertise]('#')
+- [ ] [advancedslider       ]('#')
+- [ ] [cartabandonmentpro   ]('#')
+- [ ] [cartabandonmentproOld]('#')
+- [ ] [videostab            ]('#')
+- [ ] [wg24themeadministration]('#')
+- [ ] [fieldvmegamenu       ]('#')
+- [ ] [wdoptionpanel        ]('#')
+
+#### Opencart
+- [ ] [Opencart BruteForce]('#')
 
 ### Available command line options
 [`READ VULNX WIKI`](https://github.com/anouarbensaad/vulnx/wiki/Usage)
@@ -128,5 +176,8 @@ You can contribute in following ways:
 
 Do you want to have a conversation in private? email me : Bensaad.tig@gmail.com
 
-
 ***VulnX*** is licensed under [MIT License](https://github.com/anouarbensaad/VulnX/blob/master/LICENSE) **
+
+### :warning: Warning !!
+
+***I don't Accept any responsibility for any illegal usage.***
