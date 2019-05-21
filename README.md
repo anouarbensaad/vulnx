@@ -11,10 +11,9 @@
 ![demo](https://i.ibb.co/wrZgjWn/New-Project-2.jpg)
 
 <p align="center">
-  <a href="#">VulnX Wiki</a> •
-  <a href="#">How To Use</a> •
-  <a href="#">Compatibility</a> •
-  <a href="#">VulnX Library</a> •
+  <a href="https://github.com/anouarbensaad/vulnx/wiki">VulnX Wiki</a> •
+  <a href="https://github.com/anouarbensaad/vulnx/wiki/Usage">How To Use</a> •
+  <a href="https://github.com/anouarbensaad/vulnx/wiki/Compatibility-&-Dependencies">Compatibility</a> •
 </p>
 
 ### Exploits
