@@ -6,7 +6,7 @@
   <br>
 </h1>
 
-<h4 align="center">Vulnx 🕷️ Cms And Vulnerabilites Detector And An Intelligent Exploits Injector</h4>
+<h4 align="center">Vulnx 🕷️ Cms And Vulnerabilites Detector And An Intelligent Auto Shell Injector</h4>
 
 <p align="center">
   <a href="https://github.com/anouarbensaad/vulnx/releases">
