@@ -7,4 +7,3 @@ install:
   - pip install -r ./pip/requirements.txt
 script:
   - python vulnx.py -l
-  - python vulnx.py -u "http://www.google.com" -d
