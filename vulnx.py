@@ -40,13 +40,13 @@ from common.wp_exploits import(   wp_wysija,
 from common.joomla_exploits import(joomla_comjce)
 #cleaning screen
 def parser_error(errmsg):
-    banner()
     print("Usage: python " + sys.argv[0] + " [Options] use -h for help")
     print(R + "Error: " + errmsg + W)
     sys.exit()
 
 def parse_args():
     # parse the arguments
+    banner()
     parser = argparse.ArgumentParser(epilog='\tExample: \r\npython ' + sys.argv[0] + " -u google.com")
     parser.error = parser_error
     parser._optionals.title = "OPTIONS"

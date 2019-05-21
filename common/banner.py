@@ -1,5 +1,5 @@
 import sys
-from common.colors import bannerblue ,bannerblue2 ,W ,Y ,R
+from common.colors import bannerblue ,bannerblue2 ,W ,Y ,R,end
 
 def banner():
     print("""%s
@@ -31,7 +31,7 @@ def banner():
                ;.                     :.   
 
     %s# Coded By Anouar Ben Saad -%s @anouarbensaad      
-                                           """ 
+                                           %s""" 
 % 
 (bannerblue,bannerblue2,
 W,bannerblue2,W,bannerblue2,W,bannerblue2,
@@ -44,5 +44,5 @@ W,bannerblue2,
 W,bannerblue2,W,bannerblue2,
 W,bannerblue2,
 W,bannerblue2,
-W,Y,
+W,Y,end
 ))
