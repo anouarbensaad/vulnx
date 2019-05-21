@@ -28,7 +28,7 @@
   <a href="https://github.com/anouarbensaad/vulnx/wiki/Compatibility-&-Dependencies">Compatibility</a> •
 </p>
 
-**Vulnx** is a cms and vulnerabilites detection, an intelligent [exploits injection](https://github.com/anouarbensaad/vulnx/wiki/Usage#run-exploits), fast cms detection of target and fast scanner and informations gathering like subdomains, ipaddresses, country, org, timezone, region, ans and more ...
+**Vulnx** is a cms and vulnerabilites detection, an intelligent auto [shell injector](https://github.com/anouarbensaad/vulnx/wiki/Usage#run-exploits), fast cms detection of target and fast scanner and informations gathering like subdomains, ipaddresses, country, org, timezone, region, ans and more ...
 
 Instead of injecting shell and checking it works like all the other tools do, vulnx analyses the response with and recieve if shell success uploaded or no. vulnx is searching for urls with [dorks](https://github.com/anouarbensaad/vulnx/wiki/Usage#searching-dorks). 
 
