@@ -6,7 +6,7 @@
   <br>
 </h1>
 
-<h4 align="center">VulnX 🕷️ CMS-Detector and Vulnerability Scanner & exec automatic exploit process.</h4>
+<h4 align="center">Vulnx 🕷️ Cms And Vulnerabilites Detector And An Intelligent Exploits Injector</h4>
 
 <p align="center">
   <a href="https://github.com/anouarbensaad/vulnx/releases">
@@ -28,36 +28,58 @@
   <a href="https://github.com/anouarbensaad/vulnx/wiki/Compatibility-&-Dependencies">Compatibility</a> •
 </p>
 
+**Vulnx** is a cms and vulnerabilites detection, an intelligent [exploits injection](https://github.com/anouarbensaad/vulnx/wiki/Usage#run-exploits), fast cms detection of target and fast scanner and informations gathering like subdomains, ipaddresses, country, org, timezone, region, ans and more ...
+
+Instead of injecting shell and checking it works like all the other tools do, vulnx analyses the response with and recieve if shell success uploaded or no. vulnx is searching for urls with [dorks](https://github.com/anouarbensaad/vulnx/wiki/Usage#searching-dorks). 
+
+### Features
+
+- Detect cms (wordpress, joomla, prestashop, drupal, opencart, magento, lokomedia)
+- Target informations gatherings
+- Target Subdomains gathering
+- Multi-threading on demand
+- Checks for vulnerabilites
+- Auto shell injector
+- Exploit dork searcher
+
 ### Exploits
 <h1 align="center">
 <a href="https://github.com/anouarbensaad/VulnX"><img src="https://user-images.githubusercontent.com/23563528/58003677-2e03be80-7ad9-11e9-9774-c69a38248c64.gif" alt="Exploits Running"></a>
 </h1>
 
 #### Joomla
-- [ComJCE](#) `2018`
+- [ ] [ComJCE](#) `2018`
 
 #### Wordpress
-###### Plugins 
-- [Simple Ads Manager](https://www.exploit-db.com/exploits/36614)
-- [InBoundio Marketing](https://www.rapid7.com/db/modules/exploit/unix/webapp/wp_inboundio_marketing_file_upload) 
-- [WPshop eCommerce](https://www.rapid7.com/db/modules/exploit/unix/webapp/wp_wpshop_ecommerce_file_upload)
-- [Synoptic](https://cxsecurity.com/issue/WLB-2017030099) 
-- [Showbiz Pro](https://www.exploit-db.com/exploits/35385) 
-- [Job Manager](https://www.exploit-db.com/exploits/45031) 
-- [Formcraft](https://www.exploit-db.com/exploits/30002)
-- [PowerZoom](http://www.exploit4arab.org/exploits/399)
-- [Download Manager](https://www.exploit-db.com/exploits/35533)
-- [CherryFramework](https://www.exploit-db.com/exploits/45896)
-- [Catpro](https://vulners.com/zdt/1337DAY-ID-20256)
-- [Blaze SlideShow](https://0day.today/exploits/18500)
- ###### Themes
-- [Wysija-Newsletters](https://www.exploit-db.com/exploits/33991)
+- [x] [Simple Ads Manager](https://www.exploit-db.com/exploits/36614)
+- [x] [InBoundio Marketing](https://www.rapid7.com/db/modules/exploit/unix/webapp/wp_inboundio_marketing_file_upload) 
+- [x] [WPshop eCommerce](https://www.rapid7.com/db/modules/exploit/unix/webapp/wp_wpshop_ecommerce_file_upload)
+- [x] [Synoptic](https://cxsecurity.com/issue/WLB-2017030099) 
+- [x] [Showbiz Pro](https://www.exploit-db.com/exploits/35385) 
+- [x] [Job Manager](https://www.exploit-db.com/exploits/45031) 
+- [x] [Formcraft](https://www.exploit-db.com/exploits/30002)
+- [x] [PowerZoom](http://www.exploit4arab.org/exploits/399)
+- [x] [Download Manager](https://www.exploit-db.com/exploits/35533)
+- [x] [CherryFramework](https://www.exploit-db.com/exploits/45896)
+- [x] [Catpro](https://vulners.com/zdt/1337DAY-ID-20256)
+- [x] [Blaze SlideShow](https://0day.today/exploits/18500)
+- [x] [Wysija-Newsletters](https://www.exploit-db.com/exploits/33991)
 
-#### Prestashop
+### Available command line options
+[`READ VULNX WIKI`](https://github.com/anouarbensaad/vulnx/wiki/Usage)
 
-
-#### Drupal 
-
+    usage: vulnx [options]
+    
+      -u --url              url target to scan
+      -D --dorks            search webs with dorks
+      -o --output           specify output directory
+      -t --timeout          http requests timeout
+      -c --cms-info         search cms info[themes,plugins,user,version..]
+      -e --exploit          searching vulnerability & run exploits
+      -w --web-info         web informations gathering
+      -d --domain-info      subdomains informations gathering
+      -l, --dork-list       list names of dorks exploits
+      --threads             number of threads
 
 ### Docker
 
@@ -85,6 +107,17 @@ $ cd VulnX
 $ chmod + x install.sh
 $ ./install.sh
 ```
+
+Now run `vulnx`
+
+##### example command with options : settimeout=3 , cms-gathering = all , -d subdomains-gathering , run --exploits
+`vulnx -u http://example.com --timeout 3 -c all -d -w --exploit` 
+
+##### example command for searching dorks : -D or --dorks , -l --list-dorks 
+`vulnx --list-dorks`
+return table of exploits name.
+`vulnx -D blaze`
+return urls found with blaze dork
 
 ### Contribution & License
 
