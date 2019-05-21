@@ -50,20 +50,20 @@ def parse_args():
     parser = argparse.ArgumentParser(epilog='\tExample: \r\npython ' + sys.argv[0] + " -u google.com")
     parser.error = parser_error
     parser._optionals.title = "OPTIONS"
-    parser.add_argument('-u', '--url', help="Url scanned for")
-    parser.add_argument('-D', '--dorks', help='searching dorks', dest='dorks' , type=str)
-    parser.add_argument('-o', '--output', help='output directory',required=False)
-    parser.add_argument('-t', '--timeout', help='http request timeout', dest='timeout',type=float)
-    parser.add_argument('-c', '--cms-info', help='http request timeout', dest='cms', choices=['user', 'themes','version','plugins','all'])
-    parser.add_argument('--threads', help="num threads working", dest='numthread', type=float)
+    parser.add_argument('-u', '--url', help="url target to scan")
+    parser.add_argument('-D', '--dorks', help='search webs with dorks', dest='dorks' , type=str)
+    parser.add_argument('-o', '--output', help='specify output directory',required=False)
+    parser.add_argument('-t', '--timeout', help='http requests timeout', dest='timeout',type=float)
+    parser.add_argument('-c', '--cms-info', help='search cms info[themes,plugins,user,version..]', dest='cms', choices=['user', 'themes','version','plugins','all'])
+    parser.add_argument('--threads', help="number of threads", dest='numthread', type=float)
     #Switches
     parser.add_argument('-e','--exploit', help='searching vulnerability & run exploits',
     dest='exploit', action='store_true')
-    parser.add_argument('-w','--web-info', help='searching web info',
+    parser.add_argument('-w','--web-info', help='web informations gathering',
     dest='webinfo', action='store_true')
-    parser.add_argument('-d','--domain-info', help='searching domain info',
+    parser.add_argument('-d','--domain-info', help='subdomains informations gathering',
     dest='domaininfo', action='store_true')
-    parser.add_argument('-l','--dork-list', help='listing names of exploits',
+    parser.add_argument('-l','--dork-list', help='list names of dorks exploits',
     dest='dorkslist', action='store_true')
     return parser.parse_args()
 
