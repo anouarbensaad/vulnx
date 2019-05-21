@@ -8,6 +8,18 @@
 
 <h4 align="center">VulnX 🕷️ CMS-Detector and Vulnerability Scanner & exec automatic exploit process.</h4>
 
+<p align="center">
+  <a href="https://github.com/anouarbensaad/vulnx/releases">
+    <img src="https://img.shields.io/github/release/anouarbensaad/vulnx.svg">
+  </a>
+  <a href="https://github.com/anouarbensaad/vulnx/issues?q=is%3Aissue+is%3Aclosed">
+      <img src="https://img.shields.io/github/issues-closed/anouarbensaad/vulnx.svg">
+  </a>
+  <a href="https://travis-ci.com/anouarbensaad/vulnx">
+    <img src="https://img.shields.io/travis/com/anouarbensaad/vulnx.svg">
+  </a>
+</p>
+
 ![demo](https://i.ibb.co/wrZgjWn/New-Project-2.jpg)
 
 <p align="center">
