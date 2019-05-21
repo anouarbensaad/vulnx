@@ -6,4 +6,5 @@ python:
 install:
   - pip install -r ./pip/requirements.txt
 script:
-  - python3 vulnx.py -u "https://google.com" -d -t3
+  - python vulnx.py -l
+  - python vulnx.py -u "http://www.google.com" -d
