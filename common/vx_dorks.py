@@ -2,8 +2,7 @@ import requests
 import re
 from common.colors import run,W,end,good,bad
 
-headers = {
-        'Host' : 'google.com',
+headers = {'Host' : 'google.com',
         'User-Agent' : 'Mozilla/5.0 (X11; CrOS x86_64 8172.45.0) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/51.0.2704.64 Safari/537.36',
         'Accept': 'text/html,application/html+xml,q=0.9,*/*;q=0.8',
         'Accept-Language': 'en-US,en;q=0.5',
@@ -27,14 +26,22 @@ wp_admindorks = {
         'powerzoomer'       : 'inurl:"/wp-admin/admin.php?page=powerzoomer_manage"',
         'showbiz'           : 'inurl:"/wp-admin/admin-ajax.php"',
 }
+
 wpajx = {
         'jobmanager'        : 'inurl:"/jm-ajax/upload_file/"',
 }
+
+
 wpindex = {
         'injection'         : 'inurl:"/index.php/wp-json/wp/"',
 }
+
+
 joomla = {
-        'comjce'            : 'inurl":index.php?option=com_jce"'
+        'comjce'            : 'inurl":index.php?option=com_jce"',
+        'comfabrik'         : 'inurl":index.php?option=com_fabrik"',
+        'comjdownloads'     : 'inurl":index.php?option=com_fabrik"',
+        'comfoxcontact'     : 'inurl":index.php?option=com_foxcontact"',
 }
 
 def getdorksbyname(exploitname):
@@ -48,41 +55,42 @@ def getdorksbyname(exploitname):
                 return wpindex[exploitname]
         elif exploitname in joomla:
                 return joomla[exploitname]
-def searchengine(exploitname):
+def searchengine(exploitname,num_page):
         print (' %s Searching for %s dork url\n' %(run,exploitname))
         webs = []
-        bingquery = 'https://www.google.com/search?q=' + getdorksbyname(exploitname)
-        res = requests.get(bingquery,headers).text
-        if exploitname in wp_contentdorks:
-                dorks = re.findall(re.compile(r'https?://+?\w+?[a-zA-Z0-9-_.]+?[a-zA-Z0-9-_.]?\w+\.\w+/?/wp-content/plugins/\w+'),res)
-                if len(dorks) > 0:
+        for np in range(num_page):
+                bingquery = 'http://www.bing.com/search?q='+getdorksbyname(exploitname)+"&filt=all&first="+np+"&FORM=PERE"
+                res = requests.get(bingquery,headers).text
+                if exploitname in wp_contentdorks:
+                        dorks = re.findall(re.compile(r'https?://+?\w+?[a-zA-Z0-9-_.]+?[a-zA-Z0-9-_.]?\w+\.\w+/?/wp-content/plugins/\w+'),res)
+                        if len(dorks) > 0:
+                                for web in dorks:
+                                        if web not in webs:
+                                                webs.append(web)
+                                                print (' %s urls found : %s ' %(good," \n                  ".join(webs)))
+                elif exploitname in wp_admindorks:
+                        dorks = re.findall(re.compile(r'https?://+?\w+?[a-zA-Z0-9-_.]+?[a-zA-Z0-9-_.]?\w+\.\w+/?/wp-admin/\w+'),res)
                         for web in dorks:
                                 if web not in webs:
                                         webs.append(web)
                                         print (' %s urls found : %s ' %(good," \n                  ".join(webs)))
-        elif exploitname in wp_admindorks:
-                dorks = re.findall(re.compile(r'https?://+?\w+?[a-zA-Z0-9-_.]+?[a-zA-Z0-9-_.]?\w+\.\w+/?/wp-admin/\w+'),res)
-                for web in dorks:
-                        if web not in webs:
-                                webs.append(web)
-                                print (' %s urls found : %s ' %(good," \n                  ".join(webs)))
-        elif exploitname in wpajx:
-                dorks = re.findall(re.compile(r'https?://+?\w+?[a-zA-Z0-9-_.]+?[a-zA-Z0-9-_.]?\w+\.\w+/?/jm-ajax/upload_file/'),res)
-                for web in dorks:
-                        if web not in webs:
-                                webs.append(web)
-                                print (' %s urls found : %s ' %(good," \n                  ".join(webs)))
-        elif exploitname in wpindex:
-                dorks = re.findall(re.compile(r'https?://+?\w+?[a-zA-Z0-9-_.]+?[a-zA-Z0-9-_.]?\w+\.\w+/index.php/wp-json/wp/'),res)
-                for web in dorks:
-                        if web not in webs:
-                                webs.append(web)
-                                print (' %s urls found : %s ' %(good," \n           ".join(webs)))
-        elif exploitname in joomla:
-                dorks = re.findall(re.compile(r'https?://+?\w+?[a-zA-Z0-9-_.]+?[a-zA-Z0-9-_.]?\w+\.\w+/index.php?option=com_jce'),res)
-                for web in dorks:
-                        if web not in webs:
-                                webs.append(web)
-                                print (' %s urls found : %s ' %(good," \n           ".join(webs)))
-        else:
-                print('%s [-] NO URL FOUND' %(bad))
+                elif exploitname in wpajx:
+                        dorks = re.findall(re.compile(r'https?://+?\w+?[a-zA-Z0-9-_.]+?[a-zA-Z0-9-_.]?\w+\.\w+/?/jm-ajax/upload_file/'),res)
+                        for web in dorks:
+                                if web not in webs:
+                                        webs.append(web)
+                                        print (' %s urls found : %s ' %(good," \n                  ".join(webs)))
+                elif exploitname in wpindex:
+                        dorks = re.findall(re.compile(r'https?://+?\w+?[a-zA-Z0-9-_.]+?[a-zA-Z0-9-_.]?\w+\.\w+/index.php/wp-json/wp/'),res)
+                        for web in dorks:
+                                if web not in webs:
+                                        webs.append(web)
+                                        print (' %s urls found : %s ' %(good," \n           ".join(webs)))
+                elif exploitname in joomla:
+                        dorks = re.findall(re.compile(r'https?://+?\w+?[a-zA-Z0-9-_.]+?[a-zA-Z0-9-_.]?\w+\.\w+/index.php?option=com_jce'),res)
+                        for web in dorks:
+                                if web not in webs:
+                                        webs.append(web)
+                                        print (' %s urls found : %s ' %(good," \n           ".join(webs)))
+                else:
+                        print('%s [-] NO URL FOUND' %(bad))
