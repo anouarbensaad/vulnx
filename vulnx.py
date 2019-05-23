@@ -63,7 +63,7 @@ def parse_args():
     parser.add_argument('-t', '--timeout', help='http requests timeout', dest='timeout',type=float)
     parser.add_argument('-c', '--cms-info', help='search cms info[themes,plugins,user,version..]', dest='cms', choices=['user', 'themes','version','plugins','all'])
     parser.add_argument('--threads', help="number of threads", dest='numthread', type=float)
-    parser.add_argument('-n', '--number-pages', help='search dorks number page limit', dest='numberpage' , type=float)
+    parser.add_argument('-n', '--number-pages', help='search dorks number page limit', dest='numberpage' , type=int)
     #Switches
     parser.add_argument('-e','--exploit', help='searching vulnerability & run exploits',
     dest='exploit', action='store_true')
@@ -101,7 +101,7 @@ timeout = args.timeout or 3
 #thread
 numthread = args.numthread or 1
 #numberpage
-numberpage = args.numberpage or 1
+numberpage = args.numberpage or 1   
 
 # Disable SSL related warnings
 warnings.filterwarnings('ignore')
