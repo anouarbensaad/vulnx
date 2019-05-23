@@ -9,9 +9,14 @@
 <h4 align="center">Vulnx 🕷️ Cms And Vulnerabilites Detector And An Intelligent Auto Shell Injector</h4>
 
 <p align="center">
-  <a href="https://github.com/anouarbensaad/vulnx/releases">
+   <a href="https://github.com/anouarbensaad/vulnx/releases">
     <img src="https://img.shields.io/github/release/anouarbensaad/vulnx.svg">
   </a>
+
+  <a href="https://pypi.org/project/vulnx/">
+    <img src="https://img.shields.io/badge/pypi-vulnx-red.svg">
+  </a>
+
   <a href="https://github.com/anouarbensaad/vulnx/issues?q=is%3Aissue+is%3Aclosed">
       <img src="https://img.shields.io/github/issues-closed/anouarbensaad/vulnx.svg">
   </a>
