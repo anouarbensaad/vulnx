@@ -133,6 +133,7 @@ Instead of injecting shell and checking it works like all the other tools do, vu
       -d --domain-info      subdomains informations gathering
       -l, --dork-list       list names of dorks exploits
       -n, --number-page     number page of search engine(Google)
+      -p, --ports           ports to scan
       --threads             number of threads
 
 ### Docker
