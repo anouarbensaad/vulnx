@@ -18,6 +18,7 @@ from common.banner import banner
 from common.uri_converter import convert_uri as hostd
 from common.vxrequest import random_UserAgent
 from common.vxrequest import getrequest as vxget
+from common.scanningports import portscan
 from common.grabwp import (wp_version,wp_plugin,wp_themes,wp_user)
 from common.output_wr import writelogs as outlogs
 from common.wp_exploits import(   wp_wysija,
@@ -68,6 +69,8 @@ def parse_args():
     #Switches
     parser.add_argument('-e','--exploit', help='searching vulnerability & run exploits',
     dest='exploit', action='store_true')
+    parser.add_argument('-p',  '--ports', help='ports to scan',
+    dest='scanports', action='store_true')
     parser.add_argument('-w','--web-info', help='web informations gathering',
     dest='webinfo', action='store_true')
     parser.add_argument('-d','--domain-info', help='subdomains informations gathering',
@@ -103,6 +106,8 @@ timeout = args.timeout or 3
 numthread = args.numthread or 1
 #numberpage
 numberpage = args.numberpage or 1   
+#portscan
+scanports = args.scanports
 
 # Disable SSL related warnings
 warnings.filterwarnings('ignore')
@@ -138,6 +143,12 @@ def detect_cms():
         if cms == 'version':
             print (' %s Check CMS Info' %(run))
             prestashop_version()
+        #port to scan
+        if scanports:
+            print (' %s Scanning Ports\n' %(run))
+            print (""" %s     PORTS                     %sSTATUS  %sPROTO"""%(W,W,W))
+            portscan(hostd(url))
+            print ("-----------------------------------------------")
         #joomla_exploits imported from folder[./common/joomla_exploits.py]
         if exploit:
             print (' %s Check Vulnerability\n' %(run))
@@ -190,6 +201,12 @@ def detect_cms():
             wp_user(url,headers,grabinfo)
             wp_plugin(url,headers,grabinfo)
             print ("-----------------------------------------------")
+                #port to scan
+        if scanports:
+            print (' %s Scanning Ports\n' %(run))
+            print (""" %sPORTS                     %sSTATUS  %sPROTO"""%(W,W,W))
+            portscan(hostd(url))
+            print ("-----------------------------------------------")
         # vulnx -u http://example.com -e | vulnx -u http://example --exploit
         if exploit:
             print (' %s Check Vulnerability\n' %(run))
@@ -233,6 +250,11 @@ def detect_cms():
         if cms == 'version':
             print (' %s Check CMS Info' %(run))
             drupal_version()
+        if scanports:
+            print (' %s Scanning Ports\n' %(run))
+            print (""" %s     PORTS                     %sSTATUS  %sPROTO"""%(W,W,W))
+            portscan(hostd(url))
+            print ("-----------------------------------------------")
         if exploit:
             print (' %s Check Vulnerability\n' %(run))
             print (""" %sNAME                      %sSTATUS  %sSHELL"""%(W,W,W))
@@ -257,6 +279,11 @@ def detect_cms():
         if cms == 'version':
             print (' %s Check CMS Info' %(run))
             prestashop_version()
+        if scanports:
+            print (' %s Scanning Ports\n' %(run))
+            print (""" %s     PORTS                     %sSTATUS  %sPROTO"""%(W,W,W))
+            portscan(hostd(url))
+            print ("-----------------------------------------------")
         if exploit:
             print (' %s Check Vulnerability\n' %(run))
             print (""" %sNAME                      %sSTATUS  %sSHELL"""%(W,W,W))
@@ -280,7 +307,11 @@ def detect_cms():
             domain_info(subdomains)
         if cms == 'version':
             print (' %s Check CMS Info' %(run))
-
+        if scanports:
+            print (' %s Scanning Ports\n' %(run))
+            print (""" %s     PORTS                     %sSTATUS  %sPROTO"""%(W,W,W))
+            portscan(hostd(url))
+            print ("-----------------------------------------------")
         if exploit:
             print (' %s Check Vulnerability\n' %(run))
             print (""" %sNAME                      %sSTATUS  %sSHELL"""%(W,W,W))
@@ -304,6 +335,11 @@ def detect_cms():
             domain_info(subdomains)
         if cms == 'version':
             print (' %s Check CMS Info' %(run))
+        if scanports:
+            print (' %s Scanning Ports\n' %(run))
+            print (""" %s     PORTS                     %sSTATUS  %sPROTO"""%(W,W,W))
+            portscan(hostd(url))
+            print ("-----------------------------------------------")
         if exploit:
             print (' %s Check Vulnerability\n' %(run))
             print (""" %sNAME                      %sSTATUS  %sSHELL"""%(W,W,W))
@@ -322,6 +358,11 @@ def detect_cms():
         print (' %s CMS : Lokomedia' % (good))
         print ('------------------------------------------------')
         domain_info(subdomains)
+        if scanports:
+            print (' %s Scanning Ports\n' %(run))
+            print (""" %s  PORTS                     %sSTATUS  %sPROTO"""%(W,W,W))
+            portscan(hostd(url))
+            print ("-----------------------------------------------")
         print (' %s Check Vulnerability' %(run))
     elif re.search(re.compile(r'lokomedia'), lm2_content):
         print ('%s Target[%i] -> %s%s \n\n '% (W,id,url,end))
@@ -330,6 +371,11 @@ def detect_cms():
         print (' %s CMS : Lokomedia' % (good))
         print ('------------------------------------------------')
         domain_info(subdomains)
+        if scanports:
+            print (' %s Scanning Ports\n' %(run))
+            print (""" %s  PORTS                     %sSTATUS  %sPROTO"""%(W,W,W))
+            portscan(hostd(url))
+            print ("-----------------------------------------------")
         print (' %s Check Vulnerability' %(run))
 
         ############################
