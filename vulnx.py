@@ -13,7 +13,7 @@ import common
 import warnings
 import signal
 from common.threading import threads
-from common.colors import red, green, bg, G, R, W, Y, G , good , bad , run , info , end
+from common.colors import red, green, bg, G, R, W, Y, G , good , bad , run , info , end , que
 from common.banner import banner
 from common.uri_converter import convert_uri as hostd
 from common.vxrequest import random_UserAgent
@@ -113,135 +113,239 @@ def detect_cms():
     lm2 = url + '/rss.xml'
     lm2_content = vxget(lm2,headers)
     content=vxget(url,headers)
-    try:
-        #joomla searching content to detect.
-        if  re.search(re.compile(r'<script type=\"text/javascript\" src=\"/media/system/js/mootools.js\"></script>|/media/system/js/|com_content|Joomla!'), content):
-            print ('%s[%i] Target -> %s %s CMS : Joomla \n\n%s' % (W,id,url,G,W))
-            print (' %s Check Vulnerability' %(run))
-            #joomla_exploits imported from folder[./common/joomla_exploits.py]
-            if exploit:
-                joomla_comjce(url,headers,timeout)
-                joomla_comedia(url,headers,timeout)
-                joomla_comjdownloads(url,headers,timeout)
-                joomla_comjdownloads2(url,headers,timeout)
-                joomla_fabrik2(url,headers,timeout)
-                joomla_fabrik2_d(url,headers,timeout)
-                joomla_foxcontact(url,headers,timeout)
-                
-        #prestashop searching content to detect.
-        elif re.search(re.compile(r'Prestashop|prestashop'), content):
-            print ('%s Target[%i] -> %s%s \n\n '% (W,id,url,end))
-            print ('------------------------------------------------')
-            print (' %s %sCMS :%s Prestashop' % (good,W,end))
-            print ('------------------------------------------------')
-            prestashop_version()
-            domain_info(subdomains)
-            print (' %s Check Vulnerability' %(run))
-        #wordpress searching content to detect.
-        elif re.search(re.compile(r'wp-content|wordpress|xmlrpc.php'), content):
-            print ('%s Target[%i] -> %s%s \n\n '% (W,id,url,end))
-            print ('------------------------------------------------')
-            print (' %s %sCMS :%s Wordpress' % (good,W,end))
-            print ('------------------------------------------------')
-            if webinfo:
-                webhosting_info(hostinfo)
-            if domaininfo:
-                domain_info(subdomains)
-            #wp_grab methods info from (folder)[./common/grapwp.py]
-            if cms == 'version':
-                print (' %s Check CMS Info' %(run))
-                wp_version(url,headers,grabinfo)
-                print ("-----------------------------------------------")
-            if cms == 'themes':
-                print (' %s Check CMS Info' %(run))
-                wp_themes(url,headers,grabinfo)
-                print ("-----------------------------------------------")
-            if cms == 'user':
-                print (' %s Check CMS Info' %(run))
-                wp_user(url,headers,grabinfo)
-                print ("-----------------------------------------------")
-            if cms == 'plugins':
-                print (' %s Check CMS Info' %(run))
-                wp_plugin(url,headers,grabinfo)
-                print ("-----------------------------------------------")
-            if cms == 'all':
-                print (' %s Check CMS Info' %(run))
-                wp_version(url,headers,grabinfo)
-                wp_themes(url,headers,grabinfo)
-                wp_user(url,headers,grabinfo)
-                wp_plugin(url,headers,grabinfo)
-                print ("-----------------------------------------------")
-            # vulnx -u http://example.com -e | vulnx -u http://example --exploit
-            if exploit:
-                print (' %s Check Vulnerability\n' %(run))
-                print (""" %sNAME                      %sSTATUS  %sSHELL"""%(W,W,W))
-                #wp_exploit methods from (dolder)[./common/wp_exploits.py]
-                wp_wysija(url,headers,timeout,vulnresults)
-                wp_blaze(url,headers,timeout,vulnresults)
-                wp_synoptic(url,headers,timeout,vulnresults)
-                wp_catpro(url,headers,timeout,vulnresults)
-                wp_cherry(url,headers,timeout,vulnresults)
-                wp_dm(url,headers,timeout,vulnresults)
-                wp_fromcraft(url,headers,timeout,vulnresults)
-                wp_jobmanager(url,headers,timeout,vulnresults)
-                wp_showbiz(url,headers,timeout,vulnresults)      
-                wp_shop(url,headers,timeout,vulnresults)
-                wp_powerzoomer(url,headers,timeout,vulnresults)
-                wp_revslider(url,headers,timeout,vulnresults)
-                wp_adsmanager(url,headers,timeout,vulnresults)
-                wp_inboundiomarketing(url,headers,timeout,vulnresults)
-                wp_adblockblocker(url,headers,timeout,vulnresults)
-                wp_levoslideshow(url,headers,timeout,vulnresults)
-                print ("-----------------------------------------------")
-        #Drupal searching content to detect.
-        elif re.search(re.compile(r'Drupal|drupal|sites/all|drupal.org'), content):
-            print ('%s Target[%i] -> %s%s \n\n '% (W,id,url,end))
-            print ('------------------------------------------------')
-            print (' %s CMS : Drupal' % (good))
-            print ('------------------------------------------------')
-            drupal_version()
-            domain_info(subdomains)
-            print (' %s Check Vulnerability' %(run))
-        #OpenCart detection
-        elif re.search(re.compile(r'route=product|OpenCart|route=common|catalog/view/theme'), content):
-            print ('%s Target[%i] -> %s%s \n\n '% (W,id,url,end))
-            print ('------------------------------------------------')
-            print (' %s CMS : OpenCart' % (good))
-            print ('------------------------------------------------')
-            domain_info(subdomains)
-            print (' %s Check Vulnerability' %(run))
-        #magento detection
-        elif re.search(re.compile(r'Log into Magento Admin Page|name=\"dummy\" id=\"dummy\"|Magento'), content):
-            print ('%s Target[%i] -> %s%s \n\n '% (W,id,url,end))
-            print ('------------------------------------------------')
-            print (' %s CMS : Magento' % (good))
-            print ('------------------------------------------------')
-            domain_info(subdomains)
-        #lokomedia
-            print (' %s Check Vulnerability' %(run))
-        elif re.search(re.compile(r'image/gif'), lm_content):
-            print ('%s Target[%i] -> %s%s \n\n '% (W,id,url,end))
-            print ('------------------------------------------------')
-            print (' %s CMS : Lokomedia' % (good))
-            print ('------------------------------------------------')
-            domain_info(subdomains)
-            print (' %s Check Vulnerability' %(run))
-        elif re.search(re.compile(r'lokomedia'), lm2_content):
-            print ('%s Target[%i] -> %s%s \n\n '% (W,id,url,end))
-            print ('------------------------------------------------')
-            print (' %s CMS : Lokomedia' % (good))
-            print ('------------------------------------------------')
-            domain_info(subdomains)
-            print (' %s Check Vulnerability' %(run))
-        else:
-            print ('%s Target[%i] -> %s%s \n\n '% (W,id,url,end))
-            print ('------------------------------------------------')
-            print (' %s CMS : Unknown' % (bad))
-            print ('------------------------------------------------')
+#    try:
+
+        ############################
+        #                          #
+        #         joomla           #
+        #                          #
+        ############################
+    #joomla searching content to detect.
+    if  re.search(re.compile(r'<script type=\"text/javascript\" src=\"/media/system/js/mootools.js\"></script>|/media/system/js/|com_content|Joomla!'), content):
+        print ('%s Target[%i] -> %s%s \n\n '% (W,id,url,end))
+        print ('------------------------------------------------')
+        print (' %s looking for cms' % (que))
+        print (' %s %sCMS :%s Joomla' % (good,W,end))
+        print ('------------------------------------------------')
+        #webinfo gathering argument
+        if webinfo:
             webhosting_info(hostinfo)
+        #domain gatherinargument
+        if domaininfo:
             domain_info(subdomains)
-    except Exception as e:
-        print ('%s\n\n error : %s%s' % (R,e,W))
+        if cms == 'version':
+            print (' %s Check CMS Info' %(run))
+            prestashop_version()
+        #joomla_exploits imported from folder[./common/joomla_exploits.py]
+        if exploit:
+            print (' %s Check Vulnerability\n' %(run))
+            print (""" %sNAME                      %sSTATUS  %sSHELL"""%(W,W,W))
+            joomla_comjce(url,headers,timeout)
+            joomla_comedia(url,headers,timeout)
+            joomla_comjdownloads(url,headers,timeout)
+            joomla_comjdownloads2(url,headers,timeout)
+            joomla_fabrik2(url,headers,timeout)
+            joomla_fabrik2_d(url,headers,timeout)
+            joomla_foxcontact(url,headers,timeout)
+
+        ############################
+        #                          #
+        #         Wordpress        #
+        #                          #
+        ############################
+    #wordpress searching content to detect.
+    elif re.search(re.compile(r'wp-content|wordpress|xmlrpc.php'), content):
+        print ('%s Target[%i] -> %s%s \n\n '% (W,id,url,end))
+        print ('------------------------------------------------')
+        print (' %s looking for cms' % (que))
+        print (' %s %sCMS :%s Wordpress' % (good,W,end))
+        print ('------------------------------------------------')
+        if webinfo:
+            webhosting_info(hostinfo)
+        if domaininfo:
+            domain_info(subdomains)
+        #wp_grab methods info from (folder)[./common/grapwp.py]
+        if cms == 'version':
+            print (' %s Check CMS Info' %(run))
+            wp_version(url,headers,grabinfo)
+            print ("-----------------------------------------------")
+        if cms == 'themes':
+            print (' %s Check CMS Info' %(run))
+            wp_themes(url,headers,grabinfo)
+            print ("-----------------------------------------------")
+        if cms == 'user':
+            print (' %s Check CMS Info' %(run))
+            wp_user(url,headers,grabinfo)
+            print ("-----------------------------------------------")
+        if cms == 'plugins':
+            print (' %s Check CMS Info' %(run))
+            wp_plugin(url,headers,grabinfo)
+            print ("-----------------------------------------------")
+        if cms == 'all':
+            print (' %s Check CMS Info' %(run))
+            wp_version(url,headers,grabinfo)
+            wp_themes(url,headers,grabinfo)
+            wp_user(url,headers,grabinfo)
+            wp_plugin(url,headers,grabinfo)
+            print ("-----------------------------------------------")
+        # vulnx -u http://example.com -e | vulnx -u http://example --exploit
+        if exploit:
+            print (' %s Check Vulnerability\n' %(run))
+            print (""" %sNAME                      %sSTATUS  %sSHELL"""%(W,W,W))
+            #wp_exploit methods from (dolder)[./common/wp_exploits.py]
+            wp_wysija(url,headers,timeout,vulnresults)
+            wp_blaze(url,headers,timeout,vulnresults)
+            wp_synoptic(url,headers,timeout,vulnresults)
+            wp_catpro(url,headers,timeout,vulnresults)
+            wp_cherry(url,headers,timeout,vulnresults)
+            wp_dm(url,headers,timeout,vulnresults)
+            wp_fromcraft(url,headers,timeout,vulnresults)
+            wp_jobmanager(url,headers,timeout,vulnresults)
+            wp_showbiz(url,headers,timeout,vulnresults)      
+            wp_shop(url,headers,timeout,vulnresults)
+            wp_powerzoomer(url,headers,timeout,vulnresults)
+            wp_revslider(url,headers,timeout,vulnresults)
+            wp_adsmanager(url,headers,timeout,vulnresults)
+            wp_inboundiomarketing(url,headers,timeout,vulnresults)
+            wp_adblockblocker(url,headers,timeout,vulnresults)
+            wp_levoslideshow(url,headers,timeout,vulnresults)
+            print ("-----------------------------------------------")
+
+        ############################
+        #                          #
+        #          Drupal          #
+        #                          #
+        ############################
+    #drupal searching content to detect.
+    elif re.search(re.compile(r'Drupal|drupal|sites/all|drupal.org'), content):
+        print ('%s Target[%i] -> %s%s \n\n '% (W,id,url,end))
+        print ('------------------------------------------------')
+        print (' %s looking for cms' % (que))
+        print (' %s CMS : Drupal' % (good))
+        print ('------------------------------------------------')
+        if webinfo:
+            webhosting_info(hostinfo)
+        #domain gatherinargument
+        if domaininfo:
+            domain_info(subdomains)
+        if cms == 'version':
+            print (' %s Check CMS Info' %(run))
+            drupal_version()
+        if exploit:
+            print (' %s Check Vulnerability\n' %(run))
+            print (""" %sNAME                      %sSTATUS  %sSHELL"""%(W,W,W))
+
+        ############################
+        #                          #
+        #        Prestashop        #
+        #                          #
+        ############################
+    #prestashop searching content to detect.
+    elif re.search(re.compile(r'Prestashop|prestashop'), content):
+        print ('%s Target[%i] -> %s%s \n\n '% (W,id,url,end))
+        print ('------------------------------------------------')
+        print (' %s looking for cms' % (que))
+        print (' %s %sCMS :%s Prestashop' % (good,W,end))
+        print ('------------------------------------------------')
+        if webinfo:
+            webhosting_info(hostinfo)
+        #domain gatherinargument
+        if domaininfo:
+            domain_info(subdomains)
+        if cms == 'version':
+            print (' %s Check CMS Info' %(run))
+            prestashop_version()
+        if exploit:
+            print (' %s Check Vulnerability\n' %(run))
+            print (""" %sNAME                      %sSTATUS  %sSHELL"""%(W,W,W))
+
+        ############################
+        #                          #
+        #          OpenCart        #
+        #                          #
+        ############################
+    #opencart searching content to detect.
+    elif re.search(re.compile(r'route=product|OpenCart|route=common|catalog/view/theme'), content):
+        print ('%s Target[%i] -> %s%s \n\n '% (W,id,url,end))
+        print ('------------------------------------------------')
+        print (' %s looking for cms' % (que))
+        print (' %s CMS : OpenCart' % (good))
+        print ('------------------------------------------------')
+        if webinfo:
+            webhosting_info(hostinfo)
+        #domain gatherinargument
+        if domaininfo:
+            domain_info(subdomains)
+        if cms == 'version':
+            print (' %s Check CMS Info' %(run))
+
+        if exploit:
+            print (' %s Check Vulnerability\n' %(run))
+            print (""" %sNAME                      %sSTATUS  %sSHELL"""%(W,W,W))
+
+        ############################
+        #                          #
+        #          Magento         #
+        #                          #
+        ############################
+    #magento searching content to detect.
+    elif re.search(re.compile(r'Log into Magento Admin Page|name=\"dummy\" id=\"dummy\"|Magento'), content):
+        print ('%s Target[%i] -> %s%s \n\n '% (W,id,url,end))
+        print ('------------------------------------------------')
+        print (' %s looking for cms' % (que))
+        print (' %s CMS : Magento' % (good))
+        print ('------------------------------------------------')
+        if webinfo:
+            webhosting_info(hostinfo)
+        #domain gatherinargument
+        if domaininfo:
+            domain_info(subdomains)
+        if cms == 'version':
+            print (' %s Check CMS Info' %(run))
+        if exploit:
+            print (' %s Check Vulnerability\n' %(run))
+            print (""" %sNAME                      %sSTATUS  %sSHELL"""%(W,W,W))
+
+        ############################
+        #                          #
+        #         Lokomedia        #
+        #                          #
+        ############################
+    #lokomedia searching content to detect.
+        print (' %s Check Vulnerability' %(run))
+    elif re.search(re.compile(r'image/gif'), lm_content):
+        print ('%s Target[%i] -> %s%s \n\n '% (W,id,url,end))
+        print ('------------------------------------------------')
+        print (' %s looking for cms' % (que))
+        print (' %s CMS : Lokomedia' % (good))
+        print ('------------------------------------------------')
+        domain_info(subdomains)
+        print (' %s Check Vulnerability' %(run))
+    elif re.search(re.compile(r'lokomedia'), lm2_content):
+        print ('%s Target[%i] -> %s%s \n\n '% (W,id,url,end))
+        print ('------------------------------------------------')
+        print (' %s looking for cms' % (que))
+        print (' %s CMS : Lokomedia' % (good))
+        print ('------------------------------------------------')
+        domain_info(subdomains)
+        print (' %s Check Vulnerability' %(run))
+
+        ############################
+        #                          #
+        #          Unknown         #
+        #                          #
+        ############################
+    #no cms detect
+    else:
+        print ('%s Target[%i] -> %s%s \n\n '% (W,id,url,end))
+        print ('------------------------------------------------')
+        print (' %s looking for cms' % (que))
+        print (' %s CMS : Unknown' % (bad))
+        print ('------------------------------------------------')
+        webhosting_info(hostinfo)
+        domain_info(subdomains)
+#    except Exception as e:
+#        print ('%s\n\n error : %s%s' % (R,e,W))
 
 # drupal Version
 def drupal_version():
@@ -294,32 +398,35 @@ def webhosting_info(hostinfo):
     matches = re.search(regex_date,getinfo)
     if matches:
         print ( ' %s Domain Created on : %s' % (good,matches.group(1)))
-    ip = socket.gethostbyname(hostd(url))
-    print ( ' %s CloudFlare IP : %s' % (good,ip))
-    ipinfo = "http://ipinfo.io/" + ip + "/json"
-    getipinfo = vxget(ipinfo,headers,timeout)
-    country = re.search(re.compile(r'country\": \"(.+?)\"'),getipinfo)
-    region = re.search(re.compile(r'region\": \"(.+?)\"'),getipinfo)
-    latitude = re.search(re.compile(r'latitude: (.+?)'),getipinfo)
-    longitude = re.search(re.compile(r'longitude\": \"(.+?)\"'),getipinfo)
-    timezone = re.search(re.compile(r'timezone\": \"(.+?)\"'),getipinfo)
-    ans = re.search(re.compile(r'ans\": \"(.+?)\"'),getipinfo)
-    org = re.search(re.compile(r'org\": \"(.+?)\"'),getipinfo)
-    if country:
-        print(' %s Country : %s' % (good,country.group(1)))
-    if region:
-        print(' %s Region : %s' % (good,region.group(1)))
-    if latitude:
-        print(' %s Latitude : %s' % (good,latitude.group(1)))
-    if longitude:
-        print(' %s Longitude : %s' % (good,longitude.group(1)))
-    if timezone:
-        print(' %s Timezone : %s' % (good,timezone.group(1)))
-    if ans:
-        print(' %s Ans : %s' % (good,ans.group(1)))
-    if org:
-        print(' %s Org : %s' % (good,org.group(1)))
-    print ("-----------------------------------------------")
+    try:
+        ip = socket.gethostbyname(hostd(url))
+        print ( ' %s CloudFlare IP : %s' % (good,ip))
+        ipinfo = "http://ipinfo.io/" + ip + "/json"
+        getipinfo = vxget(ipinfo,headers,timeout)
+        country = re.search(re.compile(r'country\": \"(.+?)\"'),getipinfo)
+        region = re.search(re.compile(r'region\": \"(.+?)\"'),getipinfo)
+        latitude = re.search(re.compile(r'latitude: (.+?)'),getipinfo)
+        longitude = re.search(re.compile(r'longitude\": \"(.+?)\"'),getipinfo)
+        timezone = re.search(re.compile(r'timezone\": \"(.+?)\"'),getipinfo)
+        ans = re.search(re.compile(r'ans\": \"(.+?)\"'),getipinfo)
+        org = re.search(re.compile(r'org\": \"(.+?)\"'),getipinfo)
+        if country:
+            print(' %s Country : %s' % (good,country.group(1)))
+        if region:
+            print(' %s Region : %s' % (good,region.group(1)))
+        if latitude:
+            print(' %s Latitude : %s' % (good,latitude.group(1)))
+        if longitude:
+            print(' %s Longitude : %s' % (good,longitude.group(1)))
+        if timezone:
+            print(' %s Timezone : %s' % (good,timezone.group(1)))
+        if ans:
+            print(' %s Ans : %s' % (good,ans.group(1)))
+        if org:
+            print(' %s Org : %s' % (good,org.group(1)))
+        print ("-----------------------------------------------")
+    except Exception as converterror:
+        print(' %s Error to get ip for this web ' % (bad))
 # output
 output_dir = args.output or 'logs'
 
@@ -354,7 +461,7 @@ if __name__ == "__main__":
         'Accept-Language': 'en-US,en;q=0.5',
         'Connection': 'keep-alive',
         }
-        threads(detect_cms,numthread)
+        detect_cms()
     if dorks:
         from common.vx_dorks import (searchengine,getdorksbyname,wp_contentdorks)
         searchengine(dorks,numberpage)
