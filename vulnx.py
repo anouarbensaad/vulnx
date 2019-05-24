@@ -107,6 +107,14 @@ numberpage = args.numberpage or 1
 # Disable SSL related warnings
 warnings.filterwarnings('ignore')
 
+#url condition entrypoint
+root = url
+if root.startswith('http'):
+    url = root
+else:
+    url = 'http://'+root
+
+#method for cms detection
 def detect_cms():
     id = 0
     lm = url + '/smiley/1.gif'
@@ -343,8 +351,11 @@ def detect_cms():
         print (' %s looking for cms' % (que))
         print (' %s CMS : Unknown' % (bad))
         print ('------------------------------------------------')
-        webhosting_info(hostinfo)
-        domain_info(subdomains)
+        if webinfo:
+            webhosting_info(hostinfo)
+        #domain gatherinargument
+        if domaininfo:
+            domain_info(subdomains)
 #    except Exception as e:
 #        print ('%s\n\n error : %s%s' % (R,e,W))
 
