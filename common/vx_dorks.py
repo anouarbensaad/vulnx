@@ -56,34 +56,36 @@ def getdorksbyname(exploitname):
         elif exploitname in joomla:
                 return joomla[exploitname]
 def searchengine(exploitname,numberpage):
-        print (' %s Searching for %s dork url\n' %(run,exploitname))
-        numberpage = numberpage*10
-        for np in range(0,numberpage,10):
-                if np==0:
-                        print(' %s Page n° 1 ' % (info))
-                        bingquery = 'https://www.google.com/search?q='+getdorksbyname(exploitname)
-                        print(' %s searching for : %s'% (que,bingquery))
-                        res = requests.get(bingquery,headers).text
-                        robot_detected = re.findall(re.compile(r'(Our systems have detected)?(\w+)'),res)
-                        if robot_detected:
-                                print(" %s robot detected for verification, so changed you headers" %(bad))
-                                print ('------------------------------------------------')
+        try :
+                print (' %s Searching for %s dork url\n' %(run,exploitname))
+                numberpage = numberpage*10
+                for np in range(0,numberpage,10):
+                        if np==0:
+                                print(' %s Page n° 1 ' % (info))
+                                bingquery = 'https://www.google.com/search?q='+getdorksbyname(exploitname)
+                                print(' %s searching for : %s'% (que,bingquery))
+                                res = requests.get(bingquery,headers).text
+                                robot_detected = re.findall(re.compile(r'(Our systems have detected)?(\w+)'),res)
+                                if robot_detected:
+                                        print(" %s robot detected for verification, so changed you headers" %(bad))
+                                        print ('------------------------------------------------')
+                                else:
+                                        WP_dorksconditions(exploitname,res)
+                                        print ('------------------------------------------------')
                         else:
-                                WP_dorksconditions(exploitname,res)
-                                print ('------------------------------------------------')
-                else:
-                        print(' %s Page n° %i ' % (info,np/10+1))
-                        bingquery = 'https://www.google.com/search?q='+getdorksbyname(exploitname)+'&start='+str(np)
-                        print(' %s searching for : %s'% (que,bingquery))
-                        res = requests.get(bingquery,headers).text
-                        robot_detected = re.findall(re.compile(r'(Our systems have detected)?(\w+)'),res)
-                        if robot_detected:
-                                print(" %s robot detected for verification, so changed you headers" %(bad))
-                                print ('------------------------------------------------')
-                        else:
-                                WP_dorksconditions(exploitname,res)
-                                print ('------------------------------------------------')
-                        
+                                print(' %s Page n° %i ' % (info,np/10+1))
+                                bingquery = 'https://www.google.com/search?q='+getdorksbyname(exploitname)+'&start='+str(np)
+                                print(' %s searching for : %s'% (que,bingquery))
+                                res = requests.get(bingquery,headers).text
+                                robot_detected = re.findall(re.compile(r'(Our systems have detected)?(\w+)'),res)
+                                if robot_detected:
+                                        print(" %s robot detected for verification, so changed you headers" %(bad))
+                                        print ('------------------------------------------------')
+                                else:
+                                        WP_dorksconditions(exploitname,res)
+                                        print ('------------------------------------------------')
+        except Exception as msg:
+                print(' %s exploitname %s ' %(bad,msg))
         np=+10
 def WP_dorksconditions(exploitname,response):
         webs = []
@@ -119,4 +121,4 @@ def WP_dorksconditions(exploitname,response):
                                 webs.append(web)
                                 print (' %s urls found : %s ' %(good," \n           ".join(webs)))
         else:
-                print('%s [-] NO URL FOUND' %(bad))
+                print(' %s No URL founds' %(bad))
