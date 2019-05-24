@@ -1,14 +1,7 @@
 import requests
 import re
 from common.colors import run,W,end,good,bad,que,info
-
-headers = {'Host' : 'google.com',
-        'User-Agent' : 'Mozilla/5.0 (X11; CrOS x86_64 8172.45.0) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/51.0.2704.64 Safari/537.36',
-        'Accept': 'text/html,application/html+xml,q=0.9,*/*;q=0.8',
-        'Accept-Language': 'en-US,en;q=0.5',
-        'Connection': 'keep-alive',
-    }
-
+from common.vxrequest import getrequest as vulnxget
 wp_contentdorks = {
         'blaze'             : 'inurl:"/wp-content/plugins/blaze-slide-show-for-wordpress/"',
         'catpro'            : 'inurl:"/wp-content/plugins/wp-catpro/"',
@@ -55,16 +48,16 @@ def getdorksbyname(exploitname):
                 return wpindex[exploitname]
         elif exploitname in joomla:
                 return joomla[exploitname]
-def searchengine(exploitname,numberpage):
+def searchengine(exploitname,headers,timeout,numberpage):
         try :
                 print (' %s Searching for %s dork url\n' %(run,exploitname))
                 numberpage = numberpage*10
                 for np in range(0,numberpage,10):
                         if np==0:
                                 print(' %s Page n° 1 ' % (info))
-                                bingquery = 'https://www.google.com/search?q='+getdorksbyname(exploitname)
-                                print(' %s searching for : %s'% (que,bingquery))
-                                res = requests.get(bingquery,headers).text
+                                googlequery = 'https://www.google.com/search?q='+getdorksbyname(exploitname)
+                                print(' %s searching for : %s'% (que,googlequery))
+                                res = vulnxget(googlequery,headers,timeout)
                                 robot_detected = re.findall(re.compile(r'(Our systems have detected)?(\w+)'),res)
                                 if robot_detected:
                                         print(" %s robot detected for verification, so changed you headers" %(bad))
@@ -74,9 +67,9 @@ def searchengine(exploitname,numberpage):
                                         print ('------------------------------------------------')
                         else:
                                 print(' %s Page n° %i ' % (info,np/10+1))
-                                bingquery = 'https://www.google.com/search?q='+getdorksbyname(exploitname)+'&start='+str(np)
-                                print(' %s searching for : %s'% (que,bingquery))
-                                res = requests.get(bingquery,headers).text
+                                googlequery = 'https://www.google.com/search?q='+getdorksbyname(exploitname)+'&start='+str(np)
+                                print(' %s searching for : %s'% (que,googlequery))
+                                res = vulnxget(googlequery,headers,timeout)
                                 robot_detected = re.findall(re.compile(r'(Our systems have detected)?(\w+)'),res)
                                 if robot_detected:
                                         print(" %s robot detected for verification, so changed you headers" %(bad))
