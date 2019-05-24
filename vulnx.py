@@ -46,14 +46,15 @@ from common.joomla_exploits import(joomla_comjce,
                                   joomla_foxcontact,
                                 )
 #cleaning screen
+
+banner()
+
 def parser_error(errmsg):
     print("Usage: python " + sys.argv[0] + " [Options] use -h for help")
     print(R + "Error: " + errmsg + W)
     sys.exit()
 
 def parse_args():
-    # parse the arguments
-    banner()
     parser = argparse.ArgumentParser(epilog='\tExample: \r\npython ' + sys.argv[0] + " -u google.com")
     parser.error = parser_error
     parser._optionals.title = "\nOPTIONS"
@@ -451,7 +452,6 @@ signal.signal(signal.SIGINT, signal_handler)
 
 #main
 if __name__ == "__main__":
-    banner()
     if url:
         #default headers.
         headers = {
