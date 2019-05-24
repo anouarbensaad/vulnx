@@ -107,13 +107,6 @@ numberpage = args.numberpage or 1
 # Disable SSL related warnings
 warnings.filterwarnings('ignore')
 
-#url condition entrypoint
-root = url
-if root.startswith('http'):
-    url = root
-else:
-    url = 'http://'+root
-
 #method for cms detection
 def detect_cms():
     id = 0
@@ -464,6 +457,12 @@ signal.signal(signal.SIGINT, signal_handler)
 #main
 if __name__ == "__main__":
     if url:
+        #url condition entrypoint
+        root = url
+        if root.startswith('http'):
+            url = root
+        else:
+            url = 'http://'+root
         #default headers.
         headers = {
         'Host' : hostd(url),
