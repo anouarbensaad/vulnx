@@ -3,10 +3,6 @@
 red="\e[0;31m"
 green="\e[0;32m"
 off="\e[0m"
-
-function banner(){
-    echo "nothing"
-}
 function install(){
     echo -e "$red [$green+$red]$off Installing Python ...";
     sudo apt-get install -y python3
@@ -18,7 +14,7 @@ if [ -d "/usr/share/VulnX" ]; then
       sudo rm -r "/usr/share/vulnx"
       sudo rm "/usr/share/icons/vulnxicon.png"
       sudo rm "/usr/share/applications/vulnx.desktop"
-      sudo rm "/usr/local/bin/VulnX"
+      sudo rm "/usr/local/bin/vulnx"
 
 else
 echo -e "$red [$green✘$red]$off If You Want To Install You Must Remove Previous Installations";
@@ -40,6 +36,8 @@ python3 /usr/share/vulnx/vulnx.py" '${1+"$@"}' > "vulnx";
     sudo cp "conf/vulnxicon.png" "/usr/share/icons"
     sudo cp "conf/vulnx.desktop" "/usr/share/applications"
     sudo cp "vulnx" "/usr/local/bin/"
+    sudo cp -r "common" "/usr/share/vulnx/common"
+    sudo cp -r "shell" "usr/share/vulnx/shell"
     rm "vulnx";
 
 if [ -d "/usr/share/vulnx" ] ;
