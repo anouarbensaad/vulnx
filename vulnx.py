@@ -473,8 +473,14 @@ if __name__ == "__main__":
         }
         detect_cms()
     if dorks:
+        headers = {
+        'host' : 'google.com',
+        'User-Agent' : random_UserAgent(),
+        'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8',
+        'Accept-Language': 'en-US,en;q=0.5',
+        'Connection': 'keep-alive',}
         from common.vx_dorks import (searchengine,getdorksbyname,wp_contentdorks)
-        searchengine(dorks,numberpage)
+        searchengine(dorks,headers,timeout,numberpage)
     if dorkslist:
         from common.dorks_list import dorkslist as lsdorks
         lsdorks()
