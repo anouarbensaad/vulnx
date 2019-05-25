@@ -12,7 +12,7 @@ function termuxOS() {
     echo -e "$red [$green+$red]$off Installing Python ...";
     pkg install python
     echo -e "$red [$green+$red]$off Installing Packages ...";
-    pip install requests
+    pip install -r ./requirements.txt
     echo -e "$red [$green+$red]$off Checking directories ..."
     if [ -e "/data/data/com.termux/files/usr/share/vulnx" ]; then
         echo -e "$red [$green+$red]$off A previous installation was found Do you want to replace it? [Y/n]: "
@@ -55,7 +55,7 @@ function termuxOS() {
 function debianOS(){
     echo -e "$red [$green+$red]$off Installing Python ...";
     sudo apt-get install -y python3
-    sudo pip install requests 
+    pip install -r ./requirements.txt
     echo -e "$red [$green+$red]$off Checking directories..."
     if [ -d "/usr/share/VulnX" ]; then
         echo -e "$red [$green+$red]$off A Directory VulnX Was Found! Do You Want To Replace It? [Y/n]:" ;
