@@ -46,6 +46,8 @@ Instead of injecting shell and checking it works like all the other tools do, vu
 - Checks for vulnerabilites
 - Auto shell injector
 - Exploit dork searcher
+- [`Ports Scan`](https://user-images.githubusercontent.com/23563528/58365946-40a83a00-7ec3-11e9-87c5-055ed67109b7.jpg) High Level
+- [`Dns`](https://user-images.githubusercontent.com/23563528/58365784-09388e00-7ec1-11e9-8a05-e71fa39f146d.png)-Servers Dump
 ### Exploits
 <h1 align="center">
 <a href="https://github.com/anouarbensaad/VulnX"><img src="https://user-images.githubusercontent.com/23563528/58003677-2e03be80-7ad9-11e9-9774-c69a38248c64.gif" alt="Exploits Running"></a>
@@ -134,6 +136,7 @@ Instead of injecting shell and checking it works like all the other tools do, vu
       -n, --number-page     number page of search engine(Google)
       -p, --ports           ports to scan
       --threads             number of threads
+      --dns                 dns informations gathering
 
 ### Docker
 
