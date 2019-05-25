@@ -1,0 +1,90 @@
+import requests
+import re
+import base64
+import json
+from common.colors import red, green, bg, G, R, W, Y, G , good , bad , run , info , end , que
+from bs4 import BeautifulSoup
+from common.uri_converter import convert_uri as hostd
+
+def results(table):
+    res = []
+    trs = table.findAll('tr')
+    for tr in trs:
+        tds = tr.findAll('td')
+        pattern_ip = r'([0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3})'
+        try:
+            ip = re.findall(pattern_ip, tds[1].text)[0]
+            domain = str(tds[0]).split('<br/>')[0].split('>')[1]
+            header = ' '.join(tds[0].text.replace('\n', '').split(' ')[1:])
+            reverse_dns = tds[1].find('span', attrs={}).text
+
+            additional_info = tds[2].text
+            country = tds[2].find('span', attrs={}).text
+            autonomous_system = additional_info.split(' ')[0]
+            provider = ' '.join(additional_info.split(' ')[1:])
+            provider = provider.replace(country, '')
+            data = {'domain': domain,
+                    'ip': ip,
+                    'reverse_dns': reverse_dns,
+                    'as': autonomous_system,
+                    'provider': provider,
+                    'country': country,
+                    'header': header}
+            res.append(data)
+        except:
+            pass
+    return res
+
+def text_record(table):
+    res = []
+    for td in table.findAll('td'):
+        res.append(td.text)
+    return res
+
+
+def dnsdumper(url):
+    domain = hostd(url)
+    dnsdumpster_url = 'https://dnsdumpster.com/'
+    response = requests.Session().get(dnsdumpster_url).text
+    csrf_token = re.search(r"name='csrfmiddlewaretoken' value='(.*?)'", response).group(1)
+    print (' %s Retrieved token: %s' % (que,csrf_token))
+    cookies = {'csrftoken': csrf_token}
+    headers = {'Referer': 'https://dnsdumpster.com/'}
+    data = {'csrfmiddlewaretoken': csrf_token, 'targetip': domain }
+    response = requests.Session().post('https://dnsdumpster.com/',cookies=cookies, data=data, headers=headers)
+    image = requests.get('https://dnsdumpster.com/static/map/%s.png' % domain)
+    if response.status_code == 200:
+        soup = BeautifulSoup(response.content, 'html.parser')
+        tables = soup.findAll('table')
+        res = {}
+        res['domain'] = domain
+        res['dns_records'] = {}
+        res['dns_records']['dns'] = results(tables[0])
+        res['dns_records']['mx'] = results(tables[1])
+        res['dns_records']['txt'] = text_record(tables[2])
+        res['dns_records']['host'] = results(tables[3])
+        print(' %s looking for dns-servers'%(que))
+        print(res['dns_records']['dns'])
+        print(' %s looking for mx-records'%(que))
+        print(res['dns_records']['mx'])
+
+
+def domain_info(url):
+    domain = hostd(url)
+    dnsdumpster_url = 'https://dnsdumpster.com/'
+    response = requests.Session().get(dnsdumpster_url).text
+    csrf_token = re.search(r"name='csrfmiddlewaretoken' value='(.*?)'", response).group(1)
+    cookies = {'csrftoken': csrf_token}
+    headers = {'Referer': 'https://dnsdumpster.com/'}
+    data = {'csrfmiddlewaretoken': csrf_token, 'targetip': domain }
+    response = requests.Session().post('https://dnsdumpster.com/',cookies=cookies, data=data, headers=headers)
+    image = requests.get('https://dnsdumpster.com/static/map/%s.png' % domain)
+    if response.status_code == 200:
+        soup = BeautifulSoup(response.content, 'html.parser')
+        tables = soup.findAll('table')
+        res = {}
+        res['domain'] = domain
+        res['dns_records'] = {}
+        res['dns_records']['host'] = results(tables[3])
+        print(' %s looking for subdomains'%(que))
+        print(res['dns_records']['host'])
