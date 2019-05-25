@@ -44,9 +44,9 @@ function debianOS() {
 if [ -d "/data/data/com.termux/files/usr/" ]; then
 banner
 echo -e "$red [$green+$red]$off vulnx Will Be Installed In Your System";
-termux
+termuxOS
 elif [ -d "/usr/bin/" ];then
 banner
 echo -e "$red [$green+$red]$off vulnx Will Be Installed In Your System";
-linux
+debianOS
 fi
