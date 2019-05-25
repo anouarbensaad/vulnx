@@ -163,7 +163,7 @@ $ ./install.sh
 ```
 Now run `vulnx`
 
-### Install vulunx on Termux
+### Install vulnx on Termux
 
 ```
 $ pkg update
