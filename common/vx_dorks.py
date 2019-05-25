@@ -57,26 +57,16 @@ def searchengine(exploitname,headers,timeout,numberpage):
                                 print(' %s Page n° 1 ' % (info))
                                 googlequery = 'https://www.google.com/search?q='+getdorksbyname(exploitname)
                                 print(' %s searching for : %s'% (que,googlequery))
-                                res = vulnxget(googlequery,headers,timeout)
-                                robot_detected = re.findall(re.compile(r'(Our systems have detected)?(\w+)'),res)
-                                if robot_detected:
-                                        print(" %s robot detected for verification, so changed you headers" %(bad))
-                                        print ('------------------------------------------------')
-                                else:
-                                        WP_dorksconditions(exploitname,res)
-                                        print ('------------------------------------------------')
+                                res = requests.get(googlequery,headers).text
+                                WP_dorksconditions(exploitname,res)
+                                print ('------------------------------------------------')
                         else:
                                 print(' %s Page n° %i ' % (info,np/10+1))
                                 googlequery = 'https://www.google.com/search?q='+getdorksbyname(exploitname)+'&start='+str(np)
+                                res = requests.get(googlequery,headers).text
                                 print(' %s searching for : %s'% (que,googlequery))
-                                res = vulnxget(googlequery,headers,timeout)
-                                robot_detected = re.findall(re.compile(r'(Our systems have detected)?(\w+)'),res)
-                                if robot_detected:
-                                        print(" %s robot detected for verification, so changed you headers" %(bad))
-                                        print ('------------------------------------------------')
-                                else:
-                                        WP_dorksconditions(exploitname,res)
-                                        print ('------------------------------------------------')
+                                WP_dorksconditions(exploitname,res)
+                                print ('------------------------------------------------')
         except Exception as msg:
                 print(' %s exploitname %s ' %(bad,msg))
         np=+10
