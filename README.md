@@ -46,7 +46,6 @@ Instead of injecting shell and checking it works like all the other tools do, vu
 - Checks for vulnerabilites
 - Auto shell injector
 - Exploit dork searcher
-
 ### Exploits
 <h1 align="center">
 <a href="https://github.com/anouarbensaad/VulnX"><img src="https://user-images.githubusercontent.com/23563528/58003677-2e03be80-7ad9-11e9-9774-c69a38248c64.gif" alt="Exploits Running"></a>
@@ -153,17 +152,28 @@ make a local volume to view the results into a logfile
 $ docker run -it --name vulnx -v "$PWD/logs:/VulnX/logs" vulnx:latest -u http://exemple.com
 ```
 
-### Install VulnX
+### Install vulnx on Ubuntu
 
 
 ```bash
-$ git clone https://github.com/anouarbensaad/VulnX.git
+$ git clone https://github.com/anouarbensaad/vulnx.git
 $ cd VulnX
 $ chmod + x install.sh
 $ ./install.sh
 ```
-
 Now run `vulnx`
+
+### Install vulunx on Termux
+
+```
+$ pkg update
+$ pkg install -y git
+$ git clone http://github.com/anouarbensaad/vulnx
+$ cd vulnx
+$ chmod +x install.sh
+$ ./install.sh
+```
+[**CLICK HERE TO SHOW THE RESULT**](https://user-images.githubusercontent.com/23563528/58364091-98847800-7ea6-11e9-9a9a-c27717e4dda1.png)
 
 ##### example command with options : settimeout=3 , cms-gathering = all , -d subdomains-gathering , run --exploits
 `vulnx -u http://example.com --timeout 3 -c all -d -w --exploit` 
