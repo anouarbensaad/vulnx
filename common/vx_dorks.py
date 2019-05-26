@@ -78,8 +78,6 @@ def searchengine(exploitname,headers,timeout,numberpage):
                                 else:
                                         WP_dorksconditions(exploitname,res)
                                         print ('------------------------------------------------')
-                                WP_dorksconditions(exploitname,res)
-                                print ('------------------------------------------------')
                         endy = time.time()
                         elapsed = endy - starty
                         print (' %s Elapsed Time : %.2f seconds' % (info,elapsed))
@@ -95,30 +93,39 @@ def WP_dorksconditions(exploitname,response):
                         for web in dorks:
                                 if web not in webs:
                                         webs.append(web)
-                                        print (' %s urls found : %s ' %(good," \n                  ".join(webs)))
-        elif exploitname in wp_admindorks:
+                        for i in range(len(webs)): 
+                                print (' %s URL : %s ' %(good , webs[i]))
+        elif exploitname in wp_admindorks:      
                 dorks = re.findall(re.compile(r'https?://+?\w+?[a-zA-Z0-9-_.]+?[a-zA-Z0-9-_.]?\w+\.\w+/?/wp-admin/\w+'),response)
-                for web in dorks:
-                        if web not in webs:
-                                webs.append(web)
-                                print (' %s urls found : %s ' %(good," \n                  ".join(webs)))
+                if len(dorks) > 0:
+                        for web in dorks:
+                                if web not in webs:
+                                        webs.append(web)
+                        for i in range(len(webs)): 
+                                print (' %s URL : %s ' %(good , webs[i]))
         elif exploitname in wpajx:
                 dorks = re.findall(re.compile(r'https?://+?\w+?[a-zA-Z0-9-_.]+?[a-zA-Z0-9-_.]?\w+\.\w+/?/jm-ajax/upload_file/'),response)
-                for web in dorks:
-                        if web not in webs:
-                                webs.append(web)
-                                print (' %s urls found : %s ' %(good," \n                  ".join(webs)))
+                if len(dorks) > 0:
+                        for web in dorks:
+                                if web not in webs:
+                                        webs.append(web)
+                        for i in range(len(webs)): 
+                                print (' %s URL : %s ' %(good , webs[i]))
         elif exploitname in wpindex:
                 dorks = re.findall(re.compile(r'https?://+?\w+?[a-zA-Z0-9-_.]+?[a-zA-Z0-9-_.]?\w+\.\w+/index.php/wp-json/wp/'),response)
-                for web in dorks:
-                        if web not in webs:
-                                webs.append(web)
-                                print (' %s urls found : %s ' %(good," \n           ".join(webs)))
+                if len(dorks) > 0:
+                        for web in dorks:
+                                if web not in webs:
+                                        webs.append(web)
+                        for i in range(len(webs)): 
+                                print (' %s URL : %s ' %(good , webs[i]))
         elif exploitname in joomla:
                 dorks = re.findall(re.compile(r'https?://+?\w+?[a-zA-Z0-9-_.]+?[a-zA-Z0-9-_.]?\w+\.\w+/index.php?option=com_jce'),response)
-                for web in dorks:
-                        if web not in webs:
-                                webs.append(web)
-                                print (' %s urls found : %s ' %(good," \n           ".join(webs)))
+                if len(dorks) > 0:
+                        for web in dorks:
+                                if web not in webs:
+                                        webs.append(web)
+                        for i in range(len(webs)): 
+                                print (' %s URL : %s ' %(good , webs[i]))
         else:
                 print(' %s No URL founds' %(bad))
