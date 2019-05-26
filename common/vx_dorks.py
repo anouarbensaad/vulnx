@@ -1,6 +1,8 @@
 import requests
 import re
-from common.colors import run,W,end,good,bad,que,info
+import time
+import random
+from common.colors import run,W,end,good,bad,que,info,bannerblue
 from common.vxrequest import getrequest as vulnxget
 wp_contentdorks = {
         'blaze'             : 'inurl:"/wp-content/plugins/blaze-slide-show-for-wordpress/"',
@@ -50,33 +52,38 @@ def getdorksbyname(exploitname):
                 return joomla[exploitname]
 def searchengine(exploitname,headers,timeout,numberpage):
         try :
-                print (' %s Searching for %s dork url\n' %(run,exploitname))
+                print (' %s Searching for %s dork url' %(run,exploitname))
                 numberpage = numberpage*10
                 for np in range(0,numberpage,10):
+                        starty = time.time()
                         if np==0:
+                                time.sleep(random.randint(1,2))
                                 print(' %s Page n° 1 ' % (info))
                                 googlequery = 'https://www.google.com/search?q='+getdorksbyname(exploitname)
                                 print(' %s searching for : %s'% (que,googlequery))
-                                res = vulnxget(googlequery,headers,timeout)
-                                robot_detected = re.findall(re.compile(r'(Our systems have detected)?(\w+)'),res)
-                                if robot_detected:
-                                        print(" %s robot detected for verification, so changed you headers" %(bad))
-                                        print ('------------------------------------------------')
+                                res = requests.get(googlequery,headers).text
+                                if (re.findall(re.compile(r'CAPTCHA'),res)):
+                                        print(' %s Bot Detected The block will expire shortly' % bad)
                                 else:
                                         WP_dorksconditions(exploitname,res)
                                         print ('------------------------------------------------')
                         else:
+                                time.sleep(random.randint(3,5))
                                 print(' %s Page n° %i ' % (info,np/10+1))
                                 googlequery = 'https://www.google.com/search?q='+getdorksbyname(exploitname)+'&start='+str(np)
+                                res = requests.get(googlequery,headers).text
                                 print(' %s searching for : %s'% (que,googlequery))
-                                res = vulnxget(googlequery,headers,timeout)
-                                robot_detected = re.findall(re.compile(r'(Our systems have detected)?(\w+)'),res)
-                                if robot_detected:
-                                        print(" %s robot detected for verification, so changed you headers" %(bad))
-                                        print ('------------------------------------------------')
+                                if (re.findall(re.compile(r'CAPTCHA'),res)):
+                                        print(' %s Bot Detected The block will expire shortly' % bad)
                                 else:
                                         WP_dorksconditions(exploitname,res)
                                         print ('------------------------------------------------')
+                                WP_dorksconditions(exploitname,res)
+                                print ('------------------------------------------------')
+                        endy = time.time()
+                        elapsed = endy - starty
+                        print (' %s Elapsed Time : %.2f seconds' % (info,elapsed))
+                        print("%s----------------%s"%(bannerblue,end))
         except Exception as msg:
                 print(' %s exploitname %s ' %(bad,msg))
         np=+10
