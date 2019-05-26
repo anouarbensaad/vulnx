@@ -14,15 +14,25 @@ import warnings
 import signal
 import requests
 from common.threading import threads
+#colors Module.
 from common.colors import red, green, bg, G, R, W, Y, G , good , bad , run , info , end , que
+#banner module.
 from common.banner import banner
+#import parse url_convert url to domain_name.
 from common.uri_converter import parsing_url as hostd
+#import vulnx_request::MODULE
 from common.vxrequest import random_UserAgent
 from common.vxrequest import getrequest as vxget
+#import ports_scan bootcode.
 from common.scanningports import portscan
+#wp cms informations
 from common.grabwp import (wp_version,wp_plugin,wp_themes,wp_user)
+#joomla cms informations
+from common.grabjoo import (joo_version,joo_user)
 from common.output_wr import writelogs as outlogs
+#dnsdumpster informations gathering
 from common.dnsdumperapi import dnsdumper , domain_info
+#import wordpress_exploits
 from common.wp_exploits import(   wp_wysija,
                                   wp_blaze,
                                   wp_catpro,
@@ -142,13 +152,21 @@ def detect_cms():
         #webinfo gathering argument
         if webinfo:
             webhosting_info(hostinfo)
+        
         #domain gatherinargument
         if domaininfo:
             print (' %s Starting searching for Subdomains' %(run))
             domain_info(url)
+        
         if cms == 'version':
             print (' %s Check CMS Info' %(run))
-            prestashop_version()
+            joo_version(url,headers)
+
+        if cms == 'all':
+            print (' %s Check CMS Info' %(run))
+            joo_version(url,headers)
+            joo_user(url,headers)
+        
         #port to scan
         if scanports:
             print (' %s Scanning Ports' %(run))
