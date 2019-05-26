@@ -16,7 +16,7 @@ import requests
 from common.threading import threads
 from common.colors import red, green, bg, G, R, W, Y, G , good , bad , run , info , end , que
 from common.banner import banner
-from common.uri_converter import convert_uri as hostd
+from common.uri_converter import parsing_url as hostd
 from common.vxrequest import random_UserAgent
 from common.vxrequest import getrequest as vxget
 from common.scanningports import portscan
@@ -144,24 +144,24 @@ def detect_cms():
             webhosting_info(hostinfo)
         #domain gatherinargument
         if domaininfo:
-            print (' %s Starting searching for Subdomains \n' %(run))
+            print (' %s Starting searching for Subdomains' %(run))
             domain_info(url)
         if cms == 'version':
             print (' %s Check CMS Info' %(run))
             prestashop_version()
         #port to scan
         if scanports:
-            print (' %s Scanning Ports\n' %(run))
+            print (' %s Scanning Ports' %(run))
             print (""" %s     PORTS                     %sSTATUS  %sPROTO"""%(W,W,W))
             portscan(hostd(url))
             print ("-----------------------------------------------")
         if dnsdump:
-            print (' %s Starting DNS dump \n' %(run))
+            print (' %s Starting DNS dump' %(run))
             dnsdumper(url)
             print ("-----------------------------------------------")
         #joomla_exploits imported from folder[./common/joomla_exploits.py]
         if exploit:
-            print (' %s Check Vulnerability\n' %(run))
+            print (' %s Check Vulnerability' %(run))
             print (""" %sNAME                      %sSTATUS  %sSHELL"""%(W,W,W))
             joomla_comjce(url,headers,timeout)
             joomla_comedia(url,headers,timeout)
@@ -186,7 +186,7 @@ def detect_cms():
         if webinfo:
             webhosting_info(hostinfo)
         if domaininfo:
-            print (' %s Starting searching for Subdomains \n' %(run))
+            print (' %s Starting searching for Subdomains' %(run))
             domain_info(url)
         #wp_grab methods info from (folder)[./common/grapwp.py]
         if cms == 'version':
@@ -214,12 +214,12 @@ def detect_cms():
             print ("-----------------------------------------------")
                 #port to scan
         if scanports:
-            print (' %s Scanning Ports\n' %(run))
+            print (' %s Scanning Ports' %(run))
             print (""" %sPORTS                     %sSTATUS  %sPROTO"""%(W,W,W))
             portscan(hostd(url))
             print ("-----------------------------------------------")
         if dnsdump:
-            print (' %s Starting DNS dump \n' %(run))
+            print (' %s Starting DNS dump' %(run))
             dnsdumper(url)
             print ("-----------------------------------------------")
         # vulnx -u http://example.com -e | vulnx -u http://example --exploit
@@ -261,7 +261,7 @@ def detect_cms():
             webhosting_info(hostinfo)
         #domain gatherinargument
         if domaininfo:
-            print (' %s Starting searching for Subdomains \n' %(run))
+            print (' %s Starting searching for Subdomains' %(run))
             domain_info(url)
         if cms == 'version':
             print (' %s Check CMS Info' %(run))
@@ -272,7 +272,7 @@ def detect_cms():
             portscan(hostd(url))
             print ("-----------------------------------------------")
         if dnsdump:
-            print (' %s Starting DNS dump \n' %(run))
+            print (' %s Starting DNS dump ' %(run))
             dnsdumper(url)
             print ("-----------------------------------------------")
         if exploit:
@@ -295,7 +295,7 @@ def detect_cms():
             webhosting_info(hostinfo)
         #domain gatherinargument
         if domaininfo:
-            print (' %s Starting searching for Subdomains \n' %(run))
+            print (' %s Starting searching for Subdomains' %(run))
             domain_info(url)
         if cms == 'version':
             print (' %s Check CMS Info' %(run))
@@ -306,7 +306,7 @@ def detect_cms():
             portscan(hostd(url))
             print ("-----------------------------------------------")
         if dnsdump:
-            print (' %s Starting DNS dump \n' %(run))
+            print (' %s Starting DNS dump ' %(run))
             dnsdumper(url)
             print ("-----------------------------------------------")
         if exploit:
@@ -329,7 +329,7 @@ def detect_cms():
             webhosting_info(hostinfo)
         #domain gatherinargument
         if domaininfo:
-            print (' %s Starting searching for Subdomains \n' %(run))
+            print (' %s Starting searching for Subdomains' %(run))
             domain_info(url)
         if cms == 'version':
             print (' %s Check CMS Info' %(run))
@@ -339,7 +339,7 @@ def detect_cms():
             portscan(hostd(url))
             print ("-----------------------------------------------")
         if dnsdump:
-            print (' %s Starting DNS dump \n' %(run))
+            print (' %s Starting DNS dump ' %(run))
             dnsdumper(url)
             print ("-----------------------------------------------")
         if exploit:
@@ -362,7 +362,7 @@ def detect_cms():
             webhosting_info(hostinfo)
         #domain gatherinargument
         if domaininfo:
-            print (' %s Starting searching for Subdomains \n' %(run))
+            print (' %s Starting searching for Subdomains' %(run))
             domain_info(url)
         if cms == 'version':
             print (' %s Check CMS Info' %(run))
@@ -372,11 +372,11 @@ def detect_cms():
             portscan(hostd(url))
             print ("-----------------------------------------------")
         if dnsdump:
-            print (' %s Starting DNS dump \n' %(run))
+            print (' %s Starting DNS dump ' %(run))
             dnsdumper(url)
             print ("-----------------------------------------------")
         if exploit:
-            print (' %s Check Vulnerability\n' %(run))
+            print (' %s Check Vulnerability' %(run))
             print (""" %sNAME                      %sSTATUS  %sSHELL"""%(W,W,W))
 
         ############################
@@ -393,7 +393,7 @@ def detect_cms():
         print (' %s CMS : Lokomedia' % (good))
         print ('------------------------------------------------')
         if subdomains:
-            print (' %s Starting searching for Subdomains \n' %(run))
+            print (' %s Starting searching for Subdomains' %(run))
             domain_info(url)
         print ('------------------------------------------------')
         if scanports:
@@ -402,7 +402,7 @@ def detect_cms():
             portscan(hostd(url))
             print ("-----------------------------------------------")
         if dnsdump:
-            print (' %s Starting DNS dump \n' %(run))
+            print (' %s Starting DNS dump ' %(run))
             dnsdumper(url)
             print ("-----------------------------------------------")
         print (' %s Check Vulnerability' %(run))
@@ -413,7 +413,7 @@ def detect_cms():
         print (' %s CMS : Lokomedia' % (good))
         print ('------------------------------------------------')
         if subdomains:
-            print (' %s Starting searching for Subdomains \n' %(run))
+            print (' %s Starting searching for Subdomains' %(run))
             domain_info(url)
         if scanports:
             print (' %s Scanning Ports\n' %(run))
@@ -421,7 +421,7 @@ def detect_cms():
             portscan(hostd(url))
             print ("-----------------------------------------------")
         if dnsdump:
-            print (' %s Starting DNS dump \n' %(run))
+            print (' %s Starting DNS dump ' %(run))
             dnsdumper(url)
             print ("-----------------------------------------------")
         print (' %s Check Vulnerability' %(run))
@@ -442,8 +442,13 @@ def detect_cms():
             webhosting_info(hostinfo)
         #domain gatherinargument
         if domaininfo:
-            print (' %s Starting searching for Subdomains \n' %(run))
+            print (' %s Starting searching for Subdomains' %(run))
             domain_info(url)
+            print ("-----------------------------------------------")
+        if dnsdump:
+            print (' %s Starting DNS dump ' %(run))
+            dnsdumper(url)
+            print ("-----------------------------------------------")
 #    except Exception as e:
 #        print ('%s\n\n error : %s%s' % (R,e,W))
 

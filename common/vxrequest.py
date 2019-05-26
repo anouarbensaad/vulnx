@@ -2,7 +2,7 @@
 import random
 import requests
 from requests.exceptions import TooManyRedirects
-from common.uri_converter import convert_uri as hostd
+from common.uri_converter import parsing_url as hostd
 
 SESSION = requests.Session()
 SESSION.max_redirects = 2

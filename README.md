@@ -6,7 +6,7 @@
   <br>
 </h1>
 
-<h4 align="center">Vulnx 🕷️ Cms And Vulnerabilites Detector And An Intelligent Auto Shell Injector</h4>
+<h4 align="center">Vulnx 🕷️ Cms And Vulnerabilites Detector And An Intelligent Bot Auto Shell Injector</h4>
 
 <p align="center">
    <a href="https://github.com/anouarbensaad/vulnx/releases">
@@ -46,6 +46,32 @@ Instead of injecting shell and checking it works like all the other tools do, vu
 - Checks for vulnerabilites
 - Auto shell injector
 - Exploit dork searcher
+- [`Ports Scan`](https://user-images.githubusercontent.com/23563528/58365946-40a83a00-7ec3-11e9-87c5-055ed67109b7.jpg) High Level
+- [`Dns`](https://user-images.githubusercontent.com/23563528/58365784-09388e00-7ec1-11e9-8a05-e71fa39f146d.png)-Servers Dump
+
+
+### DNS-Map-Results
+
+To do this, we'll run a scan with the --dns flag and -d for subdomains.
+To generate a map of isetso.rnu.tn, you can run the command 
+`vulnx -u isetso.rnu.tn --dns -d --output $PATH`in a terminal window.
+
+`$PATH` : Where export the graphs ?
+
+<p align="center">
+   <a href="https://github.com/anouarbensaad/vulnx/wiki/Usage#dns-informations-gathering">
+    <img src="https://user-images.githubusercontent.com/23563528/58377134-92a79900-7f71-11e9-952f-9fd4e0a751cb.png">
+  </a>
+</p>
+
+
+![Screenshot from 2019-05-26 04-43-10](https://user-images.githubusercontent.com/23563528/58377079-cd5d0180-7f70-11e9-9e9f-adf419fe993a.png)
+
+
+Let's zoom in and look at the Subdomains,MX & DNS Records.
+
+![demo](https://i.ibb.co/2kDLc0t/isetso-rnu-tn.png)
+
 
 ### Exploits
 <h1 align="center">
@@ -135,6 +161,7 @@ Instead of injecting shell and checking it works like all the other tools do, vu
       -n, --number-page     number page of search engine(Google)
       -p, --ports           ports to scan
       --threads             number of threads
+      --dns                 dns informations gathering
 
 ### Docker
 
@@ -153,17 +180,28 @@ make a local volume to view the results into a logfile
 $ docker run -it --name vulnx -v "$PWD/logs:/VulnX/logs" vulnx:latest -u http://exemple.com
 ```
 
-### Install VulnX
+### Install vulnx on Ubuntu
 
 
 ```bash
-$ git clone https://github.com/anouarbensaad/VulnX.git
+$ git clone https://github.com/anouarbensaad/vulnx.git
 $ cd VulnX
 $ chmod + x install.sh
 $ ./install.sh
 ```
-
 Now run `vulnx`
+
+### Install vulnx on Termux
+
+```
+$ pkg update
+$ pkg install -y git
+$ git clone http://github.com/anouarbensaad/vulnx
+$ cd vulnx
+$ chmod +x install.sh
+$ ./install.sh
+```
+[**CLICK HERE TO SHOW THE RESULT**](https://user-images.githubusercontent.com/23563528/58364091-98847800-7ea6-11e9-9a9a-c27717e4dda1.png)
 
 ##### example command with options : settimeout=3 , cms-gathering = all , -d subdomains-gathering , run --exploits
 `vulnx -u http://example.com --timeout 3 -c all -d -w --exploit` 

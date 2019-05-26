@@ -2,9 +2,9 @@ import requests
 import re
 import base64
 import json
-from common.colors import red, green, bg, G, R, W, Y, G , good , bad , run , info , end , que
+from common.colors import red, green, bg, G, R, W, Y, G , good , bad , run , info , end , que , bannerblue
 from bs4 import BeautifulSoup
-from common.uri_converter import convert_uri as hostd
+from common.uri_converter import parsing_url as hostd
 
 def results(table):
     res = []
@@ -47,7 +47,7 @@ def dnsdumper(url):
     dnsdumpster_url = 'https://dnsdumpster.com/'
     response = requests.Session().get(dnsdumpster_url).text
     csrf_token = re.search(r"name='csrfmiddlewaretoken' value='(.*?)'", response).group(1)
-    print (' %s Retrieved token: %s' % (que,csrf_token))
+    print (' %s Retrieved token: %s' % (info,csrf_token))
     cookies = {'csrftoken': csrf_token}
     headers = {'Referer': 'https://dnsdumpster.com/'}
     data = {'csrfmiddlewaretoken': csrf_token, 'targetip': domain }
@@ -61,14 +61,12 @@ def dnsdumper(url):
         res['dns_records'] = {}
         res['dns_records']['dns'] = results(tables[0])
         res['dns_records']['mx'] = results(tables[1])
-        res['dns_records']['txt'] = text_record(tables[2])
-        res['dns_records']['host'] = results(tables[3])
-        print(' %s looking for dns-servers'%(que))
-        print(res['dns_records']['dns'])
-        print(' %s looking for mx-records'%(que))
-        print(res['dns_records']['mx'])
-
-
+        print(' %s Search for DNS Servers' % que)
+        for entry in res['dns_records']['dns']:
+                print((" %s Host : {domain} \n %s IP : {ip} \n %s AS : {as} \n  %s----------------%s".format(**entry)% (good,good,good,bannerblue,end)))
+        print(' %s Search for MX Records ' % que)
+        for entry in res['dns_records']['mx']:
+                print((" %s Host : {domain} \n %s IP : {ip} \n %s AS : {as} \n  %s----------------%s".format(**entry)% (good,good,good,bannerblue,end)))
 def domain_info(url):
     domain = hostd(url)
     dnsdumpster_url = 'https://dnsdumpster.com/'
@@ -86,5 +84,6 @@ def domain_info(url):
         res['domain'] = domain
         res['dns_records'] = {}
         res['dns_records']['host'] = results(tables[3])
-        print(' %s looking for subdomains'%(que))
-        print(res['dns_records']['host'])
+        print(' %s SubDomains' % que)
+        for entry in res['dns_records']['host']:
+                print((" %s SubDomain : {domain} \n %s IP : {ip} \n %s----------------%s".format(**entry)% (good,good,bannerblue,end)))
