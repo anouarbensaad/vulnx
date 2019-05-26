@@ -138,6 +138,28 @@ Instead of injecting shell and checking it works like all the other tools do, vu
       --threads             number of threads
       --dns                 dns informations gathering
 
+### DNS-Map-Results
+
+To do this, we'll run a scan with the --dns flag and -d for subdomains.
+To generate a map of isetso.rnu.tn, you can run the command 
+`vulnx -u isetso.rnu.tn --dns -d --output $PATH`in a terminal window.
+
+`$PATH` : Where export the graphs ?
+
+<p align="center">
+   <a href="https://github.com/anouarbensaad/vulnx/wiki/Usage#dns-informations-gathering">
+    <img src="https://user-images.githubusercontent.com/23563528/58377134-92a79900-7f71-11e9-952f-9fd4e0a751cb.png">
+  </a>
+</p>
+
+
+![Screenshot from 2019-05-26 04-43-10](https://user-images.githubusercontent.com/23563528/58377079-cd5d0180-7f70-11e9-9e9f-adf419fe993a.png)
+
+
+Let's zoom in and look at the Subdomains,MX & DNS Records.
+
+![demo](https://i.ibb.co/2kDLc0t/isetso-rnu-tn.png)
+
 ### Docker
 
 VulnX can be launched in docker.
