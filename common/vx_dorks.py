@@ -4,6 +4,7 @@ import time
 import random
 from common.colors import run,W,end,good,bad,que,info,bannerblue
 from common.vxrequest import getrequest as vulnxget
+from common.uri_converter import parsing_url as parsify
 wp_contentdorks = {
         'blaze'             : 'inurl:"/wp-content/plugins/blaze-slide-show-for-wordpress/"',
         'catpro'            : 'inurl:"/wp-content/plugins/wp-catpro/"',
@@ -94,7 +95,8 @@ def WP_dorksconditions(exploitname,response):
                                 if web not in webs:
                                         webs.append(web)
                         for i in range(len(webs)): 
-                                print (' %s URL : %s ' %(good , webs[i]))
+                                print (' %s URL   : %s ' %(good , webs[i]))
+                                print (' %s DOMAIN: %s ' %(good , parsify(webs[i])))
         elif exploitname in wp_admindorks:      
                 dorks = re.findall(re.compile(r'https?://+?\w+?[a-zA-Z0-9-_.]+?[a-zA-Z0-9-_.]?\w+\.\w+/?/wp-admin/\w+'),response)
                 if len(dorks) > 0:
@@ -102,7 +104,8 @@ def WP_dorksconditions(exploitname,response):
                                 if web not in webs:
                                         webs.append(web)
                         for i in range(len(webs)): 
-                                print (' %s URL : %s ' %(good , webs[i]))
+                                print (' %s URL   : %s ' %(good , webs[i]))
+                                print (' %s DOMAIN: %s ' %(good , parsify(webs[i])))
         elif exploitname in wpajx:
                 dorks = re.findall(re.compile(r'https?://+?\w+?[a-zA-Z0-9-_.]+?[a-zA-Z0-9-_.]?\w+\.\w+/?/jm-ajax/upload_file/'),response)
                 if len(dorks) > 0:
@@ -110,7 +113,8 @@ def WP_dorksconditions(exploitname,response):
                                 if web not in webs:
                                         webs.append(web)
                         for i in range(len(webs)): 
-                                print (' %s URL : %s ' %(good , webs[i]))
+                                print (' %s URL   : %s ' %(good , webs[i]))
+                                print (' %s DOMAIN: %s ' %(good , parsify(webs[i])))
         elif exploitname in wpindex:
                 dorks = re.findall(re.compile(r'https?://+?\w+?[a-zA-Z0-9-_.]+?[a-zA-Z0-9-_.]?\w+\.\w+/index.php/wp-json/wp/'),response)
                 if len(dorks) > 0:
@@ -118,7 +122,8 @@ def WP_dorksconditions(exploitname,response):
                                 if web not in webs:
                                         webs.append(web)
                         for i in range(len(webs)): 
-                                print (' %s URL : %s ' %(good , webs[i]))
+                                print (' %s URL   : %s ' %(good , webs[i]))
+                                print (' %s DOMAIN: %s ' %(good , parsify(webs[i])))
         elif exploitname in joomla:
                 dorks = re.findall(re.compile(r'https?://+?\w+?[a-zA-Z0-9-_.]+?[a-zA-Z0-9-_.]?\w+\.\w+/index.php?option=com_jce'),response)
                 if len(dorks) > 0:
@@ -126,6 +131,7 @@ def WP_dorksconditions(exploitname,response):
                                 if web not in webs:
                                         webs.append(web)
                         for i in range(len(webs)): 
-                                print (' %s URL : %s ' %(good , webs[i]))
+                                print (' %s URL   : %s ' %(good , webs[i]))
+                                print (' %s DOMAIN: %s ' %(good , parsify(webs[i])))
         else:
                 print(' %s No URL founds' %(bad))
