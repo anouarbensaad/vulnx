@@ -47,7 +47,7 @@ def dnsdumper(url):
     dnsdumpster_url = 'https://dnsdumpster.com/'
     response = requests.Session().get(dnsdumpster_url).text
     csrf_token = re.search(r"name='csrfmiddlewaretoken' value='(.*?)'", response).group(1)
-    print (' %s Retrieved token: %s' % (good,csrf_token))
+    print (' %s Retrieved token: %s' % (info,csrf_token))
     cookies = {'csrftoken': csrf_token}
     headers = {'Referer': 'https://dnsdumpster.com/'}
     data = {'csrfmiddlewaretoken': csrf_token, 'targetip': domain }
@@ -63,10 +63,10 @@ def dnsdumper(url):
         res['dns_records']['mx'] = results(tables[1])
         print(' %s Search for DNS Servers' % que)
         for entry in res['dns_records']['dns']:
-                print(("     %s Host : {domain} \n     %s IP : {ip} \n     %s AS : {as} \n     %s----------------%s".format(**entry)% (good,good,good,bannerblue,end)))
+                print((" %s Host : {domain} \n %s IP : {ip} \n %s AS : {as} \n  %s----------------%s".format(**entry)% (good,good,good,bannerblue,end)))
         print(' %s Search for MX Records ' % que)
         for entry in res['dns_records']['mx']:
-                print(("     %s Host : {domain} \n     %s IP : {ip} \n     %s AS : {as} \n     %s----------------%s".format(**entry)% (good,good,good,bannerblue,end)))
+                print((" %s Host : {domain} \n %s IP : {ip} \n %s AS : {as} \n  %s----------------%s".format(**entry)% (good,good,good,bannerblue,end)))
 def domain_info(url):
     domain = hostd(url)
     dnsdumpster_url = 'https://dnsdumpster.com/'
@@ -86,4 +86,4 @@ def domain_info(url):
         res['dns_records']['host'] = results(tables[3])
         print(' %s SubDomains' % que)
         for entry in res['dns_records']['host']:
-                print(("     %s SubDomain : {domain} \n     %s IP : {ip} \n     %s----------------%s".format(**entry)% (good,good,bannerblue,end)))
+                print((" %s SubDomain : {domain} \n %s IP : {ip} \n %s----------------%s".format(**entry)% (good,good,bannerblue,end)))

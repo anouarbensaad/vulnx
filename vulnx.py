@@ -272,7 +272,7 @@ def detect_cms():
             portscan(hostd(url))
             print ("-----------------------------------------------")
         if dnsdump:
-            print (' %s Starting DNS dump \n' %(run))
+            print (' %s Starting DNS dump ' %(run))
             dnsdumper(url)
             print ("-----------------------------------------------")
         if exploit:
@@ -306,7 +306,7 @@ def detect_cms():
             portscan(hostd(url))
             print ("-----------------------------------------------")
         if dnsdump:
-            print (' %s Starting DNS dump \n' %(run))
+            print (' %s Starting DNS dump ' %(run))
             dnsdumper(url)
             print ("-----------------------------------------------")
         if exploit:
@@ -339,7 +339,7 @@ def detect_cms():
             portscan(hostd(url))
             print ("-----------------------------------------------")
         if dnsdump:
-            print (' %s Starting DNS dump \n' %(run))
+            print (' %s Starting DNS dump ' %(run))
             dnsdumper(url)
             print ("-----------------------------------------------")
         if exploit:
@@ -372,11 +372,11 @@ def detect_cms():
             portscan(hostd(url))
             print ("-----------------------------------------------")
         if dnsdump:
-            print (' %s Starting DNS dump \n' %(run))
+            print (' %s Starting DNS dump ' %(run))
             dnsdumper(url)
             print ("-----------------------------------------------")
         if exploit:
-            print (' %s Check Vulnerability\n' %(run))
+            print (' %s Check Vulnerability' %(run))
             print (""" %sNAME                      %sSTATUS  %sSHELL"""%(W,W,W))
 
         ############################
@@ -402,7 +402,7 @@ def detect_cms():
             portscan(hostd(url))
             print ("-----------------------------------------------")
         if dnsdump:
-            print (' %s Starting DNS dump \n' %(run))
+            print (' %s Starting DNS dump ' %(run))
             dnsdumper(url)
             print ("-----------------------------------------------")
         print (' %s Check Vulnerability' %(run))
@@ -421,7 +421,7 @@ def detect_cms():
             portscan(hostd(url))
             print ("-----------------------------------------------")
         if dnsdump:
-            print (' %s Starting DNS dump \n' %(run))
+            print (' %s Starting DNS dump ' %(run))
             dnsdumper(url)
             print ("-----------------------------------------------")
         print (' %s Check Vulnerability' %(run))
@@ -446,7 +446,7 @@ def detect_cms():
             domain_info(url)
             print ("-----------------------------------------------")
         if dnsdump:
-            print (' %s Starting DNS dump \n' %(run))
+            print (' %s Starting DNS dump ' %(run))
             dnsdumper(url)
             print ("-----------------------------------------------")
 #    except Exception as e:
