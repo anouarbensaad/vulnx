@@ -4,7 +4,7 @@ import base64
 import json
 from common.colors import red, green, bg, G, R, W, Y, G , good , bad , run , info , end , que , bannerblue
 from bs4 import BeautifulSoup
-from common.uri_converter import convert_uri as hostd
+from common.uri_converter import parsing_url as hostd
 
 def results(table):
     res = []

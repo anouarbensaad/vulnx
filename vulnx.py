@@ -16,7 +16,7 @@ import requests
 from common.threading import threads
 from common.colors import red, green, bg, G, R, W, Y, G , good , bad , run , info , end , que
 from common.banner import banner
-from common.uri_converter import convert_uri as hostd
+from common.uri_converter import parsing_url as hostd
 from common.vxrequest import random_UserAgent
 from common.vxrequest import getrequest as vxget
 from common.scanningports import portscan
