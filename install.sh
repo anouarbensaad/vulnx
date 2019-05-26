@@ -79,13 +79,13 @@ function debianOS(){
     sudo mkdir "/usr/share/vulnx"
     sudo cp "install.sh" "/usr/share/vulnx"
     sudo cp "update.sh" "/usr/share/vulnx"
+    sudo cp -r "./common" "/usr/share/vulnx/"
+    sudo cp -r "./shell" "usr/share/vulnx/"
     sudo chmod +x /usr/share/vulnx/update.sh
     sudo cp "vulnx.py" "/usr/share/vulnx"
     sudo cp "conf/vulnxicon.png" "/usr/share/icons"
     sudo cp "conf/vulnx.desktop" "/usr/share/applications"
     sudo cp "vulnx" "/usr/local/bin/"
-    sudo cp -r "common" "/usr/share/vulnx/common"
-    sudo cp -r "shell" "usr/share/vulnx/shell"
     rm "vulnx";
     if [ -d "/usr/share/vulnx" ] ;
     then
