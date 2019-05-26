@@ -28,7 +28,7 @@ from common.scanningports import portscan
 #wp cms informations
 from common.grabwp import (wp_version,wp_plugin,wp_themes,wp_user)
 #joomla cms informations
-from common.grabjoo import (joo_version,joo_user)
+from common.grabjoo import (joo_version,joo_user,joo_template)
 from common.output_wr import writelogs as outlogs
 #dnsdumpster informations gathering
 from common.dnsdumperapi import dnsdumper , domain_info
@@ -159,14 +159,15 @@ def detect_cms():
             domain_info(url)
         
         if cms == 'version':
-            print (' %s Check CMS Info' %(run))
+            print (' %s CMS informations gathering' %(run))
             joo_version(url,headers)
-
+            print ("-----------------------------------------------")
         if cms == 'all':
-            print (' %s Check CMS Info' %(run))
+            print (' %s CMS informations gathering' %(run))
             joo_version(url,headers)
             joo_user(url,headers)
-        
+            joo_template(url,headers)
+            print ("-----------------------------------------------")
         #port to scan
         if scanports:
             print (' %s Scanning Ports' %(run))
@@ -208,23 +209,23 @@ def detect_cms():
             domain_info(url)
         #wp_grab methods info from (folder)[./common/grapwp.py]
         if cms == 'version':
-            print (' %s Check CMS Info' %(run))
+            print (' %s CMS informations gathering' %(run))
             wp_version(url,headers,grabinfo)
             print ("-----------------------------------------------")
         if cms == 'themes':
-            print (' %s Check CMS Info' %(run))
+            print (' %s CMS informations gathering' %(run))
             wp_themes(url,headers,grabinfo)
             print ("-----------------------------------------------")
         if cms == 'user':
-            print (' %s Check CMS Info' %(run))
+            print (' %s CMS informations gathering' %(run))
             wp_user(url,headers,grabinfo)
             print ("-----------------------------------------------")
         if cms == 'plugins':
-            print (' %s Check CMS Info' %(run))
+            print (' %s CMS informations gathering' %(run))
             wp_plugin(url,headers,grabinfo)
             print ("-----------------------------------------------")
         if cms == 'all':
-            print (' %s Check CMS Info' %(run))
+            print (' %s CMS informations gathering' %(run))
             wp_version(url,headers,grabinfo)
             wp_themes(url,headers,grabinfo)
             wp_user(url,headers,grabinfo)
@@ -282,7 +283,7 @@ def detect_cms():
             print (' %s Starting searching for Subdomains' %(run))
             domain_info(url)
         if cms == 'version':
-            print (' %s Check CMS Info' %(run))
+            print (' %s CMS informations gathering' %(run))
             drupal_version()
         if scanports:
             print (' %s Scanning Ports\n' %(run))
@@ -316,7 +317,7 @@ def detect_cms():
             print (' %s Starting searching for Subdomains' %(run))
             domain_info(url)
         if cms == 'version':
-            print (' %s Check CMS Info' %(run))
+            print (' %s CMS informations gathering' %(run))
             prestashop_version()
         if scanports:
             print (' %s Scanning Ports\n' %(run))
@@ -350,7 +351,7 @@ def detect_cms():
             print (' %s Starting searching for Subdomains' %(run))
             domain_info(url)
         if cms == 'version':
-            print (' %s Check CMS Info' %(run))
+            print (' %s CMS informations gathering' %(run))
         if scanports:
             print (' %s Scanning Ports\n' %(run))
             print (""" %s     PORTS                     %sSTATUS  %sPROTO"""%(W,W,W))
@@ -383,7 +384,7 @@ def detect_cms():
             print (' %s Starting searching for Subdomains' %(run))
             domain_info(url)
         if cms == 'version':
-            print (' %s Check CMS Info' %(run))
+            print (' %s CMS informations gathering' %(run))
         if scanports:
             print (' %s Scanning Ports\n' %(run))
             print (""" %s     PORTS                     %sSTATUS  %sPROTO"""%(W,W,W))

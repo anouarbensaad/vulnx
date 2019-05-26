@@ -19,12 +19,13 @@ def wp_themes(url,headers,grabinfo):
     themes_array = []
     getthemes = requests.get(ep,headers).text
     matches = re.findall(re.compile(r'themes/(\w+)?/'),getthemes)
-    #loop for matching themes.
+    #loop for matching themes.)
     if len(matches) > 0:
         for theme in matches:
-            if theme not in themes_array:
-                themes_array.append(theme)
-        print (' %s Themes : %s ' %(good," \n                  ".join(themes_array)))
+                if theme not in themes_array:
+                        themes_array.append(theme)
+        for i in range(len(themes_array)): 
+                print (' %s Themes : %s ' %(good , themes_array[i]))
 #searching for the wordpress user
 def wp_user(url,headers,grabinfo):
     ep = url + '/?author=1'
@@ -42,7 +43,9 @@ def wp_plugin(url,headers,grabinfo):
     getplugin = requests.get(ep,headers).text
     matches = re.findall(re.compile(r'wp-content/plugins/(\w+)?/'),getplugin)
     if len(matches) > 0:
-        for plugs in matches:
-            if plugs not in plugins_array:
-                plugins_array.append(plugs)
-        print (' %s Plugins : %s ' %(good," \n                  ".join(plugins_array)))
+        for plugin in matches:
+                if plugin not in plugins_array:
+                        plugins_array.append(plugin)
+        for i in range(len(plugins_array)): 
+                print (' %s Plugins : %s ' %(good , plugins_array[i]))
+        
