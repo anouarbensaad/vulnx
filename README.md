@@ -160,6 +160,7 @@ Let's zoom in and look at the Subdomains,MX & DNS Records.
       -l, --dork-list       list names of dorks exploits
       -n, --number-page     number page of search engine(Google)
       -p, --ports           ports to scan
+      -i, --input           specify input file of domains to scan
       --threads             number of threads
       --dns                 dns informations gathering
 

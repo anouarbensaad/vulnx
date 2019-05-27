@@ -15,14 +15,13 @@ import signal
 import requests
 from common.threading import threads
 #colors Module.
-from common.colors import red, green, bg, G, R, W, Y, G , good , bad , run , info , end , que
+from common.colors import red, green, bg, G, R, W, Y, G , good , bad , run , info , end , que ,bannerblue2
 #banner module.
 from common.banner import banner
 #import parse url_convert url to domain_name.
 from common.uri_converter import parsing_url as hostd
 #import vulnx_request::MODULE
 from common.vxrequest import random_UserAgent
-from common.vxrequest import getrequest as vxget
 #import ports_scan bootcode.
 from common.scanningports import portscan
 #wp cms informations
@@ -78,6 +77,7 @@ def parse_args():
     parser.add_argument('-c', '--cms-info', help='search cms info[themes,plugins,user,version..]', dest='cms', choices=['user', 'themes','version','plugins','all'])
     parser.add_argument('--threads', help="number of threads", dest='numthread', type=float)
     parser.add_argument('-n', '--number-pages', help='search dorks number page limit', dest='numberpage' , type=int)
+    parser.add_argument('-i', '--input', help='specify input file of domains to scan',dest='input_file' ,required=False)
     #Switches
     parser.add_argument('-e','--exploit', help='searching vulnerability & run exploits',
     dest='exploit', action='store_true')
@@ -124,17 +124,18 @@ numberpage = args.numberpage or 1
 scanports = args.scanports
 #dns
 dnsdump = args.dnsdump
+#input_file
+input_file = args.input_file
 # Disable SSL related warnings
 warnings.filterwarnings('ignore')
 
 #method for cms detection
 def detect_cms():
-    id = 0
     lm = url + '/smiley/1.gif'
-    lm_content = vxget(lm,headers)
+    lm_content = requests.get(lm,headers).text
     lm2 = url + '/rss.xml'
-    lm2_content = vxget(lm2,headers)
-    content=vxget(url,headers)
+    lm2_content = requests.get(lm2,headers).text
+    content=requests.get(url,headers).text
 #    try:
 
         ############################
@@ -144,7 +145,7 @@ def detect_cms():
         ############################
     #joomla searching content to detect.
     if  re.search(re.compile(r'<script type=\"text/javascript\" src=\"/media/system/js/mootools.js\"></script>|/media/system/js/|com_content|Joomla!'), content):
-        print ('%s Target[%i] -> %s%s \n\n '% (W,id,url,end))
+        print ('\n %s[%sTarget%s]%s => %s%s \n '% (bannerblue2,W,bannerblue2, W, url, end))
         print ('------------------------------------------------')
         print (' %s looking for cms' % (que))
         print (' %s %sCMS :%s Joomla' % (good,W,end))
@@ -197,7 +198,7 @@ def detect_cms():
         ############################
     #wordpress searching content to detect.
     elif re.search(re.compile(r'wp-content|wordpress|xmlrpc.php'), content):
-        print ('%s Target[%i] -> %s%s \n\n '% (W,id,url,end))
+        print ('\n %s[%sTarget%s]%s => %s%s \n '% (bannerblue2,W,bannerblue2, W, url, end))
         print ('------------------------------------------------')
         print (' %s looking for cms' % (que))
         print (' %s %sCMS :%s Wordpress' % (good,W,end))
@@ -271,7 +272,7 @@ def detect_cms():
         ############################
     #drupal searching content to detect.
     elif re.search(re.compile(r'Drupal|drupal|sites/all|drupal.org'), content):
-        print ('%s Target[%i] -> %s%s \n\n '% (W,id,url,end))
+        print ('\n %s[%sTarget%s]%s => %s%s \n '% (bannerblue2,W,bannerblue2, W, url, end))
         print ('------------------------------------------------')
         print (' %s looking for cms' % (que))
         print (' %s CMS : Drupal' % (good))
@@ -305,7 +306,7 @@ def detect_cms():
         ############################
     #prestashop searching content to detect.
     elif re.search(re.compile(r'Prestashop|prestashop'), content):
-        print ('%s Target[%i] -> %s%s \n\n '% (W,id,url,end))
+        print ('\n %s[%sTarget%s]%s => %s%s \n '% (bannerblue2,W,bannerblue2, W, url, end))
         print ('------------------------------------------------')
         print (' %s looking for cms' % (que))
         print (' %s %sCMS :%s Prestashop' % (good,W,end))
@@ -339,7 +340,7 @@ def detect_cms():
         ############################
     #opencart searching content to detect.
     elif re.search(re.compile(r'route=product|OpenCart|route=common|catalog/view/theme'), content):
-        print ('%s Target[%i] -> %s%s \n\n '% (W,id,url,end))
+        print ('\n %s[%sTarget%s]%s => %s%s \n '% (bannerblue2,W,bannerblue2, W, url, end))
         print ('------------------------------------------------')
         print (' %s looking for cms' % (que))
         print (' %s CMS : OpenCart' % (good))
@@ -372,7 +373,7 @@ def detect_cms():
         ############################
     #magento searching content to detect.
     elif re.search(re.compile(r'Log into Magento Admin Page|name=\"dummy\" id=\"dummy\"|Magento'), content):
-        print ('%s Target[%i] -> %s%s \n\n '% (W,id,url,end))
+        print ('\n %s[%sTarget%s]%s => %s%s \n '% (bannerblue2,W,bannerblue2, W, url, end))
         print ('------------------------------------------------')
         print (' %s looking for cms' % (que))
         print (' %s CMS : Magento' % (good))
@@ -406,7 +407,7 @@ def detect_cms():
     #lokomedia searching content to detect.
         print (' %s Check Vulnerability' %(run))
     elif re.search(re.compile(r'image/gif'), lm_content):
-        print ('%s Target[%i] -> %s%s \n\n '% (W,id,url,end))
+        print ('\n %s[%sTarget%s]%s => %s%s \n '% (bannerblue2,W,bannerblue2, W, url, end))
         print ('------------------------------------------------')
         print (' %s looking for cms' % (que))
         print (' %s CMS : Lokomedia' % (good))
@@ -426,7 +427,7 @@ def detect_cms():
             print ("-----------------------------------------------")
         print (' %s Check Vulnerability' %(run))
     elif re.search(re.compile(r'lokomedia'), lm2_content):
-        print ('%s Target[%i] -> %s%s \n\n '% (W,id,url,end))
+        print ('\n %s[%sTarget%s]%s => %s%s \n '% (bannerblue2,W,bannerblue2, W, url, end))
         print ('------------------------------------------------')
         print (' %s looking for cms' % (que))
         print (' %s CMS : Lokomedia' % (good))
@@ -452,7 +453,7 @@ def detect_cms():
         ############################
     #no cms detect
     else:
-        print ('%s Target[%i] -> %s%s \n\n '% (W,id,url,end))
+        print ('\n %s[%sTarget%s]%s => %s%s \n '% (bannerblue2,W,bannerblue2, W, url, end))
         print ('------------------------------------------------')
         print (' %s looking for cms' % (que))
         print (' %s CMS : Unknown' % (bad))
@@ -473,7 +474,7 @@ def detect_cms():
 
 # drupal Version
 def drupal_version():
-    response = vxget(url,headers,timeout)
+    response = requests.get(url,headers).text
     regex = 'Drupal \d{0,10}'
     regex = re.compile(regex)
     matches = regex.findall(response)
@@ -483,7 +484,7 @@ def drupal_version():
 
 # Prestashop Version
 def prestashop_version():
-    response = vxget(url,headers,timeout)
+    response = requests.get(url,headers).text
     regex = 'Prestashop \d{0,9}'
     regex = re.compile(regex)
     matches = regex.findall(response.text)
@@ -495,7 +496,7 @@ def prestashop_version():
 def webhosting_info(hostinfo):
     print (' %s Web Hosting Information' % (run))
     urldate = "https://input.payapi.io/v1/api/fraud/domain/age/" + hostd(url)
-    getinfo = vxget(urldate,headers,timeout)
+    getinfo = requests.get(urldate,headers).text
     regex_date = r'Date: (.+?)-(.+?)'
     regex_date = re.compile(regex_date)
     matches = re.search(regex_date,getinfo)
@@ -505,7 +506,7 @@ def webhosting_info(hostinfo):
         ip = socket.gethostbyname(hostd(url))
         print ( ' %s CloudFlare IP : %s' % (good,ip))
         ipinfo = "http://ipinfo.io/" + ip + "/json"
-        getipinfo = vxget(ipinfo,headers,timeout)
+        getipinfo = requests.get(ipinfo,headers).text
         country = re.search(re.compile(r'country\": \"(.+?)\"'),getipinfo)
         region = re.search(re.compile(r'region\": \"(.+?)\"'),getipinfo)
         latitude = re.search(re.compile(r'latitude: (.+?)'),getipinfo)
@@ -554,6 +555,29 @@ signal.signal(signal.SIGINT, signal_handler)
 
 #main
 if __name__ == "__main__":
+    if input_file:
+        with open(input_file,'r') as urls:
+            u_array = [url.strip('\n') for url in urls]
+            try:
+                for url in u_array:
+                    root = url
+                #url condition entrypoint
+                    if root.startswith('http'):
+                        url = root
+                    else:
+                        url = 'http://'+root
+                    #default headers.
+                    headers = {
+                    'User-Agent' : random_UserAgent(),
+                    'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8',
+                    'Accept-Language': 'en-US,en;q=0.5',
+                    'Connection': 'keep-alive',
+                    }
+                    detect_cms()
+                    urls.close()
+            except Exception as error:
+                print('error : '+error)
+
     if url:
         #url condition entrypoint
         root = url
@@ -563,7 +587,6 @@ if __name__ == "__main__":
             url = 'http://'+root
         #default headers.
         headers = {
-        'Host' : hostd(url),
         'User-Agent' : random_UserAgent(),
         'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8',
         'Accept-Language': 'en-US,en;q=0.5',
@@ -578,7 +601,7 @@ if __name__ == "__main__":
         'Accept-Language': 'en-US,en;q=0.5',
         'Connection': 'keep-alive',}
         from common.vx_dorks import (searchengine,getdorksbyname,wp_contentdorks)
-        searchengine(dorks,headers,timeout,numberpage)
+        searchengine(dorks,headers,output_dir,numberpage)
     if dorkslist:
         from common.dorks_list import dorkslist as lsdorks
         lsdorks()
