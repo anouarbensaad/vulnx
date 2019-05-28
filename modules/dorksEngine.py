@@ -4,8 +4,8 @@ import time
 import random
 import os
 from common.colors import run,W,end,good,bad,que,info,bannerblue
-from common.vxrequest import getrequest as vulnxget
-from common.uri_converter import parsing_url as parsify
+from common.requestUp import getrequest as vulnxget
+from common.uriParser import parsing_url as parsify
 wp_contentdorks = {
         'blaze'             : 'inurl:"/wp-content/plugins/blaze-slide-show-for-wordpress/"',
         'catpro'            : 'inurl:"/wp-content/plugins/wp-catpro/"',

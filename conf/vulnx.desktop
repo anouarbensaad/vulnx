@@ -1,12 +1,12 @@
 [Desktop Entry]
-Name=VulnX
-Comment=VulnX 🕷️ CMS-Detector and Vulnerability Scanner & exec automatic exploit process. 
+Name=vulnx
+Comment=VulnX 🕷️ Cms and vulnerabilites detector, & An intelligent bot auto shell injector. 
 Encoding=UTF-8
-Exec=sh -c "VulnX;${SHELL:-bash}"
+Exec=sh -c "vulnx;${SHELL:-bash}"
 Icon=vulnxicon.png
 StartupNotify=false
 Terminal=true
 Type=Application
 Categories=02-Vulnerability-Analysis;
-X-Kali-Package=VulnX
-Name[C]=VulnX
+X-Kali-Package=vulnx
+Name[C]=vulnx

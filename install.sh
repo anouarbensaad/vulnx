@@ -32,6 +32,7 @@ function termuxOS() {
     cp "install.sh" "/data/data/com.termux/files/usr/share/vulnx"
     cp "update.sh" "/data/data/com.termux/files/usr/share/vulnx"
     cp -r "./common" "/data/data/com.termux/files/usr/share/vulnx"
+    cp -r "./modules" "/data/data/com.termux/files/usr/share/vulnx"
     cp -r "./shell" "/data/data/com.termux/files/usr/share/vulnx"
     chmod +x /data/data/com.termux/files/usr/share/vulnx/update.sh
     echo -e "$red [$green+$red]$off Creating Symbolic Link ...";
@@ -80,6 +81,7 @@ function debianOS(){
     sudo cp "install.sh" "/usr/share/vulnx"
     sudo cp "update.sh" "/usr/share/vulnx"
     sudo cp -r "./common" "/usr/share/vulnx/"
+    sudo cp -r "./modules" "/usr/share/vulnx/"
     sudo cp -r "./shell" "usr/share/vulnx/"
     sudo chmod +x /usr/share/vulnx/update.sh
     sudo cp "vulnx.py" "/usr/share/vulnx"

@@ -14,25 +14,31 @@ import warnings
 import signal
 import requests
 from common.threading import threads
+
+##### COMMON
+
 #colors Module.
 from common.colors import red, green, bg, G, R, W, Y, G , good , bad , run , info , end , que ,bannerblue2
 #banner module.
 from common.banner import banner
 #import parse url_convert url to domain_name.
-from common.uri_converter import parsing_url as hostd
+from common.uriParser import parsing_url as hostd
 #import vulnx_request::MODULE
-from common.vxrequest import random_UserAgent
-#import ports_scan bootcode.
-from common.scanningports import portscan
-#wp cms informations
-from common.grabwp import (wp_version,wp_plugin,wp_themes,wp_user)
-#joomla cms informations
-from common.grabjoo import (joo_version,joo_user,joo_template)
+from common.requestUp import random_UserAgent
 from common.output_wr import writelogs as outlogs
+
+##### MODULES
+
+#import ports_scan bootcode.
+from modules.portChecker import portscan
+#wp cms informations
+from modules.wpGrabber import (wp_version,wp_plugin,wp_themes,wp_user)
+#joomla cms informations
+from modules.jooGrabber import (joo_version,joo_user,joo_template)
 #dnsdumpster informations gathering
-from common.dnsdumperapi import dnsdumper , domain_info
+from modules.dnsLookup import dnsdumper , domain_info
 #import wordpress_exploits
-from common.wp_exploits import(   wp_wysija,
+from modules.wpExploits import(   wp_wysija,
                                   wp_blaze,
                                   wp_catpro,
                                   wp_cherry,
@@ -49,7 +55,7 @@ from common.wp_exploits import(   wp_wysija,
                                   wp_levoslideshow,
                                   wp_adblockblocker,
                                 )
-from common.joomla_exploits import(joomla_comjce,
+from modules.jooExploits import(joomla_comjce,
                                   joomla_comedia,
                                   joomla_comjdownloads,
                                   joomla_comjdownloads2,
@@ -600,8 +606,8 @@ if __name__ == "__main__":
         'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8',
         'Accept-Language': 'en-US,en;q=0.5',
         'Connection': 'keep-alive',}
-        from common.vx_dorks import (searchengine,getdorksbyname,wp_contentdorks)
+        from modules.dorksEngine import (searchengine,getdorksbyname,wp_contentdorks)
         searchengine(dorks,headers,output_dir,numberpage)
     if dorkslist:
-        from common.dorks_list import dorkslist as lsdorks
+        from modules.dorkTable import dorkslist as lsdorks
         lsdorks()
