@@ -224,6 +224,13 @@ Do you want to have a conversation in private? email me : Bensaad.tig@gmail.com
 
 ***VulnX*** is licensed under [MIT License](https://github.com/anouarbensaad/VulnX/blob/master/LICENSE) **
 
+### Version
+
+- [**v1.4**](https://github.com/anouarbensaad/vulnx/releases/tag/v1.4)
+- [**v1.3**](https://github.com/anouarbensaad/vulnx/releases/tag/v1.3)
+- [**v1.2**](https://github.com/anouarbensaad/vulnx/releases/tag/v1.2)
+- [**v1.1**](https://github.com/anouarbensaad/vulnx/releases/tag/v1.1)
+
 ### :warning: Warning !!
 
 ***I don't Accept any responsibility for any illegal usage.***
