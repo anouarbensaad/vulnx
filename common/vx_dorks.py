@@ -95,74 +95,71 @@ def WP_dorksconditions(exploitname,response,output_dir):
         webs = []
         if exploitname in wp_contentdorks:
                 dorks = re.findall(re.compile(r'https?://+?\w+?[a-zA-Z0-9-_.]+?[a-zA-Z0-9-_.]?\w+\.\w+/?/wp-content/plugins/\w+'),response)
-                with open('%s/%s.txt' % (output_dirdorks,filename), 'a') as out_file:
-                        if len(dorks) > 0:
-                                for web in dorks:
-                                        if web not in webs:
-                                                webs.append(web)
-                                for i in range(len(webs)):
-                                        domains = parsify(webs[i])
-                                        print (' %s URL   : %s ' %(good , webs[i]))
-                                        print (' %s DOMAIN: %s ' %(good , domains))
-                                        joined = '\n'.join(domains)
-                        out_file.write(str(joined.encode('utf-8').decode('utf-8')))
-                        out_file.write('\n')
-
+                if len(dorks) > 0:
+                        export= open('%s/%s.txt' % (output_dirdorks,filename),'w')
+                        for web in dorks:
+                                if web not in webs:
+                                        webs.append(web)
+                        for i in range(len(webs)):
+                                domains = parsify(webs[i])
+                                print (' %s URL   : %s ' %(good , webs[i]))
+                                print (' %s DOMAIN: %s ' %(good , domains))
+                                export.write(domains)
+                                export.write('\n')
+                        export.close()
         elif exploitname in wp_admindorks:      
                 dorks = re.findall(re.compile(r'https?://+?\w+?[a-zA-Z0-9-_.]+?[a-zA-Z0-9-_.]?\w+\.\w+/?/wp-admin/\w+'),response)
-                with open('%s/%s.txt' % (output_dirdorks,filename), 'a') as out_file:
-                        if len(dorks) > 0:
-                                for web in dorks:
-                                        if web not in webs:
-                                                webs.append(web)
-                                for i in range(len(webs)):
-                                        domains = parsify(webs[i])
-                                        print (' %s URL   : %s ' %(good , webs[i]))
-                                        print (' %s DOMAIN: %s ' %(good , domains))
-                                        joined = '\n'.join(domains)
-                        out_file.write(str(joined.encode('utf-8').decode('utf-8')))
-                        out_file.write('\n')
+                if len(dorks) > 0:
+                        export= open('%s/%s.txt' % (output_dirdorks,filename),'w')
+                        for web in dorks:
+                                if web not in webs:
+                                        webs.append(web)
+                        for i in range(len(webs)):
+                                domains = parsify(webs[i])
+                                print (' %s URL   : %s ' %(good , webs[i]))
+                                print (' %s DOMAIN: %s ' %(good , domains))
+                                export.write(domains)
+                                export.write('\n')
+                        export.close()
         elif exploitname in wpajx:
                 dorks = re.findall(re.compile(r'https?://+?\w+?[a-zA-Z0-9-_.]+?[a-zA-Z0-9-_.]?\w+\.\w+/?/jm-ajax/upload_file/'),response)
-                with open('%s/%s.txt' % (output_dirdorks,filename), 'a') as out_file:
-                        if len(dorks) > 0:
-                                for web in dorks:
-                                        if web not in webs:
-                                                webs.append(web)
-                                for i in range(len(webs)):
-                                        domains = parsify(webs[i])
-                                        print (' %s URL   : %s ' %(good , webs[i]))
-                                        print (' %s DOMAIN: %s ' %(good , domains))
-                                        joined = '\n'.join(domains)
-                        out_file.write(str(joined.encode('utf-8').decode('utf-8')))
-                        out_file.write('\n')
+                if len(dorks) > 0:
+                        export= open('%s/%s.txt' % (output_dirdorks,filename),'w')
+                        for web in dorks:
+                                if web not in webs:
+                                        webs.append(web)
+                        for i in range(len(webs)):
+                                domains = parsify(webs[i])
+                                print (' %s URL   : %s ' %(good , webs[i]))
+                                print (' %s DOMAIN: %s ' %(good , domains))
+                                export.write(domains)
+                                export.write('\n')
+                        export.close()
         elif exploitname in wpindex:
                 dorks = re.findall(re.compile(r'https?://+?\w+?[a-zA-Z0-9-_.]+?[a-zA-Z0-9-_.]?\w+\.\w+/index.php/wp-json/wp/'),response)
-                with open('%s/%s.txt' % (output_dirdorks,filename), 'a') as out_file:
-                        if len(dorks) > 0:
-                                for web in dorks:
-                                        if web not in webs:
-                                                webs.append(web)
-                                for i in range(len(webs)):
-                                        domains = parsify(webs[i])
-                                        print (' %s URL   : %s ' %(good , webs[i]))
-                                        print (' %s DOMAIN: %s ' %(good , domains))
-                                        joined = '\n'.join(domains)
-                        out_file.write(str(joined.encode('utf-8').decode('utf-8')))
-                        out_file.write('\n')
+                if len(dorks) > 0:
+                        export= open('%s/%s.txt' % (output_dirdorks,filename),'w')
+                        for web in dorks:
+                                if web not in webs:
+                                        webs.append(web)
+                        for i in range(len(webs)):
+                                domains = parsify(webs[i])
+                                print (' %s URL   : %s ' %(good , webs[i]))
+                                print (' %s DOMAIN: %s ' %(good , domains))
+                                export.write(domains)
+                                export.write('\n')
+                        export.close()
         elif exploitname in joomla:
                 dorks = re.findall(re.compile(r'https?://+?\w+?[a-zA-Z0-9-_.]+?[a-zA-Z0-9-_.]?\w+\.\w+/index.php?option=com_jce'),response)
-                with open('%s/%s.txt' % (output_dirdorks,filename), 'a') as out_file:
-                        if len(dorks) > 0:
-                                for web in dorks:
-                                        if web not in webs:
-                                                webs.append(web)
-                                for i in range(len(webs)):
-                                        domains = parsify(webs[i])
-                                        print (' %s URL   : %s ' %(good , webs[i]))
-                                        print (' %s DOMAIN: %s ' %(good , domains))
-                                        joined = '\n'.join(domains)
-                        out_file.write(str(joined.encode('utf-8').decode('utf-8')))
-                        out_file.write('\n')
-        else:
-                print(' %s No URL founds' %(bad))
+                if len(dorks) > 0:
+                        export= open('%s/%s.txt' % (output_dirdorks,filename),'w')
+                        for web in dorks:
+                                if web not in webs:
+                                        webs.append(web)
+                        for i in range(len(webs)):
+                                domains = parsify(webs[i])
+                                print (' %s URL   : %s ' %(good , webs[i]))
+                                print (' %s DOMAIN: %s ' %(good , domains))
+                                export.write(domains)
+                                export.write('\n')
+                        export.close()
