@@ -187,7 +187,7 @@ $ docker run -it --name vulnx -v "$PWD/logs:/VulnX/logs" vulnx:latest -u http://
 ```bash
 $ git clone https://github.com/anouarbensaad/vulnx.git
 $ cd VulnX
-$ chmod + x install.sh
+$ chmod +x install.sh
 $ ./install.sh
 ```
 Now run `vulnx`
