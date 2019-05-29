@@ -6,9 +6,18 @@ LABEL name vulnx
 LABEL src "https://github.com/anouarbensaad/vulnx"
 LABEL creator anouarbensaad
 LABEL desc "Vulnx is a cms and vulnerabilites detection, an intelligent auto shell injector,\
-            fast cms detection of target and fast scanner and informations gathering like subdomains, ipaddresses, country, org, timezone, region, ans and more ...\
+            fast cms detection of target and fast scanner and informations gathering like\
+	    subdomains, \
+	    ipaddresses,\
+	    country,    \
+	    org,        \
+	    timezone,   \
+	    region,     \
+	    ans         \
+	    and more ...\
             Instead of injecting shell and checking it works like all the other tools do,\
-            vulnx analyses the response with and recieve if shell success uploaded or no. vulnx is searching for urls with dorks."
+            vulnx analyses the response with and recieve if shell success uploaded or no.\
+	    vulnx is searching for urls with dorks."
 	    
 # Install Git,
 RUN apt-get update -qq && \
