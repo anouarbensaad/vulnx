@@ -18,5 +18,7 @@ def dorkslist():
   showbiz          
   jobmanager       
   injection  
+  thumbslider
+  
   """ %(W,end))
     print ('------------------------------------------------')

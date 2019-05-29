@@ -17,6 +17,7 @@ wp_contentdorks = {
         'revslider'         : 'inurl "/wp-content/plugins/revslider/"',
         'adsmanager'        : 'inurl:"/wp-content/plugins/simple-ads-manager/"',
         'inboundiomarketing': 'inurl:"/wp-content/plugins/inboundio-marketing/"',
+        'thumbslider'       :'inurl:"/wp-content/plugins/wp-responsive-thumbnail-slider"',
 }
 wp_admindorks = {
         'wysija'            : 'inurl":/wp-admin/admin-post.php?page=wysija_campaigns"',
