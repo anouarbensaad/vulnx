@@ -2,9 +2,10 @@ import sys
 
 if sys.platform.lower().startswith(('os', 'win', 'darwin', 'ios')):
     # Colors shouldn't be displayed on Mac and Windows
-    end = red = white = green = yellow = run = bad = good = info = que = \
-    bannerblue = bannerblue2 = yellowhead = W = Y = \
-    failexploit = vulnexploit = portopen = portclose = ''
+    bannerblue = bannerblue2 = yellowhead = \
+        W = Y = R = G = B = bg = green = \
+            run = good = bad = info = red = end = que = \
+                failexploit = vulnexploit = portopen = portclose = ''
 else:
     #banner Colors
     bannerblue  = '\033[34m'
