@@ -14,11 +14,15 @@ else:
     W           = '\033[97m'  # white
     Y           = '\033[93m' # yellow
     R           = '\033[91m'
+    G           = '\033[92m'
+    back        = '\033[7;91m'
+    green       = '\033[92m'
     #action colors
     run         = '\033[93m[~]\033[0m'
     good        = '\033[92m[+]\033[0m'
     bad         = '\033[91m[-]\033[0m'
     info        = '\033[93m[!]\033[0m'
+    red         = '\033[91m'
     end         = '\033[0m'
     que         = '\033[94m[?]\033[0m'
     #test colors
