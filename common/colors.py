@@ -15,7 +15,7 @@ else:
     Y           = '\033[93m' # yellow
     R           = '\033[91m'
     G           = '\033[92m'
-    back        = '\033[7;91m'
+    bg          = '\033[7;91m'
     green       = '\033[92m'
     #action colors
     run         = '\033[93m[~]\033[0m'
