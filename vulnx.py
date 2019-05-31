@@ -63,6 +63,17 @@ from modules.jooExploits import(joomla_comjce,
                                   joomla_fabrik2_d,
                                   joomla_foxcontact,
                                 )
+from modules.prestaExploits import (
+                                  columnadverts,
+                                  soopabanners,
+                                  vtslide,
+                                  simpleslideshow,
+                                  productpageadverts,
+                                  productpageadvertsb,
+                                  jro_homepageadvertise,
+                                  attributewizardpro,
+)
+
 #cleaning screen
 
 banner()
@@ -338,6 +349,14 @@ def detect_cms():
         if exploit:
             print (' %s Check Vulnerability\n' %(run))
             print (""" %sNAME                      %sSTATUS  %sSHELL"""%(W,W,W))
+            columnadverts(url,headers)
+            soopabanners(url,headers)
+            vtslide(url,headers)
+            simpleslideshow(url,headers)
+            productpageadverts(url,headers)
+            productpageadvertsb(url,headers)
+            jro_homepageadvertise(url,headers)
+            attributewizardpro(url,headers)
 
         ############################
         #                          #
