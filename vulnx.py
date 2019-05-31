@@ -72,6 +72,21 @@ from modules.prestaExploits import (
                                   productpageadvertsb,
                                   jro_homepageadvertise,
                                   attributewizardpro,
+                                  oneattributewizardpro,
+                                  attributewizardpro_old,
+                                  attributewizardpro_x,
+                                  advancedslider,
+                                  cartabandonmentpro,
+                                  cartabandonmentpro_old,
+                                  videostab,
+                                  wg24themeadministration,
+                                  fieldvmegamenu,
+                                  wdoptionpanel,
+                                  pk_flexmenu,
+                                  nvn_export_orders,
+                                  tdpsthemeoptionpanel,
+                                  masseditproduct,
+
 )
 
 #cleaning screen
@@ -357,7 +372,20 @@ def detect_cms():
             productpageadvertsb(url,headers)
             jro_homepageadvertise(url,headers)
             attributewizardpro(url,headers)
-
+            oneattributewizardpro(url,headers)
+            attributewizardpro_old(url,headers)
+            attributewizardpro_x(url,headers)
+            advancedslider(url,headers)
+            cartabandonmentpro(url,headers)
+            cartabandonmentpro_old(url,headers)
+            videostab(url,headers)
+            wg24themeadministration(url,headers)
+            fieldvmegamenu(url,headers)
+            wdoptionpanel(url,headers)
+            pk_flexmenu(url,headers)
+            nvn_export_orders(url,headers)
+            tdpsthemeoptionpanel(url,headers)
+            masseditproduct(url,headers)
         ############################
         #                          #
         #          OpenCart        #
