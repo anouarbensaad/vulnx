@@ -2,12 +2,8 @@ language: python
 os:
   # os building
   - linux
-sudo: false
-git:
-  - depth: 1
 python:
   # version of python.
-  - 3.3
   - 3.6
 install:
   # install packages.
