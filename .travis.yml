@@ -9,10 +9,11 @@ install:
   # install packages.
   - pip install -r ./pip/requirements.txt
 before_script:
+  - pip install flake8
   # stop the build if there are Python syntax errors or undefined names
   - flake8 . --count --select=E901,E999,F821,F822,F823 --show-source --statistics
   # exit-zero treats all errors as warnings.  The GitHub editor is 127 chars wide
-- flake8 . --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics
+  - flake8 . --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics
 script:
   # run this command to grabber all informations, and apply the vunerabilites search
   - python vulnx.py -u isetso.rnu.tn --cms all -t3 --domain-info --web-info --dns --exploit
