@@ -110,6 +110,8 @@ def parse_args():
     parser.add_argument('--threads', help="number of threads", dest='numthread', type=float)
     parser.add_argument('-n', '--number-pages', help='search dorks number page limit', dest='numberpage' , type=int)
     parser.add_argument('-i', '--input', help='specify input file of domains to scan',dest='input_file' ,required=False)
+    parser.add_argument('-l','--dork-list', help='list names of dorks exploits',dest='dorkslist',
+                        choices=['wordpress', 'prestashop','joomla','lokomedia','drupal','all']) 
     #Switches
     parser.add_argument('-e','--exploit', help='searching vulnerability & run exploits',
     dest='exploit', action='store_true')
@@ -121,8 +123,6 @@ def parse_args():
     dest='domaininfo', action='store_true')
     parser.add_argument('--dns', help='dns informations gatherings',
     dest='dnsdump', action='store_true')
-    parser.add_argument('-l','--dork-list', help='list names of dorks exploits',
-    dest='dorkslist', action='store_true')
     return parser.parse_args()
 
 vulnresults = set()  # results of vulnerability exploits. [success or failed]
@@ -655,6 +655,21 @@ if __name__ == "__main__":
         'Connection': 'keep-alive',}
         from modules.dorksEngine import (searchengine,getdorksbyname,wp_contentdorks)
         searchengine(dorks,headers,output_dir,numberpage)
-    if dorkslist:
-        from modules.dorkTable import dorkslist as lsdorks
-        lsdorks()
+    if dorkslist == 'all':
+        from modules.dorkTable import dorkslist as listall
+        listall()
+    if dorkslist == 'wordpress':
+        from modules.dorkTable import wp_dorkTable as listwp
+        listwp()
+    if dorkslist == 'joomla':
+        from modules.dorkTable import joo_dorkTable as listjoo
+        listjoo()
+    if dorkslist == 'prestashop':
+        from modules.dorkTable import ps_dorkTable as listps
+        listps()
+    if dorkslist == 'lokomedia':
+        from modules.dorkTable import loko_dorkTable as listlm
+        listlm()
+    if dorkslist == 'drupal':
+        from modules.dorkTable import dru_dorkTable as listdru
+        listdru()
