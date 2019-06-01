@@ -2,8 +2,12 @@ language: python
 os:
   # os building
   - linux
+sudo: false
+git:
+  - depth: 1
 python:
   # version of python.
+  - 3.3
   - 3.6
 install:
   # install packages.
@@ -18,4 +22,4 @@ script:
   # run this command to grabber all informations, and apply the vunerabilites search
   - python vulnx.py -u isetso.rnu.tn --cms all -t3 --domain-info --web-info --dns --exploit
   # show list dorks & search example for blaze dork 5 page of google search & output the results to logs/Dorks/getTime()
-  - python vulnx.py -l -D blaze -n 5 --output logs/
+  - python vulnx.py -l all -D blaze -n 5 --output logs/
