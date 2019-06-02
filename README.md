@@ -6,7 +6,7 @@
   <br>
 </h1>
 
-<h4 align="center">Vulnx 🕷️ Cms And Vulnerabilites Detector And An Intelligent Bot Auto Shell Injector</h4>
+<h4 align="center">Vulnx 🕷️ is An Intelligent Bot Auto Shell Injector that detect Vulnerabilites in multiple types of Cms </h4>
 
 <p align="center">
    <a href="https://github.com/anouarbensaad/vulnx/releases">
@@ -33,9 +33,9 @@
   <a href="https://github.com/anouarbensaad/vulnx/wiki/Compatibility-&-Dependencies">Compatibility</a> •
 </p>
 
-**Vulnx** is a cms and vulnerabilites detection, an intelligent auto [shell injector](https://github.com/anouarbensaad/vulnx/wiki/Usage#run-exploits), fast cms detection of target and fast scanner and informations gathering like subdomains, ipaddresses, country, org, timezone, region, ans and more ...
+**Vulnx** is An Intelligent Bot Auto [Shell Injector](https://github.com/anouarbensaad/vulnx/wiki/Usage#run-exploits) that detect Vulnerabilites in multiple types of Cms, fast cms detection,informations gathering and Vulnerabilite Scanning of the target like subdomains, ipaddresses, country, org, timezone, region, ans and more ...
 
-Instead of injecting shell and checking it works like all the other tools do, vulnx analyses the response with and recieve if shell success uploaded or no. vulnx is searching for urls with [dorks](https://github.com/anouarbensaad/vulnx/wiki/Usage#searching-dorks). 
+Instead of injecting each and every shell manually like all the other tools do, VulnX analyses the target website checking the presence of a Vulnerabilite if so the shell will be Injected.searching urls with [dorks](https://github.com/anouarbensaad/vulnx/wiki/Usage#searching-dorks) Tool. 
 
 ### Features
 
@@ -52,11 +52,11 @@ Instead of injecting shell and checking it works like all the other tools do, vu
 
 ### DNS-Map-Results
 
-To do this, we'll run a scan with the --dns flag and -d for subdomains.
+To do this,run a scan with the --dns flag and -d for subdomains.
 To generate a map of isetso.rnu.tn, you can run the command 
-`vulnx -u isetso.rnu.tn --dns -d --output $PATH`in a terminal window.
+`vulnx -u isetso.rnu.tn --dns -d --output $PATH`in a new terminal.
 
-`$PATH` : Where export the graphs ?
+`$PATH` : Where the graphs results will be stored.
 
 <p align="center">
    <a href="https://github.com/anouarbensaad/vulnx/wiki/Usage#dns-informations-gathering">
@@ -115,31 +115,31 @@ Let's zoom in and look at the Subdomains,MX & DNS Records.
 - [ ] [Drupal Geddon2       ]('#')
 
 #### PrestaShop
-- [ ] [attributewizardpro   ]('#')
-- [ ] [columnadverts        ]('#')
+- [x] [attributewizardpro   ]('#')
+- [x] [columnadverts        ]('#')
 - [ ] [soopamobile          ]('#')
-- [ ] [pk_flexmenu          ]('#')
-- [ ] [pk_vertflexmenu      ]('#')
-- [ ] [nvn_export_orders    ]('#')
-- [ ] [megamenu             ]('#')
-- [ ] [tdpsthemeoptionpanel ]('#')
+- [x] [pk_flexmenu          ]('#')
+- [x] [pk_vertflexmenu      ]('#')
+- [x] [nvn_export_orders    ]('#')
+- [x] [megamenu             ]('#')
+- [x] [tdpsthemeoptionpanel ]('#')
 - [ ] [psmodthemeoptionpanel]('#')
-- [ ] [masseditproduct      ]('#')
+- [x] [masseditproduct      ]('#')
 - [ ] [blocktestimonial     ]('#')
-- [ ] [soopabanners         ]('#')
-- [ ] [Vtermslideshow       ]('#')
-- [ ] [simpleslideshow      ]('#')
-- [ ] [productpageadverts   ]('#')
-- [ ] [homepageadvertise    ]('#')
+- [x] [soopabanners         ]('#')
+- [x] [Vtermslideshow       ]('#')
+- [x] [simpleslideshow      ]('#')
+- [x] [productpageadverts   ]('#')
+- [x] [homepageadvertise    ]('#')
 - [ ] [homepageadvertise2   ]('#')
-- [ ] [jro_homepageadvertise]('#')
-- [ ] [advancedslider       ]('#')
-- [ ] [cartabandonmentpro   ]('#')
-- [ ] [cartabandonmentproOld]('#')
-- [ ] [videostab            ]('#')
-- [ ] [wg24themeadministration]('#')
-- [ ] [fieldvmegamenu       ]('#')
-- [ ] [wdoptionpanel        ]('#')
+- [x] [jro_homepageadvertise]('#')
+- [x] [advancedslider       ]('#')
+- [x] [cartabandonmentpro   ]('#')
+- [x] [cartabandonmentproOld]('#')
+- [x] [videostab            ]('#')
+- [x] [wg24themeadministration]('#')
+- [x] [fieldvmegamenu       ]('#')
+- [x] [wdoptionpanel        ]('#')
 
 #### Opencart
 - [ ] [Opencart BruteForce]('#')
@@ -149,7 +149,7 @@ Let's zoom in and look at the Subdomains,MX & DNS Records.
 
     usage: vulnx [options]
     
-      -u --url              url target to scan
+      -u --url              url target
       -D --dorks            search webs with dorks
       -o --output           specify output directory
       -t --timeout          http requests timeout
@@ -160,13 +160,13 @@ Let's zoom in and look at the Subdomains,MX & DNS Records.
       -l, --dork-list       list names of dorks exploits
       -n, --number-page     number page of search engine(Google)
       -p, --ports           ports to scan
-      -i, --input           specify input file of domains to scan
+      -i, --input           specify domains to scan from an input file 
       --threads             number of threads
       --dns                 dns informations gathering
 
 ### Docker
 
-VulnX can be launched in docker.
+VulnX in DOCKER !!.
 
 ```bash
 $ git clone https://github.com/anouarbensaad/VulnX.git
@@ -175,7 +175,7 @@ $ docker build -t vulnx ./docker/
 $ docker run -it --name vulnx vulnx:latest -u http://exemple.com
 ```
 
-make a local volume to view the results into a logfile
+to view logfiles mount it in a volume like so:
 
 ```bash
 $ docker run -it --name vulnx -v "$PWD/logs:/VulnX/logs" vulnx:latest -u http://exemple.com
@@ -246,7 +246,7 @@ return urls found with blaze dork
 
 ### :warning: Warning !!
 
-***I don't Accept any responsibility for any illegal usage.***
+***I Am Not Responsible of any Illegal Use***
 
 ### Contribution & License
 
