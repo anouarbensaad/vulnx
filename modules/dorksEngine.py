@@ -6,6 +6,14 @@ import os
 from common.colors import run,W,end,good,bad,que,info,bannerblue
 from common.requestUp import getrequest as vulnxget
 from common.uriParser import parsing_url as parsify
+filename = time.strftime("%Y-%m-%d-%H%M%S-Dorks")
+output_dirdorks = 'logs'+'/Dorks'
+
+if not os.path.exists(output_dirdorks): # if the directory doesn't exist
+        os.mkdir(output_dirdorks) # create a new directory
+        export= open('%s/%s.txt' % (output_dirdorks,filename),'w')
+
+
 wp_contentdorks = {
         'blaze'             : 'inurl:"/wp-content/plugins/blaze-slide-show-for-wordpress/"',
         'catpro'            : 'inurl:"/wp-content/plugins/wp-catpro/"',
@@ -113,19 +121,15 @@ def searchengine(exploitname,headers,output_dir,numberpage):
                         elapsed = endy - starty
                         print (' %s Elapsed Time : %.2f seconds' % (info,elapsed))
                         print("%s----------------%s"%(bannerblue,end))
+                export.close()
         except Exception as msg:
                 print(' %s exploitname %s ' %(bad,msg))
         np=+10
 def WP_dorksconditions(exploitname,response,output_dir):
-        filename = time.strftime("%Y-%m-%d-%H%M%S-Dorks")
-        output_dirdorks = output_dir+'/Dorks'
-        if not os.path.exists(output_dirdorks): # if the directory doesn't exist
-                os.mkdir(output_dirdorks) # create a new directory
         webs = []
         if exploitname in wp_contentdorks:
                 dorks = re.findall(re.compile(r'https?://+?\w+?[a-zA-Z0-9-_.]+?[a-zA-Z0-9-_.]?\w+\.\w+/?/wp-content/plugins/\w+'),response)
                 if len(dorks) > 0:
-                        export= open('%s/%s.txt' % (output_dirdorks,filename),'w')
                         for web in dorks:
                                 if web not in webs:
                                         webs.append(web)
@@ -135,11 +139,9 @@ def WP_dorksconditions(exploitname,response,output_dir):
                                 print (' %s DOMAIN: %s ' %(good , domains))
                                 export.write(domains)
                                 export.write('\n')
-                        export.close()
         elif exploitname in wp_admindorks:      
                 dorks = re.findall(re.compile(r'https?://+?\w+?[a-zA-Z0-9-_.]+?[a-zA-Z0-9-_.]?\w+\.\w+/?/wp-admin/\w+'),response)
                 if len(dorks) > 0:
-                        export= open('%s/%s.txt' % (output_dirdorks,filename),'w')
                         for web in dorks:
                                 if web not in webs:
                                         webs.append(web)
@@ -149,11 +151,9 @@ def WP_dorksconditions(exploitname,response,output_dir):
                                 print (' %s DOMAIN: %s ' %(good , domains))
                                 export.write(domains)
                                 export.write('\n')
-                        export.close()
         elif exploitname in wpajx:
                 dorks = re.findall(re.compile(r'https?://+?\w+?[a-zA-Z0-9-_.]+?[a-zA-Z0-9-_.]?\w+\.\w+/?/jm-ajax/upload_file/'),response)
                 if len(dorks) > 0:
-                        export= open('%s/%s.txt' % (output_dirdorks,filename),'w')
                         for web in dorks:
                                 if web not in webs:
                                         webs.append(web)
@@ -163,11 +163,9 @@ def WP_dorksconditions(exploitname,response,output_dir):
                                 print (' %s DOMAIN: %s ' %(good , domains))
                                 export.write(domains)
                                 export.write('\n')
-                        export.close()
         elif exploitname in wpindex:
                 dorks = re.findall(re.compile(r'https?://+?\w+?[a-zA-Z0-9-_.]+?[a-zA-Z0-9-_.]?\w+\.\w+/index.php/wp-json/wp/'),response)
                 if len(dorks) > 0:
-                        export= open('%s/%s.txt' % (output_dirdorks,filename),'w')
                         for web in dorks:
                                 if web not in webs:
                                         webs.append(web)
@@ -177,11 +175,9 @@ def WP_dorksconditions(exploitname,response,output_dir):
                                 print (' %s DOMAIN: %s ' %(good , domains))
                                 export.write(domains)
                                 export.write('\n')
-                        export.close()
         elif exploitname in joomla:
                 dorks = re.findall(re.compile(r'https?://+?\w+?[a-zA-Z0-9-_.]+?[a-zA-Z0-9-_.]?\w+\.\w+/index.php?option=com_jce'),response)
                 if len(dorks) > 0:
-                        export= open('%s/%s.txt' % (output_dirdorks,filename),'w')
                         for web in dorks:
                                 if web not in webs:
                                         webs.append(web)
@@ -191,11 +187,9 @@ def WP_dorksconditions(exploitname,response,output_dir):
                                 print (' %s DOMAIN: %s ' %(good , domains))
                                 export.write(domains)
                                 export.write('\n')
-                        export.close()
         elif exploitname in prestashop:
                 dorks = re.findall(re.compile(r'https?://+?\w+?[a-zA-Z0-9-_.]+?[a-zA-Z0-9-_.]?\w+\.\w+/?/modules/\w+'),response)
                 if len(dorks) > 0:
-                        export= open('%s/%s.txt' % (output_dirdorks,filename),'w')
                         for web in dorks:
                                 if web not in webs:
                                         webs.append(web)
@@ -205,4 +199,3 @@ def WP_dorksconditions(exploitname,response,output_dir):
                                 print (' %s DOMAIN: %s ' %(good , domains))
                                 export.write(domains)
                                 export.write('\n')
-                        export.close()
