@@ -1,3 +1,9 @@
+#### v1.5
+- Added 8 Prestashop Exploits.
+- Added `Windows` & `MacOS` Comptability
+- Fixed a few bugs
+- Added vulnx to Docker from Ubuntu Image.
+
 #### v1.4
 - Fix parsing url
 - Fix Robot Detected when you searching for dorks.

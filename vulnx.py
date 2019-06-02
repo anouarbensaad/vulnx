@@ -63,6 +63,32 @@ from modules.jooExploits import(joomla_comjce,
                                   joomla_fabrik2_d,
                                   joomla_foxcontact,
                                 )
+from modules.prestaExploits import (
+                                  columnadverts,
+                                  soopabanners,
+                                  vtslide,
+                                  simpleslideshow,
+                                  productpageadverts,
+                                  productpageadvertsb,
+                                  jro_homepageadvertise,
+                                  attributewizardpro,
+                                  oneattributewizardpro,
+                                  attributewizardpro_old,
+                                  attributewizardpro_x,
+                                  advancedslider,
+                                  cartabandonmentpro,
+                                  cartabandonmentpro_old,
+                                  videostab,
+                                  wg24themeadministration,
+                                  fieldvmegamenu,
+                                  wdoptionpanel,
+                                  pk_flexmenu,
+                                  nvn_export_orders,
+                                  tdpsthemeoptionpanel,
+                                  masseditproduct,
+
+)
+
 #cleaning screen
 
 banner()
@@ -84,6 +110,8 @@ def parse_args():
     parser.add_argument('--threads', help="number of threads", dest='numthread', type=float)
     parser.add_argument('-n', '--number-pages', help='search dorks number page limit', dest='numberpage' , type=int)
     parser.add_argument('-i', '--input', help='specify input file of domains to scan',dest='input_file' ,required=False)
+    parser.add_argument('-l','--dork-list', help='list names of dorks exploits',dest='dorkslist',
+                        choices=['wordpress', 'prestashop','joomla','lokomedia','drupal','all']) 
     #Switches
     parser.add_argument('-e','--exploit', help='searching vulnerability & run exploits',
     dest='exploit', action='store_true')
@@ -95,8 +123,6 @@ def parse_args():
     dest='domaininfo', action='store_true')
     parser.add_argument('--dns', help='dns informations gatherings',
     dest='dnsdump', action='store_true')
-    parser.add_argument('-l','--dork-list', help='list names of dorks exploits',
-    dest='dorkslist', action='store_true')
     return parser.parse_args()
 
 vulnresults = set()  # results of vulnerability exploits. [success or failed]
@@ -338,7 +364,28 @@ def detect_cms():
         if exploit:
             print (' %s Check Vulnerability\n' %(run))
             print (""" %sNAME                      %sSTATUS  %sSHELL"""%(W,W,W))
-
+            columnadverts(url,headers)
+            soopabanners(url,headers)
+            vtslide(url,headers)
+            simpleslideshow(url,headers)
+            productpageadverts(url,headers)
+            productpageadvertsb(url,headers)
+            jro_homepageadvertise(url,headers)
+            attributewizardpro(url,headers)
+            oneattributewizardpro(url,headers)
+            attributewizardpro_old(url,headers)
+            attributewizardpro_x(url,headers)
+            advancedslider(url,headers)
+            cartabandonmentpro(url,headers)
+            cartabandonmentpro_old(url,headers)
+            videostab(url,headers)
+            wg24themeadministration(url,headers)
+            fieldvmegamenu(url,headers)
+            wdoptionpanel(url,headers)
+            pk_flexmenu(url,headers)
+            nvn_export_orders(url,headers)
+            tdpsthemeoptionpanel(url,headers)
+            masseditproduct(url,headers)
         ############################
         #                          #
         #          OpenCart        #
@@ -608,6 +655,21 @@ if __name__ == "__main__":
         'Connection': 'keep-alive',}
         from modules.dorksEngine import (searchengine,getdorksbyname,wp_contentdorks)
         searchengine(dorks,headers,output_dir,numberpage)
-    if dorkslist:
-        from modules.dorkTable import dorkslist as lsdorks
-        lsdorks()
+    if dorkslist == 'all':
+        from modules.dorkTable import dorkslist as listall
+        listall()
+    if dorkslist == 'wordpress':
+        from modules.dorkTable import wp_dorkTable as listwp
+        listwp()
+    if dorkslist == 'joomla':
+        from modules.dorkTable import joo_dorkTable as listjoo
+        listjoo()
+    if dorkslist == 'prestashop':
+        from modules.dorkTable import ps_dorkTable as listps
+        listps()
+    if dorkslist == 'lokomedia':
+        from modules.dorkTable import loko_dorkTable as listlm
+        listlm()
+    if dorkslist == 'drupal':
+        from modules.dorkTable import dru_dorkTable as listdru
+        listdru()

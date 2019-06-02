@@ -1,12 +1,21 @@
 language: python
 os:
+  # os building
   - linux
 python:
+  # version of python.
   - 3.6
 install:
+  # install packages.
   - pip install -r ./pip/requirements.txt
+before_script:
+  - pip install flake8
+  # stop the build if there are Python syntax errors or undefined names
+  - flake8 . --count --select=E901,E999,F821,F822,F823 --show-source --statistics
+  # exit-zero treats all errors as warnings.  The GitHub editor is 127 chars wide
+  - flake8 . --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics
 script:
-  - python vulnx.py -l
-  - python vulnx.py -u isetso.rnu.tn -t 3 -d -w
-  - python vulnx.py -D blaze -n 5
-  - python vulnx.py -u isetso.rnu.tn --dns -d
+  # run this command to grabber all informations, and apply the vunerabilites search
+  - python vulnx.py -u isetso.rnu.tn --cms all -t3 --domain-info --web-info --dns --exploit
+  # show list dorks & search example for blaze dork 5 page of google search & output the results to logs/Dorks/getTime()
+  - python vulnx.py -l all -D blaze -n 5 --output logs/
