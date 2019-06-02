@@ -11,7 +11,9 @@ output_dirdorks = 'logs'+'/Dorks'
 
 if not os.path.exists(output_dirdorks): # if the directory doesn't exist
         os.mkdir(output_dirdorks) # create a new directory
-        export= open('%s/%s.txt' % (output_dirdorks,filename),'w')
+        export = open('%s/%s.txt' % (output_dirdorks,filename),'w')
+else:
+        export = open('%s/%s.txt' % (output_dirdorks,filename),'w')
 
 
 wp_contentdorks = {
