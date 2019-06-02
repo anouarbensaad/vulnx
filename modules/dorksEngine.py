@@ -8,7 +8,12 @@ from common.requestUp import getrequest as vulnxget
 from common.uriParser import parsing_url as parsify
 filename = time.strftime("%Y-%m-%d-%H%M%S-Dorks")
 output_dirdorks = 'logs'+'/Dorks'
-export= open('%s/%s.txt' % (output_dirdorks,filename),'a')
+
+if not os.path.exists(output_dirdorks): # if the directory doesn't exist
+        os.mkdir(output_dirdorks) # create a new directory
+        export= open('%s/%s.txt' % (output_dirdorks,filename),'w')
+
+
 wp_contentdorks = {
         'blaze'             : 'inurl:"/wp-content/plugins/blaze-slide-show-for-wordpress/"',
         'catpro'            : 'inurl:"/wp-content/plugins/wp-catpro/"',
@@ -121,8 +126,6 @@ def searchengine(exploitname,headers,output_dir,numberpage):
                 print(' %s exploitname %s ' %(bad,msg))
         np=+10
 def WP_dorksconditions(exploitname,response,output_dir):
-        if not os.path.exists(output_dirdorks): # if the directory doesn't exist
-                os.mkdir(output_dirdorks) # create a new directory
         webs = []
         if exploitname in wp_contentdorks:
                 dorks = re.findall(re.compile(r'https?://+?\w+?[a-zA-Z0-9-_.]+?[a-zA-Z0-9-_.]?\w+\.\w+/?/wp-content/plugins/\w+'),response)
