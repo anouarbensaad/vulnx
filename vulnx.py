@@ -57,8 +57,8 @@ from modules.wpExploits import(   wp_wysija,
                                 )
 from modules.jooExploits import(  com_jce,
                                   com_media,
-                                  com_jdownloads,
-                                  com_jdownloadsb,
+#                                  com_jdownloads,
+#                                  com_jdownloadsb,
                                   com_fabrika,
                                   com_fabrikb,
                                   com_foxcontact,
@@ -228,8 +228,8 @@ def detect_cms():
             print (""" %sNAME                      %sSTATUS  %sSHELL"""%(W,W,W))
             com_jce(url,headers)
             com_media(url,headers)
-            com_jdownloads(url,headers)
-            com_jdownloadsb(url,headers)
+            #com_jdownloads(url,headers)
+#            com_jdownloadsb(url,headers)
             com_fabrika(url,headers)
             com_fabrikb(url,headers)
             com_foxcontact(url,headers)
