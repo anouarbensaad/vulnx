@@ -20,9 +20,17 @@ LABEL desc "Vulnx is a cms and vulnerabilites detection, an intelligent auto she
 	    vulnx is searching for urls with dorks."
 	    
 # Clonning Vulnx From Github
-RUN apk add git && \
+RUN apk add --no-cache git && \
     git clone https://github.com/anouarbensaad/vulnx.git
 
+# Make vulnx group
+RUN addgroup vulnx
+# added \\vulnx [group] secondary group to vulnx.
+RUN adduser -G vulnx -g "vulnx user" -s /bin/sh -D vulnx
+# change vulnx owner of directory of project.
+RUN chown -R vulnx vulnx
+# Switch user.
+USER vulnx
 # Working−Directory
 WORKDIR vulnx
 
