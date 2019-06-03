@@ -36,7 +36,7 @@ RUN chown -R vulnx vulnx
 USER vulnx
 
 # Add Envirement var to change modules run.
-ENV PATH vulnx/modules:$PATH
+#ENV PATH vulnx/modules:$PATH
 
 # Working−Directory
 WORKDIR vulnx
