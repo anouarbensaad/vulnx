@@ -55,13 +55,24 @@ from modules.wpExploits import(   wp_wysija,
                                   wp_levoslideshow,
                                   wp_adblockblocker,
                                 )
-from modules.jooExploits import(joomla_comjce,
-                                  joomla_comedia,
-                                  joomla_comjdownloads,
-                                  joomla_comjdownloads2,
-                                  joomla_fabrik2,
-                                  joomla_fabrik2_d,
-                                  joomla_foxcontact,
+from modules.jooExploits import(  com_jce,
+                                  com_media,
+                                  com_jdownloads,
+                                  com_jdownloadsb,
+                                  com_fabrika,
+                                  com_fabrikb,
+                                  com_foxcontact,
+                                  com_adsmanager,
+                                  com_blog,
+                                  com_users,
+                                  comweblinks,
+                                  mod_simplefileupload,
+                                  com_jbcatalog,
+                                  com_sexycontactform,
+                                  com_rokdownloads,
+                                  com_extplorer,
+                                  com_jwallpapers,
+                                  com_facileforms,
                                 )
 from modules.prestaExploits import (
                                   columnadverts,
@@ -215,13 +226,24 @@ def detect_cms():
         if exploit:
             print (' %s Check Vulnerability' %(run))
             print (""" %sNAME                      %sSTATUS  %sSHELL"""%(W,W,W))
-            joomla_comjce(url,headers,timeout)
-            joomla_comedia(url,headers,timeout)
-            joomla_comjdownloads(url,headers,timeout)
-            joomla_comjdownloads2(url,headers,timeout)
-            joomla_fabrik2(url,headers,timeout)
-            joomla_fabrik2_d(url,headers,timeout)
-            joomla_foxcontact(url,headers,timeout)
+            com_jce(url,headers)
+            com_media(url,headers)
+            com_jdownloads(url,headers)
+            com_jdownloadsb(url,headers)
+            com_fabrika(url,headers)
+            com_fabrikb(url,headers)
+            com_foxcontact(url,headers)
+            com_adsmanager(url,headers)
+            com_blog(url,headers)
+            com_users(url,headers)
+            comweblinks(url,headers)
+            mod_simplefileupload(url,headers)
+            com_jbcatalog(url,headers)
+            com_sexycontactform(url,headers)
+            com_rokdownloads(url,headers)
+            com_extplorer(url,headers)
+            com_jwallpapers(url,headers)
+            com_facileforms(url,headers)
 
         ############################
         #                          #
