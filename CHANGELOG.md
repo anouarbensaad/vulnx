@@ -1,3 +1,14 @@
+#### v1.6
+- Added Payloads.
+- Added PS Exploits
+- Added Joomla Exploits
+- Fix Issues
+- Added Dorks Output {logs}
+- Scan Multiple targets.
+- Docker Using User. {`Fix Permissions`}
+- Fix .travis {`CI`: Run tests after merge or pull requests}
+- Listing Dorks {list `ps` , `joo` , `wp` , `dru`} exploits manually
+
 #### v1.5
 - Added 8 Prestashop Exploits.
 - Added `Windows` & `MacOS` Comptability
