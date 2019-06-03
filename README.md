@@ -48,7 +48,9 @@ Instead of injecting each and every shell manually like all the other tools do, 
 - Exploit dork searcher
 - [`Ports Scan`](https://user-images.githubusercontent.com/23563528/58365946-40a83a00-7ec3-11e9-87c5-055ed67109b7.jpg) High Level
 - [`Dns`](https://user-images.githubusercontent.com/23563528/58365784-09388e00-7ec1-11e9-8a05-e71fa39f146d.png)-Servers Dump
-
+- Input multiple target to scan.
+- Dorks Listing by Name& by ExploitName.
+- Export multiple target from Dorks into a logfile.
 
 ### DNS-Map-Results
 
