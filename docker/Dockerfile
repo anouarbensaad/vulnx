@@ -25,10 +25,13 @@ RUN apk add --no-cache git && \
 
 # Make vulnx group
 RUN addgroup vulnx
+
 # added \\vulnx [group] secondary group to vulnx.
 RUN adduser -G vulnx -g "vulnx user" -s /bin/sh -D vulnx
+
 # change vulnx owner of directory of project.
 RUN chown -R vulnx vulnx
+
 # Switch user.
 USER vulnx
 
