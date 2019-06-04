@@ -241,4 +241,4 @@ You can contribute in following ways:
 
 Do you want to have a conversation in private? email me : Bensaad.tig@gmail.com
 
-***VulnX*** is licensed under [MIT License](https://github.com/anouarbensaad/VulnX/blob/master/LICENSE) **
+***VulnX*** is licensed under [GPL-3.0 License](https://github.com/anouarbensaad/VulnX/blob/master/LICENSE) **
