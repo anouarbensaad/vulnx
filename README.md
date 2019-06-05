@@ -6,7 +6,7 @@
   <br>
 </h1>
 
-<h4 align="center">Vulnx 🕷️ is An Intelligent Bot Auto Shell Injector that detect Vulnerabilites in multiple types of Cms </h4>
+<h4 align="center">Vulnx 🕷️ is An Intelligent Bot Auto Shell Injector that detect vulnerabilities in multiple types of Cms </h4>
 
 <p align="center">
    <a href="https://github.com/anouarbensaad/vulnx/releases">
@@ -33,9 +33,9 @@
   <a href="https://github.com/anouarbensaad/vulnx/wiki/Compatibility-&-Dependencies">Compatibility</a> •
 </p>
 
-**Vulnx** is An Intelligent Bot Auto [Shell Injector](https://github.com/anouarbensaad/vulnx/wiki/Usage#run-exploits) that detect Vulnerabilites in multiple types of Cms, fast cms detection,informations gathering and Vulnerabilite Scanning of the target like subdomains, ipaddresses, country, org, timezone, region, ans and more ...
+**Vulnx** is An Intelligent Bot Auto [Shell Injector](https://github.com/anouarbensaad/vulnx/wiki/Usage#run-exploits) that detect vulnerabilities in multiple types of Cms, fast cms detection,informations gathering and vulnerabilitie Scanning of the target like subdomains, ipaddresses, country, org, timezone, region, ans and more ...
 
-Instead of injecting each and every shell manually like all the other tools do, VulnX analyses the target website checking the presence of a Vulnerabilite if so the shell will be Injected.searching urls with [dorks](https://github.com/anouarbensaad/vulnx/wiki/Usage#searching-dorks) Tool. 
+Instead of injecting each and every shell manually like all the other tools do, VulnX analyses the target website checking the presence of a vulnerabilitie if so the shell will be Injected.searching urls with [dorks](https://github.com/anouarbensaad/vulnx/wiki/Usage#searching-dorks) Tool. 
 
 ### Features
 
@@ -43,7 +43,7 @@ Instead of injecting each and every shell manually like all the other tools do, 
 - Target informations gatherings
 - Target Subdomains gathering
 - Multi-threading on demand
-- Checks for vulnerabilites
+- Checks for vulnerabilities
 - Auto shell injector
 - Exploit dork searcher
 - [`Ports Scan`](https://user-images.githubusercontent.com/23563528/58365946-40a83a00-7ec3-11e9-87c5-055ed67109b7.jpg) High Level
