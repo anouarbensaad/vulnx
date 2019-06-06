@@ -16,6 +16,11 @@
   <a href="https://pypi.org/project/vulnx/">
     <img src="https://img.shields.io/badge/pypi-vulnx-red.svg">
   </a>
+  
+  <a href='https://coveralls.io/github/anouarbensaad/vulnx?branch=master'>
+     <img src='https://coveralls.io/repos/github/anouarbensaad/vulnx/badge.svg?branch=master' 
+     alt='Coverage Status'/>
+  </a>
 
   <a href="https://github.com/anouarbensaad/vulnx/issues?q=is%3Aissue+is%3Aclosed">
       <img src="https://img.shields.io/github/issues-closed/anouarbensaad/vulnx.svg">
