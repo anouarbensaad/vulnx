@@ -31,6 +31,18 @@ RUN apt-get update -qq && \
 RUN mkdir -p /usr/share/vulnx && cd usr/share/vulnx && \
     git clone https://www.github.com/anouarbensaad/vulnx
 
+# Make vulnx group
+RUN addgroup vulnx
+
+# added \\vulnx [group] secondary group to vulnx.
+RUN adduser -G vulnx -g "vulnx user" -s /bin/sh -D vulnx
+
+# change vulnx owner of directory of project.
+RUN chown -R vulnx vulnx
+
+# Switch user.
+USER vulnx
+
 # Working−Directory
 WORKDIR vulnx
 
