@@ -65,14 +65,9 @@ To generate a map of isetso.rnu.tn, you can run the command
 
 `$PATH` : Where the graphs results will be stored.
 
-<p align="center">
-   <a href="https://github.com/anouarbensaad/vulnx/wiki/Usage#dns-informations-gathering">
-    <img src="https://user-images.githubusercontent.com/23563528/58377134-92a79900-7f71-11e9-952f-9fd4e0a751cb.png">
-  </a>
-</p>
+![dnsdump](https://user-images.githubusercontent.com/23563528/59736309-ff504380-9250-11e9-900d-5eebdc9c36d4.png)
 
 
-![Screenshot from 2019-05-26 04-43-10](https://user-images.githubusercontent.com/23563528/58377079-cd5d0180-7f70-11e9-9e9f-adf419fe993a.png)
 
 
 Let's zoom in and look at the Subdomains,MX & DNS Records.
