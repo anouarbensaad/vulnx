@@ -78,7 +78,7 @@ Let's zoom in and look at the Subdomains,MX & DNS Records.
 
 ### Exploits
 <h1 align="center">
-<a href="https://github.com/anouarbensaad/VulnX"><img src="https://user-images.githubusercontent.com/23563528/58003677-2e03be80-7ad9-11e9-9774-c69a38248c64.gif" alt="Exploits Running"></a>
+<a href="https://github.com/anouarbensaad/VulnX"><img src="https://user-images.githubusercontent.com/23563528/59737042-06c51c00-9254-11e9-87f8-876b33c87be1.gif" alt="Exploits Running"></a>
 </h1>
 
 #### Joomla
