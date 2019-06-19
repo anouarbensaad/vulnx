@@ -43,6 +43,8 @@
 
 Instead of injecting each and every shell manually like all the other tools do, VulnX analyses the target website checking the presence of a vulnerabilitie if so the shell will be Injected.searching urls with [dorks](https://github.com/anouarbensaad/vulnx/wiki/Usage#searching-dorks) Tool. 
 
+-------------------------------------
+
 ### Features
 
 - Detect cms (wordpress, joomla, prestashop, drupal, opencart, magento, lokomedia)
@@ -58,6 +60,8 @@ Instead of injecting each and every shell manually like all the other tools do, 
 - Dorks Listing by Name& by ExploitName.
 - Export multiple target from Dorks into a logfile.
 
+-------------------------------------
+
 ### DNS-Map-Results
 
 To do this,run a scan with the --dns flag and -d for subdomains.
@@ -66,7 +70,8 @@ To generate a map of isetso.rnu.tn, you can run the command
 
 `$PATH` : Where the graphs results will be stored.
 
-![dnsdump](https://user-images.githubusercontent.com/23563528/59736309-ff504380-9250-11e9-900d-5eebdc9c36d4.png)
+![vokoscreen-2019-06-19_05-44-07](https://user-images.githubusercontent.com/23563528/59737395-696ae780-9255-11e9-9e09-26416de89bee.gif)
+
 
 
 
@@ -75,6 +80,7 @@ Let's zoom in and look at the Subdomains,MX & DNS Records.
 
 ![demo](https://i.ibb.co/2kDLc0t/isetso-rnu-tn.png)
 
+-------------------------------------
 
 ### Exploits
 <h1 align="center">
@@ -171,6 +177,8 @@ Let's zoom in and look at the Subdomains,MX & DNS Records.
       --threads             number of threads
       --dns                 dns informations gathering
 
+-------------------------------------
+
 ### Docker
 
 VulnX in DOCKER !!.
@@ -187,6 +195,8 @@ to view logfiles mount it in a volume like so:
 ```bash
 $ docker run -it --name vulnx -v "$PWD/logs:/VulnX/logs" vulnx:latest -u http://exemple.com
 ```
+
+-------------------------------------
 
 ### Install vulnx on Ubuntu
 
@@ -211,6 +221,8 @@ $ ./install.sh
 ```
 [**CLICK HERE TO SHOW THE RESULT**](https://user-images.githubusercontent.com/23563528/58364091-98847800-7ea6-11e9-9a9a-c27717e4dda1.png)
 
+-------------------------------------
+
 ##### example command with options : settimeout=3 , cms-gathering = all , -d subdomains-gathering , run --exploits
 `vulnx -u http://example.com --timeout 3 -c all -d -w --exploit` 
 
@@ -219,6 +231,8 @@ $ ./install.sh
 return table of exploits name.
 `vulnx -D blaze`
 return urls found with blaze dork
+
+-------------------------------------
 
 ### Versions
 
@@ -229,9 +243,13 @@ return urls found with blaze dork
 - [v1.2](https://github.com/anouarbensaad/vulnx/releases/tag/v1.2)
 - [v1.1](https://github.com/anouarbensaad/vulnx/releases/tag/v1.1)
 
+-------------------------------------
+
 ### :warning: Warning !!
 
 ***I Am Not Responsible of any Illegal Use***
+
+-------------------------------------
 
 ### Contribution & License
 
