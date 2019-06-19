@@ -1,10 +1,14 @@
+'''
+Dorks Engine Module.
+github Repository : http://github.com/anouarbensaad/findorks
+'''
+
 import requests
 import re
 import time
 import random
 import os
 from common.colors import run,W,end,good,bad,que,info,bannerblue
-from common.requestUp import getrequest as vulnxget
 from common.uriParser import parsing_url as parsify
 filename = time.strftime("%Y-%m-%d-%H%M%S-Dorks")
 output_dirdorks = 'logs'+'/Dorks'

@@ -1,3 +1,8 @@
+'''
+Module Of Colors.
+OS : Ubuntu
+'''
+
 import sys
 
 if sys.platform.lower().startswith(('os', 'win', 'darwin', 'ios')):

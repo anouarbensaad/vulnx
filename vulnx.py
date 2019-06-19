@@ -1,9 +1,12 @@
-#!/usr/bin/env python
-# Title : vulnx
-# Author: anouarbensaad
-# Desc  : CMS-Detector and Vulnerability Scanner & exploiter
-"""The vulnx main part."""
 
+'''
+The vulnx main part.
+title : vulnx
+Author: anouarbensaad
+Desc  : CMS-Detector and Vulnerability Scanner & exploiter
+''' 
+
+#!/usr/bin/env python
 import sys
 import argparse
 import re
@@ -144,8 +147,6 @@ hostinfo = set() # host info
 args = parse_args()
 #url arg
 url = args.url
-#dorks arg
-dorks = args.dorks
 #run exploit
 exploit = args.exploit
 #cms gathering args
