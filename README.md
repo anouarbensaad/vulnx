@@ -30,7 +30,8 @@
   </a>
 </p>
 
-![demo](https://i.ibb.co/wrZgjWn/New-Project-2.jpg)
+![Screenshot from 2019-06-19 05-22-04](https://user-images.githubusercontent.com/23563528/59736664-7c2fed00-9252-11e9-936d-53ea02628711.png)
+
 
 <p align="center">
   <a href="https://github.com/anouarbensaad/vulnx/wiki">VulnX Wiki</a> •
