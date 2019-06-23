@@ -71,7 +71,8 @@ To generate a map of isetso.rnu.tn, you can run the command
 
 
 
-Let's zoom in and look at the Subdomains,MX & DNS Records.
+Let's generates an image displaying target Subdomains,MX & DNS data.
+
 
 ![demo](https://i.ibb.co/2kDLc0t/isetso-rnu-tn.png)
 
@@ -191,6 +192,12 @@ to view logfiles mount it in a volume like so:
 $ docker run -it --name vulnx -v "$PWD/logs:/VulnX/logs" vulnx:latest -u http://exemple.com
 ```
 
+change the [mounting directory](https://github.com/anouarbensaad/vulnx/blob/master/docker/Dockerfile#L46)..
+
+```Dockerfile
+VOLUME [ "$PATH" ]
+```
+
 -------------------------------------
 
 ### Install vulnx on Ubuntu
@@ -240,7 +247,7 @@ return urls found with blaze dork
 
 -------------------------------------
 
-### :warning: Warning !!
+### :warning: Warning!
 
 ***I Am Not Responsible of any Illegal Use***
 
@@ -252,7 +259,10 @@ You can contribute in following ways:
 
 - [Report bugs & add issues](https://github.com/anouarbensaad/VulnX/issues/new)
 - Search for new vulnerability
+- Develop plugins
+- Searching Exploits
+- Give suggestions **(Ideas)** to make it better
 
 Do you want to have a conversation in private? email me : Bensaad.tig@gmail.com
 
-***VulnX*** is licensed under [GPL-3.0 License](https://github.com/anouarbensaad/VulnX/blob/master/LICENSE) **
+***VulnX*** is licensed under [GPL-3.0 License](https://github.com/anouarbensaad/VulnX/blob/master/LICENSE)
