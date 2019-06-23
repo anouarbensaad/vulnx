@@ -32,6 +32,7 @@
   <a href="https://github.com/anouarbensaad/vulnx/wiki">VulnX Wiki</a> •
   <a href="https://github.com/anouarbensaad/vulnx/wiki/Usage">How To Use</a> •
   <a href="https://github.com/anouarbensaad/vulnx/wiki/Compatibility-&-Dependencies">Compatibility</a> •
+  <a href="https://github.com/anouarbensaad/vulnx/wiki/Vulnx-Library">Library</a> •
 </p>
 
 **Vulnx** is An Intelligent Bot Auto [Shell Injector](https://github.com/anouarbensaad/vulnx/wiki/Usage#run-exploits) that detect vulnerabilities in multiple types of Cms, fast cms detection,informations gathering and vulnerabilitie Scanning of the target like subdomains, ipaddresses, country, org, timezone, region, ans and more ...
