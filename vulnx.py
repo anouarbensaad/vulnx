@@ -553,10 +553,13 @@ def drupal_version():
     response = requests.get(url,headers).text
     regex = 'Drupal \d{0,10}'
     regex = re.compile(regex)
-    matches = regex.findall(response)
-    if len(matches) > 0 and matches[0] != None and matches[0] != "":
-        version = matches[0]
-        print ('%s [+] Drupal Version : %s %s' %(G,version,W))
+    try:
+        matches = regex.findall(response)
+        if len(matches) > 0 and matches[0] != None and matches[0] != "":
+            version = matches[0]
+            print ('%s [+] Drupal Version : %s %s' %(G,version,W))
+    except Exception as error_:
+      print('Handling Error : '+ str(error_))
 
 # Prestashop Version
 def prestashop_version():
@@ -608,8 +611,8 @@ def webhosting_info(hostinfo):
         if org:
             print(' %s Org : %s' % (good,org.group(1)))
         print ("-----------------------------------------------")
-    except Exception as converterror:
-        print(' %s Error to get ip for this web ' % (bad))
+    except Exception as parsing_error:
+        print(' %s Parsing error : %s' % (bad , str(parsing_error)))
 # output
 output_dir = args.output or 'logs'
 
@@ -654,8 +657,8 @@ if __name__ == "__main__":
                     }
                     detect_cms()
                     urls.close()
-            except Exception as error:
-                print('error : '+error)
+            except Exception as error_:
+                print('UKNOWN ERROR : '+ str(error_))
 
     if url:
         #url condition entrypoint
