@@ -186,6 +186,12 @@ $ docker build -t vulnx ./docker/
 $ docker run -it --name vulnx vulnx:latest -u http://exemple.com
 ```
 
+run vulnx container in interactive mode
+
+
+![vokoscreen-2019-06-23_11-53-20](https://user-images.githubusercontent.com/23563528/59975226-a31d5480-95ad-11e9-8252-ddd8291cbee4.gif)
+
+
 to view logfiles mount it in a volume like so:
 
 ```bash
