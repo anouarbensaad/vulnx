@@ -41,7 +41,7 @@ Instead of injecting each and every shell manually like all the other tools do, 
 
 -------------------------------------
 
-### Features
+### 🕷️ Features
 
 - Detect cms (wordpress, joomla, prestashop, drupal, opencart, magento, lokomedia)
 - Target informations gatherings
@@ -58,7 +58,7 @@ Instead of injecting each and every shell manually like all the other tools do, 
 
 -------------------------------------
 
-### DNS-Map-Results
+### 🕷️ DNS-Map-Results
 
 To do this,run a scan with the --dns flag and -d for subdomains.
 To generate a map of isetso.rnu.tn, you can run the command 
