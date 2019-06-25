@@ -27,7 +27,7 @@
 
 ![Screenshot from 2019-06-19 05-22-04](https://user-images.githubusercontent.com/23563528/59736664-7c2fed00-9252-11e9-936d-53ea02628711.png)
 
-
+https://github.com/anouarbensaad/vulnx/archive/master.zip
 <p align="center">
   <a href="https://github.com/anouarbensaad/vulnx/wiki">VulnX Wiki</a> •
   <a href="https://github.com/anouarbensaad/vulnx/wiki/Usage">How To Use</a> •
@@ -229,6 +229,18 @@ $ chmod +x install.sh
 $ ./install.sh
 ```
 [**CLICK HERE TO SHOW THE RESULT**](https://user-images.githubusercontent.com/23563528/58364091-98847800-7ea6-11e9-9a9a-c27717e4dda1.png)
+
+
+### Install vulnx in Windows
+
+- [click here](https://github.com/anouarbensaad/vulnx/archive/master.zip) to download vulnx
+- download and install python3
+- unzip **vulnx-master.zip** in ***c:/***
+- open the command prompt **cmd**.
+```
+> cd c:/vulnx-master
+> python vulnx.py
+```
 
 -------------------------------------
 
