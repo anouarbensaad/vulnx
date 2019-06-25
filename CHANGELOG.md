@@ -1,3 +1,10 @@
+#### v1.7
+- add documentation vulnx for windows.
+- add minor changes in dockerfile.
+- add documentation for developper used vulnx library
+- fix regEx in prestashop version.
+- error handling and ignore warnings.
+
 #### v1.6
 - Added Payloads.
 - Added PS Exploits
