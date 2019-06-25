@@ -79,12 +79,12 @@ Let's generates an image displaying target Subdomains,MX & DNS data.
 
 -------------------------------------
 
-### Exploits
+### 🕷️ Exploits
 <h1 align="center">
 <a href="https://github.com/anouarbensaad/VulnX"><img src="https://user-images.githubusercontent.com/23563528/59737042-06c51c00-9254-11e9-87f8-876b33c87be1.gif" alt="Exploits Running"></a>
 </h1>
 
-#### Joomla
+##### Joomla
 - [x] [Com Jce            ]('#')
 - [x] [Com Jwallpapers    ]('#')
 - [x] [Com Jdownloads     ]('#')
@@ -104,7 +104,7 @@ Let's generates an image displaying target Subdomains,MX & DNS data.
 - [x] [Com Facileforms    ]('#')
 - [x] [Com extplorer      ]('#')
 
-#### Wordpress
+##### Wordpress
 - [x] [Simple Ads Manager   ](https://www.exploit-db.com/exploits/36614)
 - [x] [InBoundio Marketing  ](https://www.rapid7.com/db/modules/exploit/unix/webapp/wp_inboundio_marketing_file_upload) 
 - [x] [WPshop eCommerce     ](https://www.rapid7.com/db/modules/exploit/unix/webapp/wp_wpshop_ecommerce_file_upload)
@@ -119,12 +119,12 @@ Let's generates an image displaying target Subdomains,MX & DNS data.
 - [x] [Blaze SlideShow      ](https://0day.today/exploits/18500)
 - [x] [Wysija-Newsletters   ](https://www.exploit-db.com/exploits/33991)
 
-#### Drupal
+##### Drupal
 - [ ] [Add Admin            ]('#')
 - [ ] [Drupal BruteForcer   ]('#')
 - [ ] [Drupal Geddon2       ]('#')
 
-#### PrestaShop
+##### PrestaShop
 - [x] [attributewizardpro   ]('#')
 - [x] [columnadverts        ]('#')
 - [ ] [soopamobile          ]('#')
@@ -151,10 +151,10 @@ Let's generates an image displaying target Subdomains,MX & DNS data.
 - [x] [fieldvmegamenu       ]('#')
 - [x] [wdoptionpanel        ]('#')
 
-#### Opencart
+##### Opencart
 - [ ] [Opencart BruteForce]('#')
 
-### Available command line options
+### 🕷️ Available command line options
 [`READ VULNX WIKI`](https://github.com/anouarbensaad/vulnx/wiki/Usage)
 
     usage: vulnx [options]
@@ -176,7 +176,7 @@ Let's generates an image displaying target Subdomains,MX & DNS data.
 
 -------------------------------------
 
-### Docker
+### 🕷️ Docker
 
 VulnX in DOCKER !!.
 
@@ -207,7 +207,7 @@ VOLUME [ "$PATH" ]
 
 -------------------------------------
 
-### Install vulnx on Ubuntu
+### 🕷️ Install vulnx on Ubuntu
 
 
 ```bash
@@ -218,7 +218,7 @@ $ ./install.sh
 ```
 Now run `vulnx`
 
-### Install vulnx on Termux
+### 🕷️ Install vulnx on Termux
 
 ```
 $ pkg update
@@ -231,7 +231,7 @@ $ ./install.sh
 [**CLICK HERE TO SHOW THE RESULT**](https://user-images.githubusercontent.com/23563528/58364091-98847800-7ea6-11e9-9a9a-c27717e4dda1.png)
 
 
-### Install vulnx in Windows
+### 🕷️ Install vulnx in Windows
 
 - [click here](https://github.com/anouarbensaad/vulnx/archive/master.zip) to download vulnx
 - download and install python3
@@ -255,7 +255,7 @@ return urls found with blaze dork
 
 -------------------------------------
 
-### Versions
+### 🕷️ Versions
 - [v1.7](https://github.com/anouarbensaad/vulnx/releases/tag/v1.7)
 - [v1.6](https://github.com/anouarbensaad/vulnx/releases/tag/v1.6)
 - [v1.5](https://github.com/anouarbensaad/vulnx/releases/tag/v1.5)
@@ -272,7 +272,7 @@ return urls found with blaze dork
 
 -------------------------------------
 
-### Contribution & License
+### 🕷️ Contribution & License
 
 You can contribute in following ways:
 
