@@ -41,7 +41,7 @@ Instead of injecting each and every shell manually like all the other tools do, 
 
 -------------------------------------
 
-### 🕷️ Features
+### _🕷️ Features_
 
 - Detect cms (wordpress, joomla, prestashop, drupal, opencart, magento, lokomedia)
 - Target informations gatherings
@@ -58,7 +58,7 @@ Instead of injecting each and every shell manually like all the other tools do, 
 
 -------------------------------------
 
-### 🕷️ DNS-Map-Results
+### _🕷️ DNS-Map-Results_
 
 To do this,run a scan with the --dns flag and -d for subdomains.
 To generate a map of isetso.rnu.tn, you can run the command 
@@ -79,7 +79,7 @@ Let's generates an image displaying target Subdomains,MX & DNS data.
 
 -------------------------------------
 
-### 🕷️ Exploits
+### _🕷️ Exploits_
 <h1 align="center">
 <a href="https://github.com/anouarbensaad/VulnX"><img src="https://user-images.githubusercontent.com/23563528/59737042-06c51c00-9254-11e9-87f8-876b33c87be1.gif" alt="Exploits Running"></a>
 </h1>
@@ -154,7 +154,7 @@ Let's generates an image displaying target Subdomains,MX & DNS data.
 ##### Opencart
 - [ ] [Opencart BruteForce]('#')
 
-### 🕷️ Available command line options
+### _🕷️ Available command line options_
 [`READ VULNX WIKI`](https://github.com/anouarbensaad/vulnx/wiki/Usage)
 
     usage: vulnx [options]
@@ -176,7 +176,7 @@ Let's generates an image displaying target Subdomains,MX & DNS data.
 
 -------------------------------------
 
-### 🕷️ Docker
+### _🕷️ Docker_
 
 VulnX in DOCKER !!.
 
@@ -207,7 +207,7 @@ VOLUME [ "$PATH" ]
 
 -------------------------------------
 
-### 🕷️ Install vulnx on Ubuntu
+### _🕷️ Install vulnx on Ubuntu_
 
 
 ```bash
@@ -218,7 +218,7 @@ $ ./install.sh
 ```
 Now run `vulnx`
 
-### 🕷️ Install vulnx on Termux
+### _🕷️ Install vulnx on Termux_
 
 ```
 $ pkg update
@@ -231,7 +231,7 @@ $ ./install.sh
 [**CLICK HERE TO SHOW THE RESULT**](https://user-images.githubusercontent.com/23563528/58364091-98847800-7ea6-11e9-9a9a-c27717e4dda1.png)
 
 
-### 🕷️ Install vulnx in Windows
+### _🕷️ Install vulnx in Windows_
 
 - [click here](https://github.com/anouarbensaad/vulnx/archive/master.zip) to download vulnx
 - download and install python3
@@ -255,7 +255,7 @@ return urls found with blaze dork
 
 -------------------------------------
 
-### 🕷️ Versions
+### _🕷️ Versions_
 - [v1.7](https://github.com/anouarbensaad/vulnx/releases/tag/v1.7)
 - [v1.6](https://github.com/anouarbensaad/vulnx/releases/tag/v1.6)
 - [v1.5](https://github.com/anouarbensaad/vulnx/releases/tag/v1.5)
@@ -272,7 +272,7 @@ return urls found with blaze dork
 
 -------------------------------------
 
-### 🕷️ Contribution & License
+### _🕷️ Contribution & License_
 
 You can contribute in following ways:
 
