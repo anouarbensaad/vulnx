@@ -12,7 +12,7 @@ function termuxOS() {
     echo -e "$red [$green+$red]$off Installing Python ...";
     pkg install python
     echo -e "$red [$green+$red]$off Installing Packages ...";
-    pip install -r ./pip/requirements.txt
+    pip install -r ./requirements.txt
     echo -e "$red [$green+$red]$off Checking directories ..."
     if [ -e "/data/data/com.termux/files/usr/share/vulnx" ]; then
         echo -e "$red [$green+$red]$off A previous installation was found Do you want to replace it? [Y/n]: "
@@ -85,8 +85,8 @@ function debianOS(){
     sudo cp -r "./shell" "/usr/share/vulnx/"
     sudo chmod +x /usr/share/vulnx/update.sh
     sudo cp "vulnx.py" "/usr/share/vulnx"
-    sudo cp "conf/vulnxicon.png" "/usr/share/icons"
-    sudo cp "conf/vulnx.desktop" "/usr/share/applications"
+    sudo cp "config/vulnxicon.png" "/usr/share/icons"
+    sudo cp "config/vulnx.desktop" "/usr/share/applications"
     sudo cp "vulnx" "/usr/local/bin/"
     rm "vulnx";
     if [ -d "/usr/share/vulnx" ] ;

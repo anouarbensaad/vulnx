@@ -40,7 +40,7 @@ WORKDIR vulnx
 
 # Install Pip Packages.
 RUN pip install --user --upgrade pip && \
-    pip install --user -r ./pip/requirements.txt
+    pip install --user -r ./requirements.txt
 
 # Add Mount Volume Docker To Save All changes. 
 VOLUME [ "/vulnx" ]
