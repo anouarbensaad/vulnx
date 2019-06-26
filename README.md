@@ -220,7 +220,7 @@ Now run `vulnx`
 
 ### _🕷️ Install vulnx on Termux_
 
-```
+```BASH
 $ pkg update
 $ pkg install -y git
 $ git clone http://github.com/anouarbensaad/vulnx
