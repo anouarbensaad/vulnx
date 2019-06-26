@@ -1,12 +1,15 @@
+#!/usr/bin/env python
 
-'''
+"""
 The vulnx main part.
-title : vulnx
 Author: anouarbensaad
 Desc  : CMS-Detector and Vulnerability Scanner & exploiter
-''' 
+Copyright (c)
+See the file 'LICENSE' for copying permission
+"""
 
-#!/usr/bin/env python
+from __future__ import print_function
+
 import sys
 import argparse
 import re
@@ -18,29 +21,21 @@ import signal
 import requests
 from common.threading import threads
 
-##### COMMON
+warnings.filterwarnings(action="ignore", message=".*was already imported", category=UserWarning)
+warnings.filterwarnings(action="ignore", category=DeprecationWarning)
 
-#colors Module.
 from common.colors import red, green, bg, G, R, W, Y, G , good , bad , run , info , end , que ,bannerblue2
-#banner module.
 from common.banner import banner
-#import parse url_convert url to domain_name.
 from common.uriParser import parsing_url as hostd
-#import vulnx_request::MODULE
 from common.requestUp import random_UserAgent
 from common.output_wr import writelogs as outlogs
 
 ##### MODULES
 
-#import ports_scan bootcode.
 from modules.portChecker import portscan
-#wp cms informations
 from modules.wpGrabber import (wp_version,wp_plugin,wp_themes,wp_user)
-#joomla cms informations
 from modules.jooGrabber import (joo_version,joo_user,joo_template)
-#dnsdumpster informations gathering
 from modules.dnsLookup import dnsdumper , domain_info
-#import wordpress_exploits
 from modules.wpExploits import(   wp_wysija,
                                   wp_blaze,
                                   wp_catpro,
@@ -181,12 +176,7 @@ def detect_cms():
     lm2_content = requests.get(lm2,headers).text
     content=requests.get(url,headers).text
 #    try:
-
-        ############################
-        #                          #
         #         joomla           #
-        #                          #
-        ############################
     #joomla searching content to detect.
     if  re.search(re.compile(r'<script type=\"text/javascript\" src=\"/media/system/js/mootools.js\"></script>|/media/system/js/|com_content|Joomla!'), content):
         print ('\n %s[%sTarget%s]%s => %s%s \n '% (bannerblue2,W,bannerblue2, W, url, end))
@@ -246,11 +236,7 @@ def detect_cms():
             com_jwallpapers(url,headers)
             com_facileforms(url,headers)
 
-        ############################
-        #                          #
         #         Wordpress        #
-        #                          #
-        ############################
     #wordpress searching content to detect.
     elif re.search(re.compile(r'wp-content|wordpress|xmlrpc.php'), content):
         print ('\n %s[%sTarget%s]%s => %s%s \n '% (bannerblue2,W,bannerblue2, W, url, end))
@@ -320,11 +306,7 @@ def detect_cms():
             wp_levoslideshow(url,headers,vulnresults)
             print ("-----------------------------------------------")
 
-        ############################
-        #                          #
         #          Drupal          #
-        #                          #
-        ############################
     #drupal searching content to detect.
     elif re.search(re.compile(r'Drupal|drupal|sites/all|drupal.org'), content):
         print ('\n %s[%sTarget%s]%s => %s%s \n '% (bannerblue2,W,bannerblue2, W, url, end))
@@ -354,11 +336,7 @@ def detect_cms():
             print (' %s Check Vulnerability\n' %(run))
             print (""" %sNAME                      %sSTATUS  %sSHELL"""%(W,W,W))
 
-        ############################
-        #                          #
         #        Prestashop        #
-        #                          #
-        ############################
     #prestashop searching content to detect.
     elif re.search(re.compile(r'Prestashop|prestashop'), content):
         print ('\n %s[%sTarget%s]%s => %s%s \n '% (bannerblue2,W,bannerblue2, W, url, end))
@@ -409,11 +387,8 @@ def detect_cms():
             nvn_export_orders(url,headers)
             tdpsthemeoptionpanel(url,headers)
             masseditproduct(url,headers)
-        ############################
-        #                          #
+
         #          OpenCart        #
-        #                          #
-        ############################
     #opencart searching content to detect.
     elif re.search(re.compile(r'route=product|OpenCart|route=common|catalog/view/theme'), content):
         print ('\n %s[%sTarget%s]%s => %s%s \n '% (bannerblue2,W,bannerblue2, W, url, end))
@@ -442,11 +417,7 @@ def detect_cms():
             print (' %s Check Vulnerability\n' %(run))
             print (""" %sNAME                      %sSTATUS  %sSHELL"""%(W,W,W))
 
-        ############################
-        #                          #
         #          Magento         #
-        #                          #
-        ############################
     #magento searching content to detect.
     elif re.search(re.compile(r'Log into Magento Admin Page|name=\"dummy\" id=\"dummy\"|Magento'), content):
         print ('\n %s[%sTarget%s]%s => %s%s \n '% (bannerblue2,W,bannerblue2, W, url, end))
@@ -475,11 +446,7 @@ def detect_cms():
             print (' %s Check Vulnerability' %(run))
             print (""" %sNAME                      %sSTATUS  %sSHELL"""%(W,W,W))
 
-        ############################
-        #                          #
         #         Lokomedia        #
-        #                          #
-        ############################
     #lokomedia searching content to detect.
         print (' %s Check Vulnerability' %(run))
     elif re.search(re.compile(r'image/gif'), lm_content):
@@ -522,11 +489,7 @@ def detect_cms():
             print ("-----------------------------------------------")
         print (' %s Check Vulnerability' %(run))
 
-        ############################
-        #                          #
         #          Unknown         #
-        #                          #
-        ############################
     #no cms detect
     else:
         print ('\n %s[%sTarget%s]%s => %s%s \n '% (bannerblue2,W,bannerblue2, W, url, end))
