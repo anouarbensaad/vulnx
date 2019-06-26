@@ -1,3 +1,10 @@
+#### v1.8
+- Remove pip & rename conf to config to excute update without problem.
+- Fix port arg to give port to scan.
+- CI : Change pip package. 
+- Docker : change pip package.
+- Remove the ENV Variable.
+
 #### v1.7
 - add documentation vulnx for windows.
 - add minor changes in dockerfile.
