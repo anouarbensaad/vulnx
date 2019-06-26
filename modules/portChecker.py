@@ -26,25 +26,12 @@ portsobject = {
    5800 :'VNC'        ,
    8080 :'HTTP'       ,
 }
-ports_array = [21,22,23,25,43,53,68,80,110,115,119,123,139,143,161,220,389,443,1521,2049,3306,5800,8080,]
-def portscan(host):
+def portscan(host,port):
     sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-    for port in ports_array:
-        if port < 100:
-            result = sock.connect_ex((host, port))
-            if result == 0:
-                print (' %s %s                    %s   %s' %(que,port,portopen,portsobject[port]))
-            else:
-                print (' %s %s                    %s   %s' %(que,port,portclose,portsobject[port]))
-        elif port > 100 and port < 1000:
-            result = sock.connect_ex((host, port))
-            if result == 0:
-                print (' %s %s                   %s   %s' %(que,port,portopen,portsobject[port]))
-            else:
-                print (' %s %s                   %s   %s' %(que,port,portclose,portsobject[port]))
-        if port > 1000:
-            result = sock.connect_ex((host, port))
-            if result == 0:
-                print (' %s %s                  %s   %s' %(que,port,portopen,portsobject[port]))
-            else:
-                print (' %s %s                  %s   %s' %(que,port,portclose,portsobject[port]))
+    if port:
+        result = sock.connect_ex((host, port))
+        if result == 0:
+            print (' %s %s                    %s   %s' %(que,port,portopen,portsobject[port]))
+        else:
+            print (' %s %s                    %s   %s' %(que,port,portclose,portsobject[port]))
+

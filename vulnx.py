@@ -126,11 +126,11 @@ def parse_args():
     parser.add_argument('-i', '--input', help='specify input file of domains to scan',dest='input_file' ,required=False)
     parser.add_argument('-l','--dork-list', help='list names of dorks exploits',dest='dorkslist',
                         choices=['wordpress', 'prestashop','joomla','lokomedia','drupal','all']) 
+    parser.add_argument('-p',  '--ports', help='ports to scan',
+                        dest='scanports', type=int)
     #Switches
     parser.add_argument('-e','--exploit', help='searching vulnerability & run exploits',
     dest='exploit', action='store_true')
-    parser.add_argument('-p',  '--ports', help='ports to scan',
-    dest='scanports', action='store_true')
     parser.add_argument('-w','--web-info', help='web informations gathering',
     dest='webinfo', action='store_true')
     parser.add_argument('-d','--domain-info', help='subdomains informations gathering',
@@ -165,7 +165,7 @@ numthread = args.numthread or 1
 #numberpage
 numberpage = args.numberpage or 1   
 #portscan
-scanports = args.scanports
+scanports = args.scanports or 22
 #dns
 dnsdump = args.dnsdump
 #input_file
@@ -217,7 +217,7 @@ def detect_cms():
         if scanports:
             print (' %s Scanning Ports' %(run))
             print (""" %s     PORTS                     %sSTATUS  %sPROTO"""%(W,W,W))
-            portscan(hostd(url))
+            portscan(hostd(url),scanports)
             print ("-----------------------------------------------")
         if dnsdump:
             print (' %s Starting DNS dump' %(run))
@@ -291,7 +291,7 @@ def detect_cms():
         if scanports:
             print (' %s Scanning Ports' %(run))
             print (""" %sPORTS                     %sSTATUS  %sPROTO"""%(W,W,W))
-            portscan(hostd(url))
+            portscan(hostd(url),scanports)
             print ("-----------------------------------------------")
         if dnsdump:
             print (' %s Starting DNS dump' %(run))
@@ -344,7 +344,7 @@ def detect_cms():
         if scanports:
             print (' %s Scanning Ports\n' %(run))
             print (""" %s     PORTS                     %sSTATUS  %sPROTO"""%(W,W,W))
-            portscan(hostd(url))
+            portscan(hostd(url),scanports)
             print ("-----------------------------------------------")
         if dnsdump:
             print (' %s Starting DNS dump ' %(run))
@@ -378,7 +378,7 @@ def detect_cms():
         if scanports:
             print (' %s Scanning Ports\n' %(run))
             print (""" %s     PORTS                     %sSTATUS  %sPROTO"""%(W,W,W))
-            portscan(hostd(url))
+            portscan(hostd(url),scanports)
             print ("-----------------------------------------------")
         if dnsdump:
             print (' %s Starting DNS dump ' %(run))
@@ -432,7 +432,7 @@ def detect_cms():
         if scanports:
             print (' %s Scanning Ports\n' %(run))
             print (""" %s     PORTS                     %sSTATUS  %sPROTO"""%(W,W,W))
-            portscan(hostd(url))
+            portscan(hostd(url),scanports)
             print ("-----------------------------------------------")
         if dnsdump:
             print (' %s Starting DNS dump ' %(run))
@@ -465,7 +465,7 @@ def detect_cms():
         if scanports:
             print (' %s Scanning Ports\n' %(run))
             print (""" %s     PORTS                     %sSTATUS  %sPROTO"""%(W,W,W))
-            portscan(hostd(url))
+            portscan(hostd(url),scanports)
             print ("-----------------------------------------------")
         if dnsdump:
             print (' %s Starting DNS dump ' %(run))
@@ -495,7 +495,7 @@ def detect_cms():
         if scanports:
             print (' %s Scanning Ports\n' %(run))
             print (""" %s  PORTS                     %sSTATUS  %sPROTO"""%(W,W,W))
-            portscan(hostd(url))
+            portscan(hostd(url),scanports)
             print ("-----------------------------------------------")
         if dnsdump:
             print (' %s Starting DNS dump ' %(run))
@@ -514,7 +514,7 @@ def detect_cms():
         if scanports:
             print (' %s Scanning Ports\n' %(run))
             print (""" %s  PORTS                     %sSTATUS  %sPROTO"""%(W,W,W))
-            portscan(hostd(url))
+            portscan(hostd(url),scanports)
             print ("-----------------------------------------------")
         if dnsdump:
             print (' %s Starting DNS dump ' %(run))
