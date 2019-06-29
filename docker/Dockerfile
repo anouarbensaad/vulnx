@@ -35,8 +35,10 @@ RUN chown -R vulnx vulnx
 # Switch user.
 USER vulnx
 
+ENV APP_HOME=vulnx
+
 # Working−Directory
-WORKDIR vulnx
+WORKDIR $APP_HOME
 
 # Install Pip Packages.
 RUN pip install --user --upgrade pip && \
