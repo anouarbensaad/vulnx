@@ -218,6 +218,9 @@ $ ./install.sh
 ```
 Now run `vulnx`
 
+![vokoscreen-2019-07-05_03-59-48](https://user-images.githubusercontent.com/23563528/60695392-7a645b80-9ed9-11e9-94fb-f6025594a9e3.gif)
+
+
 ### _🕷️ Install vulnx on Termux_
 
 ```BASH
