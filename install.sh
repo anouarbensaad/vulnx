@@ -56,7 +56,7 @@ function termuxOS() {
 function debianOS(){
     echo -e "$red [$green+$red]$off Installing Python ...";
     sudo apt-get install -y python3
-    pip install -r ./pip/requirements.txt
+    pip install -r ./requirements.txt
     echo -e "$red [$green+$red]$off Checking directories..."
     if [ -d "/usr/share/VulnX" ]; then
         echo -e "$red [$green+$red]$off A Directory VulnX Was Found! Do You Want To Replace It? [Y/n]:" ;
