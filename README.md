@@ -75,7 +75,7 @@ To generate a map of isetso.rnu.tn, you can run the command
 Let's generates an image displaying target Subdomains,MX & DNS data.
 
 
-![demo](https://i.ibb.co/2kDLc0t/isetso-rnu-tn.png)
+![demo](https://i.ibb.co/WfdhvWC/isetso-rnu-tn.png)
 
 -------------------------------------
 
