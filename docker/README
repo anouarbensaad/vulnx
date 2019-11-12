@@ -4,4 +4,4 @@ The vulnx DOCKER documentation is generated as a rule of usage docker.
 
 You can build docker-image & run container for no problem of comptability:
 	$ docker build -t vulnx ./docker/
-    $ docker run -it --name vulnx vulnx:latest -u http://exemple.com
+    $ docker run -it --name vulnx vulnx:latest -u http://example.com

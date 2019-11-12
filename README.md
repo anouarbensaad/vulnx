@@ -184,7 +184,7 @@ VulnX in DOCKER !!.
 $ git clone https://github.com/anouarbensaad/VulnX.git
 $ cd VulnX
 $ docker build -t vulnx ./docker/
-$ docker run -it --name vulnx vulnx:latest -u http://exemple.com
+$ docker run -it --name vulnx vulnx:latest -u http://example.com
 ```
 
 run vulnx container in interactive mode
@@ -196,7 +196,7 @@ run vulnx container in interactive mode
 to view logfiles mount it in a volume like so:
 
 ```bash
-$ docker run -it --name vulnx -v "$PWD/logs:/VulnX/logs" vulnx:latest -u http://exemple.com
+$ docker run -it --name vulnx -v "$PWD/logs:/VulnX/logs" vulnx:latest -u http://example.com
 ```
 
 change the [mounting directory](https://github.com/anouarbensaad/vulnx/blob/master/docker/Dockerfile#L46)..
