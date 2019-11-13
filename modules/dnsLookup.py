@@ -46,7 +46,11 @@ def dnsdumper(url):
     domain = hostd(url)
     dnsdumpster_url = 'https://dnsdumpster.com/'
     response = requests.Session().get(dnsdumpster_url).text
-    csrf_token = re.search(r"name='csrfmiddlewaretoken' value='(.*?)'", response).group(1)
+    # If no match is found, the return object won't have group method, so check.
+    try:
+        csrf_token = re.search(r"name='csrfmiddlewaretoken' value='(.*?)'", response).group(1)
+    except AttributeError:  # No match is found
+        csrf_token = re.search(r"name='csrfmiddlewaretoken' value='(.*?)'", response)
     print (' %s Retrieved token: %s' % (info,csrf_token))
     cookies = {'csrftoken': csrf_token}
     headers = {'Referer': 'https://dnsdumpster.com/'}
@@ -71,7 +75,11 @@ def domain_info(url):
     domain = hostd(url)
     dnsdumpster_url = 'https://dnsdumpster.com/'
     response = requests.Session().get(dnsdumpster_url).text
-    csrf_token = re.search(r"name='csrfmiddlewaretoken' value='(.*?)'", response).group(1)
+    # If no match is found, the return object won't have group method, so check.
+    try:
+        csrf_token = re.search(r"name='csrfmiddlewaretoken' value='(.*?)'", response).group(1)
+    except AttributeError:  # No match is found
+        csrf_token = re.search(r"name='csrfmiddlewaretoken' value='(.*?)'", response)
     cookies = {'csrftoken': csrf_token}
     headers = {'Referer': 'https://dnsdumpster.com/'}
     data = {'csrfmiddlewaretoken': csrf_token, 'targetip': domain }
