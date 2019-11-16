@@ -45,12 +45,13 @@ def text_record(table):
 def dnsdumper(url):
     domain = hostd(url)
     dnsdumpster_url = 'https://dnsdumpster.com/'
-    response = requests.Session().get(dnsdumpster_url).text
+    response = requests.Session().get(dnsdumpster_url)
+    soup = BeautifulSoup(response.text, 'html.parser')
     # If no match is found, the return object won't have group method, so check.
     try:
-        csrf_token = re.search(r"name='csrfmiddlewaretoken' value='(.*?)'", response).group(1)
+        csrf_token = soup.findAll('input', attrs={'name': 'csrfmiddlewaretoken'})[0]['value']
     except AttributeError:  # No match is found
-        csrf_token = re.search(r"name='csrfmiddlewaretoken' value='(.*?)'", response)
+        csrf_token = soup.findAll('input', attrs={'name': 'csrfmiddlewaretoken'})[0]['value']
     print (' %s Retrieved token: %s' % (info,csrf_token))
     cookies = {'csrftoken': csrf_token}
     headers = {'Referer': 'https://dnsdumpster.com/'}
