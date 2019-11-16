@@ -275,6 +275,7 @@ return urls found with blaze dork
 -------------------------------------
 
 ### _🕷️ Versions_
+- [v1.9](https://github.com/anouarbensaad/vulnx/releases/tag/v1.9)
 - [v1.8](https://github.com/anouarbensaad/vulnx/releases/tag/v1.8)
 - [v1.7](https://github.com/anouarbensaad/vulnx/releases/tag/v1.7)
 - [v1.6](https://github.com/anouarbensaad/vulnx/releases/tag/v1.6)
