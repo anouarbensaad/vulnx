@@ -1,3 +1,9 @@
+#### v1.9
+- Add Vulnx−Mode `interactive mode`
+- Add Command Line Interface Class `cli`
+- Add Dork Functionnality to Vulnx−Mode
+- Fix DNSDUMP Functionnality
+
 #### v1.8
 - Remove pip & rename conf to config to excute update without problem.
 - Fix port arg to give port to scan.
