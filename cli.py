@@ -32,7 +32,8 @@ headers = {
 'Connection': 'keep-alive',}
 
 history = []
-
+numberpage=1
+output_dir='logs'
 variables = {
 	"URL":'',
 	"TIMEOUT":'',
@@ -63,7 +64,7 @@ data = {
 
 class Cli():
     #banner_function
-    banner()
+
 
     def __runExploits(self,url,headers):
         wp_wysija(url,headers,vulnresults)
@@ -121,10 +122,10 @@ class Cli():
         Command                 Description
         --------                -------------
         ?          \t\tHelp menu
-        list       \t\tset timeout
-        use        \t\tscan ports
-        num page   \t\tget domains & sub domains
-        run        \t\tget cms info (version , user ..)
+        list       \t\tlist dorks
+        set dork   \t\tset exploit name
+        num page   \t\tset num page
+        run        \t\tsearch web with specified dork 
         back       \t\tmove back from current context
         """)
 
@@ -133,30 +134,64 @@ class Cli():
         return os.system('clear')
 
     @staticmethod
-    def _generalCLI(url):
-        regex=r'^set url (.+)'
-        url=re.search(re.compile(regex),url).group(1)
+    def getDork(pattern):
+        dork_search=r'^set dork (.+)'
+        dork=re.search(re.compile(dork_search),pattern).group(1)
+        if dork:
+            return dork
+
+    @property
+    def getUrl(self,pattern):
+        url_search=r'^set url (.+)'
+
+        url=re.search(re.compile(url_search),pattern).group(1)
+
         if url:
             return url#ParseURL(url)
         else:
             print("need (help) (?)")
+        
+
+    def setdorkCLI(self,cmd_interpreter):
+        while True:
+            dorkname=re.compile(r'^set dork')
+            cmd_interpreter=input("%s%svulnx%s%s (%sDorks%s)> %s" %(bannerblue2,W_UL,end,W,B,W,end))
+            if cmd_interpreter == 'back':
+                break
+            if cmd_interpreter == 'list':
+                print('\n%s[*]%s Listing dorks name..' %(B,end))
+                from modules.dorksEngine import DorkList as DL
+                DL.dorkslist()
+            elif dorkname.search(cmd_interpreter):
+                while True:
+                    cmd_interpreter_wp=input("%s%svulnx%s%s (%sDorks-%s%s)> %s" %(bannerblue2,W_UL,end,W,B,Cli.getDork(cmd_interpreter),W,end))
+                    if cmd_interpreter_wp=='run':
+                        print('\n')
+                        from modules.dorksEngine import Dorks as D
+                        D.searchengine(Cli.getDork(cmd_interpreter),headers,output_dir,numberpage)
+                    if cmd_interpreter_wp=='back':
+                        break
+            if cmd_interpreter == 'help' or cmd_interpreter == '?':
+                self._dorks_action_help()
 
     def send_commands(self,cmd):
-        regxpr=re.compile(r'^set url')
-
+        reurl=re.compile(r'^set url')
+        redork=re.compile(r'^dork')
         while True:
             cmd = input("%s%svulnx%s > "% (bannerblue2,W_UL,end))
             dork_command="dorks"
             
-            if regxpr.search(cmd):
-                # url target
+            if reurl.search(cmd):
+
+                #url session
+
                 while True:
-                    cmd_interpreter=input("%s%svulnx%s%s target(%s%s%s) > %s" %(bannerblue2,W_UL,end,W,R,Cli._generalCLI(cmd),W,end))
+                    cmd_interpreter=input("%s%svulnx%s%s target(%s%s%s) > %s" %(bannerblue2,W_UL,end,W,R,self.getUrl(cmd),W,end))
                     if cmd_interpreter == 'back':
                         break
                     elif cmd_interpreter == 'run exploit':
                         print('\n%s[*]%s Running exploits..' %(B,end))
-                        root = Cli._generalCLI(cmd)
+                        root = self.getUrl(cmd)
                         if root.startswith('http'):
                             url_root = root
                         else:
@@ -168,16 +203,9 @@ class Cli():
                         sys.exit()
                     else:
                         print("you mean (cms info) or (web info) show more use help ?")
-            elif cmd == dork_command:
-                
-                while True:
-                    cmd_interpreter=input("%svulnx (%sDorks%s)> %s" %(W,B,W,end))
-                    if cmd_interpreter == 'back':
-                        break
-                    if cmd_interpreter == 'run exploit':
-                        print('\n%s[*]%s Running exploits..' %(B,end))
-                    if cmd_interpreter == 'help' or cmd_interpreter == '?':
-                        self._dorks_action_help()
+            elif redork.search(cmd):
+                #dork session
+                self.setdorkCLI(cmd)
             elif cmd == 'quit' or cmd == 'exit':
                 sys.exit()
             elif cmd == 'help' or cmd == '?':
