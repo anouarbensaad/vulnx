@@ -63,9 +63,7 @@ data = {
 }
 
 class Cli():
-    #banner_function
-
-
+	
     def __runExploits(self,url,headers):
         wp_wysija(url,headers,vulnresults)
         wp_blaze(url,headers,vulnresults)
