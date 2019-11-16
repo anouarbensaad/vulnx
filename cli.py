@@ -32,17 +32,9 @@ headers = {
 'Connection': 'keep-alive',}
 
 history = []
-numberpage=1
-output_dir='logs'
-variables = {
-	"URL":'',
-	"TIMEOUT":'',
-	"URL":'',
-	"COMMAND":'',
-	"FILE_PATH":'',
-	"USERNAME":'',
-	"PASSWORD":''
-}
+
+numberpage=1 #default page−dork variable
+output_dir='logs'#default output−dork
 
 W_UL= "\033[4m"
 RED_U='\033[1;1;91m'
@@ -62,8 +54,101 @@ data = {
     'subdomains':list(subdomains),
 }
 
-class Cli():
-	
+class Helpers():
+
+    @staticmethod
+    def _general_help():
+        print("""
+        Command                 Description
+        --------                -------------
+        help/?                  Show this help menu.
+        clear/cls               clear the vulnx screen
+        use       <Variable>    Use an variable.
+        info      <Variable>    Get information about an available variable.
+        set <variable> <value>  Sets a context-specific variable to a value to use while using vulnx.
+        variables               Prints all previously specified variables.
+        banner                  Display banner.
+        history                 Display command-line most important history from the beginning.
+        makerc                  Save command-line history to a file.
+        os         <command>    Execute a system command without closing the vulnx-mode
+        exit/quit               Exit the vulnx-mode
+        """)
+
+    @staticmethod
+    def _url_action_help():
+        print("""
+        Command                 Description
+        --------                -------------
+        ?                       Help menu
+        timeout                 set timeout
+        ports                   scan ports
+        domain                  get domains & sub domains
+        cms info                get cms info (version , user ..)
+        web info                get web info
+        dump dns                dump dns get sub domains [mx-server..]
+        run exploit             run exploits corresponding to cms
+        back                    move back from current context
+        """)
+
+    #dorks - command helpers. 
+
+    @staticmethod
+    def _dorks_action_help():
+        print("""
+        Command                 Description
+        --------                -------------
+        ?                       Help menu
+        list                    list dorks
+        set dork                set exploit name
+        back                    move back from current context
+        """)
+
+    @staticmethod
+    def _dorks_setdork_help():
+        print("""
+        Command                 Description
+        --------                -------------
+        ?                       Help menu
+        pages                   set num page
+        output                  output file.
+        run                     search web with specified dork 
+        back                    move back from current context
+        """)
+
+    @staticmethod
+    def _dorks_setdork_page_help():
+        print("""
+        Command                 Description
+        --------                -------------
+        ?                       Help menu
+        output                  output file.
+        run                     search web with specified dork 
+        back                    move back from current context
+        """)
+
+    @staticmethod
+    def _dorks_setdork_output_help():
+        print("""
+        Command                 Description
+        --------                -------------
+        ?                       Help menu
+        pages                   set num page
+        run                     search web with specified dork 
+        back                    move back from current context
+        """)
+
+    @staticmethod
+    def _dorks_setdork_page_output_help():
+        print("""
+        Command                 Description
+        --------                -------------
+        ?                       Help menu
+        run                     search web with specified dork 
+        back                    move back from current context
+        """)
+
+class Cli(object):
+
     def __runExploits(self,url,headers):
         wp_wysija(url,headers,vulnresults)
         wp_blaze(url,headers,vulnresults)
@@ -79,110 +164,92 @@ class Cli():
         wp_adblockblocker(url,headers,vulnresults)
 
     @staticmethod
-    def _general_help():
-        generalhelp=print("""
-        Command                 Description
-        --------                -------------
-        help/?                  Show this help menu.
-        clear/cls               clear the vulnx screen
-        use       <Variable>    Use an variable.
-        info      <Variable>    Get information about an available variable.
-        set <variable> <value>  Sets a context-specific variable to a value to use while using vulnx.
-        variables               Prints all previously specified variables.
-        banner                  Display banner.
-        history                 Display command-line most important history from the beginning.
-        makerc                  Save command-line history to a file.
-        os         <command>    Execute a system command without closing the vulnx-mode
-        exit/quit               Exit the vulnx-mode
-        """)
-        return generalhelp
-
-    @staticmethod
-    def _url_action_help():
-        urlactions=print("""
-        Command                 Description
-        --------                -------------
-        ?          \t\tHelp menu
-        timeout    \t\tset timeout
-        ports      \t\tscan ports
-        domain     \t\tget domains & sub domains
-        cms info   \t\tget cms info (version , user ..)
-        web info   \t\tget web info
-        dump dns   \t\tdump dns get sub domains [mx-server..]
-        run exploit\t\trun exploits corresponding to cms
-        back       \t\tmove back from current context
-        """)
-        return urlactions
-
-    @staticmethod
-    def _dorks_action_help():
-        print("""
-        Command                 Description
-        --------                -------------
-        ?          \t\tHelp menu
-        list       \t\tlist dorks
-        set dork   \t\tset exploit name
-        num page   \t\tset num page
-        run        \t\tsearch web with specified dork 
-        back       \t\tmove back from current context
-        """)
-
-    @staticmethod
     def _clearscreen():
         return os.system('clear')
 
     @staticmethod
     def getDork(pattern):
         dork_search=r'^set dork (.+)'
-        dork=re.search(re.compile(dork_search),pattern).group(1)
+        try:
+            dork=re.search(re.compile(dork_search),pattern).group(1)
+        except AttributeError:  # No match is found
+            dork=re.search(re.compile(dork_search),pattern)
         if dork:
             return dork
+    
+    @staticmethod
+    def setPage(page):
+        page_search=r'^page (\d+$)'
+        try:
+            page=re.search(re.compile(page_search),page).group(1)
+        except AttributeError:  # No match is found
+            page=re.search(re.compile(page_search),page)
+        if page:
+            return int(page)
 
     @property
     def getUrl(self,pattern):
         url_search=r'^set url (.+)'
-
-        url=re.search(re.compile(url_search),pattern).group(1)
-
+        try:
+            url=re.search(re.compile(url_search),pattern).group(1)
+        except AttributeError:  # No match is found
+            url=re.search(re.compile(url_search),pattern)
         if url:
             return url#ParseURL(url)
-        else:
-            print("need (help) (?)")
-        
 
     def setdorkCLI(self,cmd_interpreter):
+        
+        '''SET DORK VARIABLE'''
         while True:
-            dorkname=re.compile(r'^set dork')
+            dorkname=re.compile(r'^set dork .+')
             cmd_interpreter=input("%s%svulnx%s%s (%sDorks%s)> %s" %(bannerblue2,W_UL,end,W,B,W,end))
             if cmd_interpreter == 'back':
                 break
             if cmd_interpreter == 'list':
+            
+                '''SET DORK LIST'''
                 print('\n%s[*]%s Listing dorks name..' %(B,end))
                 from modules.dorksEngine import DorkList as DL
                 DL.dorkslist()
+            
+                '''SET DORK NAME.'''
             elif dorkname.search(cmd_interpreter):
                 while True:
                     cmd_interpreter_wp=input("%s%svulnx%s%s (%sDorks-%s%s)> %s" %(bannerblue2,W_UL,end,W,B,Cli.getDork(cmd_interpreter),W,end))
+                    page=re.compile(r'^page \d+$')
+                    
+                    '''SET PAGE VARIABLE.'''
+                    if page.search(cmd_interpreter_wp):
+                        while True:
+                            cmd_interpreter_wp_page=input("%s%svulnx%s%s (%sDorks-%s-%s%s)> %s" %(bannerblue2,W_UL,end,W,B,Cli.getDork(cmd_interpreter),Cli.setPage(cmd_interpreter_wp),W,end))
+                            if cmd_interpreter_wp_page=='run':
+                                print('\n')
+                                from modules.dorksEngine import Dorks as D
+                                D.searchengine(Cli.getDork(cmd_interpreter),headers,output_dir,Cli.setPage(cmd_interpreter_wp))
+                            if cmd_interpreter_wp_page=='back':
+                                break
+            
                     if cmd_interpreter_wp=='run':
                         print('\n')
                         from modules.dorksEngine import Dorks as D
                         D.searchengine(Cli.getDork(cmd_interpreter),headers,output_dir,numberpage)
+            
                     if cmd_interpreter_wp=='back':
                         break
+            
             if cmd_interpreter == 'help' or cmd_interpreter == '?':
-                self._dorks_action_help()
+                Helpers._dorks_action_help()
+
+
 
     def send_commands(self,cmd):
-        reurl=re.compile(r'^set url')
+        reurl=re.compile(r'^set url .+')
         redork=re.compile(r'^dork')
         while True:
             cmd = input("%s%svulnx%s > "% (bannerblue2,W_UL,end))
             dork_command="dorks"
-            
             if reurl.search(cmd):
-
                 #url session
-
                 while True:
                     cmd_interpreter=input("%s%svulnx%s%s target(%s%s%s) > %s" %(bannerblue2,W_UL,end,W,R,self.getUrl(cmd),W,end))
                     if cmd_interpreter == 'back':
@@ -196,7 +263,7 @@ class Cli():
                             url_root = 'http://'+url_root
                         self.__runExploits(url_root,headers)
                     elif cmd_interpreter == 'help' or cmd_interpreter == '?':
-                        Cli._url_action_help()
+                        Helpers._url_action_help()
                     elif cmd == 'quit' or cmd == 'exit':
                         sys.exit()
                     else:
@@ -207,7 +274,7 @@ class Cli():
             elif cmd == 'quit' or cmd == 'exit':
                 sys.exit()
             elif cmd == 'help' or cmd == '?':
-                self._general_help()
+                Helpers._general_help()
             elif cmd == 'clear' or cmd == 'cls':
                 Cli._clearscreen()
 
