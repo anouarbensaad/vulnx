@@ -58,6 +58,16 @@ Instead of injecting each and every shell manually like all the other tools do, 
 
 -------------------------------------
 
+
+
+### _🕷️ VulnxMode_ 
+`NEW`
+vulnx now have an interactive mode.
+
+![interactive_mode](https://user-images.githubusercontent.com/23563528/68983791-fddd7400-080c-11ea-8e2b-c463a2c8f8c5.png)
+
+-------------------------------------
+
 ### _🕷️ DNS-Map-Results_
 
 To do this,run a scan with the --dns flag and -d for subdomains.
@@ -67,9 +77,6 @@ To generate a map of isetso.rnu.tn, you can run the command
 `$PATH` : Where the graphs results will be stored.
 
 ![vokoscreen-2019-06-19_05-44-07](https://user-images.githubusercontent.com/23563528/59737395-696ae780-9255-11e9-9e09-26416de89bee.gif)
-
-
-
 
 
 Let's generates an image displaying target Subdomains,MX & DNS data.
@@ -153,6 +160,19 @@ Let's generates an image displaying target Subdomains,MX & DNS data.
 
 ##### Opencart
 - [ ] [Opencart BruteForce]('#')
+
+-------------------------------------
+
+
+### _🕷️ VulnxMode_ 
+`NEW`
+vulnx now have an interactive mode.
+
+![interactive_mode](https://user-images.githubusercontent.com/23563528/68983791-fddd7400-080c-11ea-8e2b-c463a2c8f8c5.png)
+
+-------------------------------------
+
+
 
 ### _🕷️ Available command line options_
 [`READ VULNX WIKI`](https://github.com/anouarbensaad/vulnx/wiki/Usage)
