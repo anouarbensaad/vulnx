@@ -158,8 +158,13 @@ Let's generates an image displaying target Subdomains,MX & DNS data.
 ### _🕷️ VulnxMode_ 
 `NEW`
 vulnx now have an interactive mode.
+***URLSET***
 
-![interactive_mode](https://user-images.githubusercontent.com/23563528/68983791-fddd7400-080c-11ea-8e2b-c463a2c8f8c5.png)
+![vulnxmode_url](https://user-images.githubusercontent.com/23563528/68983791-fddd7400-080c-11ea-8e2b-c463a2c8f8c5.png)
+
+***DORKSET***
+
+![vulnxmode_dorks](https://user-images.githubusercontent.com/23563528/68985825-bf01eb00-0819-11ea-83ea-3db022b1d645.png)
 
 -------------------------------------
 
