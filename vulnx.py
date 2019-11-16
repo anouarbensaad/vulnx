@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-# ----a
+
 """
 The vulnx main part.
 Author: anouarbensaad
@@ -126,12 +126,15 @@ def parse_args():
     #Switches
     parser.add_argument('-e','--exploit', help='searching vulnerability & run exploits',
     dest='exploit', action='store_true')
+    parser.add_argument('--it', help='interactive mode.',
+    dest='cli', action='store_true')
     parser.add_argument('-w','--web-info', help='web informations gathering',
     dest='webinfo', action='store_true')
     parser.add_argument('-d','--domain-info', help='subdomains informations gathering',
     dest='domaininfo', action='store_true')
     parser.add_argument('--dns', help='dns informations gatherings',
     dest='dnsdump', action='store_true')
+
     return parser.parse_args()
 
 vulnresults = set()  # results of vulnerability exploits. [success or failed]
@@ -142,6 +145,8 @@ hostinfo = set() # host info
 args = parse_args()
 #url arg
 url = args.url
+#interactive arugment
+cli=args.cli
 #run exploit
 exploit = args.exploit
 #cms gathering args
@@ -600,6 +605,7 @@ signal.signal(signal.SIGINT, signal_handler)
 
 #main
 if __name__ == "__main__":
+    
     if input_file:
         with open(input_file,'r') as urls:
             u_array = [url.strip('\n') for url in urls]
@@ -623,6 +629,7 @@ if __name__ == "__main__":
             except Exception as error_:
                 print('UKNOWN ERROR : '+ str(error_))
 
+
     if url:
         #url condition entrypoint
         root = url
@@ -645,23 +652,27 @@ if __name__ == "__main__":
         'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8',
         'Accept-Language': 'en-US,en;q=0.5',
         'Connection': 'keep-alive',}
-        from modules.dorksEngine import (searchengine,getdorksbyname,wp_contentdorks)
-        searchengine(dorks,headers,output_dir,numberpage)
+        from modules.dorksEngine import Dorks as D
+        D.searchengine(dorks,headers,output_dir,numberpage)
     if dorkslist == 'all':
-        from modules.dorkTable import dorkslist as listall
-        listall()
+        from modules.dorksEngine import DorkList as DL
+        DL.dorkslist()
     if dorkslist == 'wordpress':
-        from modules.dorkTable import wp_dorkTable as listwp
-        listwp()
+        from modules.dorksEngine import DorkList as DL
+        DL.wp_dorkTable()
     if dorkslist == 'joomla':
-        from modules.dorkTable import joo_dorkTable as listjoo
-        listjoo()
+        from modules.dorksEngine import DorkList as DL
+        DL.joo_dorkTable()
     if dorkslist == 'prestashop':
-        from modules.dorkTable import ps_dorkTable as listps
-        listps()
+        from modules.dorksEngine import DorkList as DL
+        DL.ps_dorkTable()
     if dorkslist == 'lokomedia':
-        from modules.dorkTable import loko_dorkTable as listlm
-        listlm()
+        from modules.dorksEngine import DorkList as DL
+        DL.loko_dorkTable()
     if dorkslist == 'drupal':
-        from modules.dorkTable import dru_dorkTable as listdru
-        listdru()
+        from modules.dorksEngine import DorkList as DL
+        DL.dru_dorkTable()
+    if cli:
+        from cli import Cli
+        cli = Cli()
+        cli.send_commands("")
