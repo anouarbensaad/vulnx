@@ -66,7 +66,11 @@ RED_U='\033[1;1;91m'
 
 #autocompleter
 autocompleter_global = ["help","clear","use","info","set","variables","history","exec","dork"]
-
+autocompleter_dork = ["help" , "list" , "set dork" , "clear" , "history" ,"variables" ,"exec","back"]
+autocompleter_setdork=["help" , "output" ,"page","run" ,"clear" ,"exec" ,"history" ,"variables" ,"back"]
+autocompleter_dork_page=["help" , "output" ,"run" ,"clear" ,"exec" ,"history" ,"variables" ,"back"]
+autocompleter_dork_output=["help" , "page" ,"run" ,"clear" ,"exec" ,"history" ,"variables" ,"back"]
+autocompleter_dork_page_output=["help" ,"run" ,"clear" ,"exec" ,"history" ,"variables" ,"back"]
 
 vulnresults = set()  # results of vulnerability exploits. [success or failed]
 grabinfo = set()  # return cms_detected the version , themes , plugins , user .. 
@@ -198,7 +202,7 @@ class Helpers():
         back                    move back from current context
         """)
 
-class Cli(object):
+class Cli():
 
     def __runExploits(self,url,headers):
         wp_wysija(url,headers,vulnresults)
@@ -227,6 +231,49 @@ class Cli(object):
             else:
                 return [c + " " for c in ll if c.startswith(line)][state]
         self.listCompleter = listCompleter
+
+    @staticmethod
+    def autoComplete_Global():
+        t = Cli()
+        t.createListCompleter(autocompleter_global)
+        readline.set_completer_delims('\t')
+        readline.parse_and_bind("tab: complete")
+        readline.set_completer(t.listCompleter)
+    @staticmethod
+    def autoComplete_Dork():
+        t = Cli()
+        t.createListCompleter(autocompleter_dork)
+        readline.set_completer_delims('\t')
+        readline.parse_and_bind("tab: complete")
+        readline.set_completer(t.listCompleter)
+    @staticmethod
+    def autoComplete_Page():
+        t = Cli()
+        t.createListCompleter(autocompleter_dork_page)
+        readline.set_completer_delims('\t')
+        readline.parse_and_bind("tab: complete")
+        readline.set_completer(t.listCompleter)
+    @staticmethod
+    def autoComplete_Output():
+        t = Cli()
+        t.createListCompleter(autocompleter_dork_output)
+        readline.set_completer_delims('\t')
+        readline.parse_and_bind("tab: complete")
+        readline.set_completer(t.listCompleter)
+    @staticmethod
+    def autoComplete_Page_Output():
+        t = Cli()
+        t.createListCompleter(autocompleter_dork_page_output)
+        readline.set_completer_delims('\t')
+        readline.parse_and_bind("tab: complete")
+        readline.set_completer(t.listCompleter)
+    @staticmethod
+    def autoComplete_setdork():
+        t = Cli()
+        t.createListCompleter(autocompleter_setdork)
+        readline.set_completer_delims('\t')
+        readline.parse_and_bind("tab: complete")
+        readline.set_completer(t.listCompleter)
 
     @staticmethod
     def dork_variable(dorkname,output,page):
@@ -316,8 +363,6 @@ class Cli(object):
         if url:
             return url#ParseURL(url)
 
-    def variable(self):
-        print("a")
 
     def setdorkCLI(self,cmd_interpreter):
 
@@ -325,6 +370,7 @@ class Cli(object):
         '''SET DORK VARIABLE'''
         
         while True:
+            Cli.autoComplete_Dork()
             cmd_interpreter=input("%s%svulnx%s%s (%sDorks%s)> %s" %(bannerblue2,W_UL,end,W,B,W,end))
             history.append(cmd_interpreter)
             if back_regx.search(cmd_interpreter):
@@ -345,20 +391,27 @@ class Cli(object):
             if history_regx.search(cmd_interpreter):
                 for i in range(len(history)):
                     print(" %s  %s"%(i+1,history[i-1]))
+            if exec_regx.search(cmd_interpreter):
+                Cli._exec(cmd_interpreter)
+            if var_regx.search(cmd_interpreter):
+                Cli.dork_variable(dorkname,output_dir,numberpage)
 
                 '''SET DORK NAME.'''
 
             if dorkname_regx.search(cmd_interpreter):
                 while True:
+                    Cli.autoComplete_setdork()
                     cmd_interpreter_wp=input("%s%svulnx%s%s (%sDorks-%s%s)> %s" %(bannerblue2,W_UL,end,W,B,Cli.getDork(cmd_interpreter),W,end))
                     history.append(cmd_interpreter_wp)
                     '''SET PAGE VARIABLE.'''
                     if page.search(cmd_interpreter_wp):
                         while True:
+                            Cli.autoComplete_Page()
                             cmd_interpreter_wp_page=input("%s%svulnx%s%s (%sDorks-%s-%s%s)> %s" %(bannerblue2,W_UL,end,W,B,Cli.getDork(cmd_interpreter),Cli.setPage(cmd_interpreter_wp),W,end))
                             history.append(cmd_interpreter_wp_page)
                             if output.search(cmd_interpreter_wp_page):
                                 while True:
+                                    Cli.autoComplete_Page_Output()
                                     cmd_interpreter_wp_page_output=input("%s%svulnx%s%s (%sDorks-%s-%s%s)> %s" %(bannerblue2,W_UL,end,W,B,Cli.getDork(cmd_interpreter),Cli.setPage(cmd_interpreter_wp),W,end))
                                     history.append(cmd_interpreter_wp_page_output)
                                     if run_regx.search(cmd_interpreter_wp_page_output):
@@ -376,6 +429,11 @@ class Cli(object):
                                     if history_regx.search(cmd_interpreter_wp_page_output):
                                         for i in range(len(history)):
                                             print(" %s  %s"%(i+1,history[i-1]))
+                                    if exec_regx.search(cmd_interpreter_wp_page_output):
+                                        Cli._exec(cmd_interpreter_wp_page_output)
+                                    if var_regx.search(cmd_interpreter_wp_page_output):
+                                        Cli.dork_variable(Cli.getDork(cmd_interpreter),Cli.setOutput(cmd_interpreter_wp),Cli.setPage(cmd_interpreter_wp))
+
 
                             if run_regx.search(cmd_interpreter_wp_page):
                                 print('\n')
@@ -392,11 +450,17 @@ class Cli(object):
                             if history_regx.search(cmd_interpreter_wp_page):
                                 for i in range(len(history)):
                                     print(" %s  %s"%(i+1,history[i-1]))
+                            if exec_regx.search(cmd_interpreter_wp_page):
+                                Cli._exec(cmd_interpreter_wp_page)
+                            if var_regx.search(cmd_interpreter_wp_page):
+                                Cli.dork_variable(Cli.getDork(cmd_interpreter),output_dir,Cli.setPage(cmd_interpreter_wp))
+
 
                     '''SET OUTPUT VARIABLE.'''
 
                     if output.search(cmd_interpreter_wp):
                         while True:
+                            Cli.autoComplete_Output()
                             cmd_interpreter_wp_output=input("%s%svulnx%s%s (%sDorks-%s%s)> %s" %(bannerblue2,W_UL,end,W,B,Cli.getDork(cmd_interpreter),W,end))
                             history.append(cmd_interpreter_wp_output)
                             if run_regx.search(cmd_interpreter_wp_output):
@@ -414,6 +478,12 @@ class Cli(object):
                             if history_regx.search(cmd_interpreter_wp_output):
                                 for i in range(len(history)):
                                     print(" %s  %s"%(i+1,history[i-1]))
+                            if exec_regx.search(cmd_interpreter_wp_output):
+                                Cli._exec(cmd_interpreter_wp_output)
+                            if var_regx.search(cmd_interpreter_wp_output):
+                                Cli.dork_variable(Cli.getDork(cmd_interpreter),Cli.setOutput(cmd_interpreter_wp),numberpage)
+
+
                     if run_regx.search(cmd_interpreter_wp):
                         print('\n')
                         from modules.dorksEngine import Dorks as D
@@ -429,21 +499,17 @@ class Cli(object):
                     if history_regx.search(cmd_interpreter_wp):
                         for i in range(len(history)):
                             print(" %s  %s"%(i+1,history[i-1]))
-    @staticmethod
-    def autoComplete_Global():
-        t = Cli()
-        t.createListCompleter(autocompleter_global)
-        readline.set_completer_delims('\t')
-        readline.parse_and_bind("tab: complete")
-        readline.set_completer(t.listCompleter)
+                    if exec_regx.search(cmd_interpreter_wp):
+                        Cli._exec(cmd_interpreter_wp)
+                    if var_regx.search(cmd_interpreter_wp):
+                        Cli.dork_variable(Cli.getDork(cmd_interpreter),output_dir,numberpage)
+
 
 
     def send_commands(self,cmd):
-
         while True:
             Cli.autoComplete_Global()
             cmd = input("%s%svulnx%s > "% (bannerblue2,W_UL,end))
-
             history.append(cmd)
             if url_regx.search(cmd):
                 #url session
@@ -465,7 +531,7 @@ class Cli(object):
                     elif exit_regx.search(cmd_interpreter) or cmd_interpreter == 'quit':
                         sys.exit()
                     else:
-                        print("you mean (cms info) or (web info) show more use help ?")
+                        print("use (help) (?) to show man commands.")
             elif dork_regx.search(cmd):
                 #dork session
                 self.setdorkCLI(cmd)
@@ -480,7 +546,7 @@ class Cli(object):
                     print(" %s  %s"%(i+1,history[i-1]))
             elif exec_regx.search(cmd):
                 Cli._exec(cmd)
-            elif cmd == 'variable':
+            elif var_regx.search(cmd):
                 Cli.global_variables(dorkname,output_dir,numberpage,url,timeout)
             else:
                 print("use (help) (?) to show man commands.")
