@@ -3,6 +3,9 @@ import sys
 import time
 import os
 import re
+import readline
+import glob
+import subprocess
 from common.colors import end,W,R,B,bannerblue2
 from common.banner import banner
 from common.requestUp import random_UserAgent
@@ -25,6 +28,23 @@ from modules.wpExploits import(   wp_wysija,
                                   wp_adblockblocker,
                                 )
 
+
+url_regx=re.compile(r'^set url .+')
+dork_regx=re.compile(r'^dork')
+exec_regx=re.compile(r'^exec .+')
+help_regx=re.compile(r'^help')
+history_regx=re.compile(r'^history')
+exit_regx=re.compile(r'^exit')
+cls_regx=re.compile(r'^clear')
+var_regx=re.compile(r'^variable')
+back_regx=re.compile(r'^back')
+run_regx=re.compile(r'^run')
+output=re.compile(r'^output \w+$')
+page=re.compile(r'^page \d+$')
+dorkname_regx=re.compile(r'^set dork .+')
+list_regx=re.compile(r'^list')
+
+
 headers = {
 'host' : 'google.com',
 'User-Agent' : random_UserAgent(),
@@ -34,11 +54,18 @@ headers = {
 
 history = []
 
+#VARIABLE
 numberpage=1 #default page−dork variable
 output_dir='logs'#default output−dork
+dorkname=''
+url=''
+timeout=''
 
 W_UL= "\033[4m"
 RED_U='\033[1;1;91m'
+
+#autocompleter
+autocompleter_global = ["help","clear","use","info","set","variables","history","exec","dork"]
 
 
 vulnresults = set()  # results of vulnerability exploits. [success or failed]
@@ -71,7 +98,7 @@ class Helpers():
         banner                  Display banner.
         history                 Display command-line most important history from the beginning.
         makerc                  Save command-line history to a file.
-        os         <command>    Execute a system command without closing the vulnx-mode
+        exec       <command>    Execute a system command without closing the vulnx-mode
         exit/quit               Exit the vulnx-mode
         """)
 
@@ -107,6 +134,7 @@ class Helpers():
         clear/cls               clear the vulnx screen
         history                 Display command-line most important history from the beginning.
         variables               Prints all previously specified variables.
+        exec       <command>    Execute a system command without closing the vulnx-mode
         back                    move back from current context
         """)
 
@@ -122,6 +150,7 @@ class Helpers():
         clear/cls               clear the vulnx screen
         history                 Display command-line most important history from the beginning.
         variables               Prints all previously specified variables.
+        exec       <command>    Execute a system command without closing the vulnx-mode
         back                    move back from current context
         """)
 
@@ -134,6 +163,7 @@ class Helpers():
         output                  output file.
         run                     search web with specified dork
         clear/cls               clear the vulnx screen
+        exec       <command>    Execute a system command without closing the vulnx-mode
         history                 Display command-line most important history from the beginning.
         variables               Prints all previously specified variables.
         back                    move back from current context
@@ -147,6 +177,7 @@ class Helpers():
         help/?                  Show this help menu.
         pages                   set num page
         run                     search web with specified dork
+        exec       <command>    Execute a system command without closing the vulnx-mode
         clear/cls               clear the vulnx screen
         history                 Display command-line most important history from the beginning.
         variables               Prints all previously specified variables.
@@ -161,6 +192,7 @@ class Helpers():
         help/?                  Show this help menu.
         run                     search web with specified dork
         clear/cls               clear the vulnx screen
+        exec       <command>    Execute a system command without closing the vulnx-mode
         history                 Display command-line most important history from the beginning.
         variables               Prints all previously specified variables.
         back                    move back from current context
@@ -182,9 +214,67 @@ class Cli(object):
         wp_levoslideshow(url,headers,vulnresults)
         wp_adblockblocker(url,headers,vulnresults)
 
+    def pathCompleter(self,text,state):
+        line   = readline.get_line_buffer().split()
+        return [x for x in glob.glob(text+'*')][state]
+
+
+    def createListCompleter(self,ll):
+        def listCompleter(text,state):
+            line   = readline.get_line_buffer()
+            if not line:
+                return [c + " " for c in ll][state]
+            else:
+                return [c + " " for c in ll if c.startswith(line)][state]
+        self.listCompleter = listCompleter
+
+    @staticmethod
+    def dork_variable(dorkname,output,page):
+        print("""
+        VARIABLE        VALUE
+        --------        -----
+        dorkname        %s
+        output          %s
+        pages           %s
+
+        """%(dorkname,output,page))
+
+    @staticmethod
+    def url_variable(url,timeout):
+        print("""
+        VARIABLE        VALUE
+        --------        -----
+        url             %s
+        timeout         %s
+
+        """%(url,timeout))
+
+    @staticmethod
+    def global_variables(dorkname,output,page,url,timeout):
+        print("""
+        VARIABLE        VALUE
+        --------        -----
+        url             %s
+        timeout         %s
+        dorkname        %s
+        output          %s
+        pages           %s
+
+        """%(dorkname,output,page,url,timeout))
+
     @staticmethod
     def _clearscreen():
         return os.system('clear')
+
+    @staticmethod
+    def _exec(cmd):
+        regx=r'^exec (.+)'
+        try:
+            command=re.search(re.compile(regx),cmd).group(1)
+        except AttributeError:  # No match is found
+            command=re.search(re.compile(regx),cmd)
+        if command:
+            return os.system(command)
 
     @staticmethod
     def getDork(pattern):
@@ -230,118 +320,136 @@ class Cli(object):
         print("a")
 
     def setdorkCLI(self,cmd_interpreter):
-        
-        # REGEX
 
-        output=re.compile(r'^output \w+$')
-        page=re.compile(r'^page \d+$')
-        dorkname=re.compile(r'^set dork .+')
-        
+        # REGEX        
         '''SET DORK VARIABLE'''
         
         while True:
             cmd_interpreter=input("%s%svulnx%s%s (%sDorks%s)> %s" %(bannerblue2,W_UL,end,W,B,W,end))
-            if cmd_interpreter == 'back':
+            history.append(cmd_interpreter)
+            if back_regx.search(cmd_interpreter):
                 break
-            if cmd_interpreter == 'list':
+            if list_regx.search(cmd_interpreter):
             
                 '''SET DORK LIST'''
 
                 print('\n%s[*]%s Listing dorks name..' %(B,end))
                 from modules.dorksEngine import DorkList as DL
                 DL.dorkslist()
-            if cmd_interpreter=='clear' or cmd_interpreter=='cls':
+            if cls_regx.search(cmd_interpreter) or cmd_interpreter=='cls':
                 Cli._clearscreen()
-            if cmd_interpreter=='exit':
+            if exit_regx.search(cmd_interpreter) or cmd_interpreter == 'quit':
                 sys.exit()
-            if cmd_interpreter == 'help' or cmd_interpreter == '?':
+            if help_regx.search(cmd_interpreter) or cmd_interpreter == '?':
                 Helpers._dorks_action_help()
+            if history_regx.search(cmd_interpreter):
+                for i in range(len(history)):
+                    print(" %s  %s"%(i+1,history[i-1]))
 
                 '''SET DORK NAME.'''
 
-            if dorkname.search(cmd_interpreter):
+            if dorkname_regx.search(cmd_interpreter):
                 while True:
                     cmd_interpreter_wp=input("%s%svulnx%s%s (%sDorks-%s%s)> %s" %(bannerblue2,W_UL,end,W,B,Cli.getDork(cmd_interpreter),W,end))
-
+                    history.append(cmd_interpreter_wp)
                     '''SET PAGE VARIABLE.'''
-
                     if page.search(cmd_interpreter_wp):
                         while True:
                             cmd_interpreter_wp_page=input("%s%svulnx%s%s (%sDorks-%s-%s%s)> %s" %(bannerblue2,W_UL,end,W,B,Cli.getDork(cmd_interpreter),Cli.setPage(cmd_interpreter_wp),W,end))
-                            
+                            history.append(cmd_interpreter_wp_page)
                             if output.search(cmd_interpreter_wp_page):
                                 while True:
                                     cmd_interpreter_wp_page_output=input("%s%svulnx%s%s (%sDorks-%s-%s%s)> %s" %(bannerblue2,W_UL,end,W,B,Cli.getDork(cmd_interpreter),Cli.setPage(cmd_interpreter_wp),W,end))
-                                    
-                                    if cmd_interpreter_wp_page_output=='run':
+                                    history.append(cmd_interpreter_wp_page_output)
+                                    if run_regx.search(cmd_interpreter_wp_page_output):
                                         print('\n')
                                         from modules.dorksEngine import Dorks as D
                                         D.searchengine(Cli.getDork(cmd_interpreter),headers,Cli.setOutput(cmd_interpreter_wp),Cli.setPage(cmd_interpreter_wp))
-                                    if cmd_interpreter_wp_page_output=='back':
+                                    if back_regx.search(cmd_interpreter_wp_page_output):
                                         break
-                                    if cmd_interpreter_wp_page_output=='help' or cmd_interpreter_wp_page_output=='?':
+                                    if help_regx.search(cmd_interpreter_wp_page_output) or cmd_interpreter_wp_page_output=='?':
                                         Helpers._dorks_setdork_page_output_help()
-                                    if cmd_interpreter_wp_page_output=='clear' or cmd_interpreter_wp_page_output=='cls':
+                                    if cls_regx.search(cmd_interpreter_wp_page_output) or cmd_interpreter_wp_page_output=='cls':
                                         Cli._clearscreen()
-                                    if cmd_interpreter_wp_page_output=='exit':
+                                    if exit_regx.search(cmd_interpreter_wp_page_output) or cmd_interpreter_wp_page_output == 'quit':
                                         sys.exit()
+                                    if history_regx.search(cmd_interpreter_wp_page_output):
+                                        for i in range(len(history)):
+                                            print(" %s  %s"%(i+1,history[i-1]))
 
-                            if cmd_interpreter_wp_page=='run':
+                            if run_regx.search(cmd_interpreter_wp_page):
                                 print('\n')
                                 from modules.dorksEngine import Dorks as D
                                 D.searchengine(Cli.getDork(cmd_interpreter),headers,output_dir,Cli.setPage(cmd_interpreter_wp))
-                            if cmd_interpreter_wp_page=='back':
+                            if back_regx.search(cmd_interpreter_wp_page):
                                 break
-                            if cmd_interpreter_wp_page=='help' or cmd_interpreter_wp_page=='?':
+                            if help_regx.search(cmd_interpreter_wp_page) or cmd_interpreter_wp_page=='?':
                                 Helpers._dorks_setdork_page_help()
-                            if cmd_interpreter_wp_page=='clear' or cmd_interpreter_wp_page=='cls':
+                            if cls_regx.search(cmd_interpreter_wp_page) or cmd_interpreter_wp_page=='cls':
                                 Cli._clearscreen()
-                            if cmd_interpreter_wp_page=='exit':
+                            if exit_regx.search(cmd_interpreter_wp_page) or cmd_interpreter_wp_page == 'quit':
                                 sys.exit()
+                            if history_regx.search(cmd_interpreter_wp_page):
+                                for i in range(len(history)):
+                                    print(" %s  %s"%(i+1,history[i-1]))
 
                     '''SET OUTPUT VARIABLE.'''
 
                     if output.search(cmd_interpreter_wp):
                         while True:
                             cmd_interpreter_wp_output=input("%s%svulnx%s%s (%sDorks-%s%s)> %s" %(bannerblue2,W_UL,end,W,B,Cli.getDork(cmd_interpreter),W,end))
-                            if cmd_interpreter_wp_output=='run':
+                            history.append(cmd_interpreter_wp_output)
+                            if run_regx.search(cmd_interpreter_wp_output):
                                 print('\n')
                                 from modules.dorksEngine import Dorks as D
                                 D.searchengine(Cli.getDork(cmd_interpreter),headers,Cli.setOutput(cmd_interpreter_wp),numberpage)
-                            if cmd_interpreter_wp_output=='back':
+                            if back_regx.search(cmd_interpreter_wp_output):
                                 break
-                            if cmd_interpreter_wp_output=='clear' or cmd_interpreter_wp_output=='cls':
+                            if cls_regx.search(cmd_interpreter_wp_output) or cmd_interpreter_wp_output=='cls':
                                 Cli._clearscreen()
-                            if cmd_interpreter_wp_output=='exit':
+                            if exit_regx.search(cmd_interpreter_wp_output) or cmd_interpreter_wp_output == 'quit':
                                 sys.exit()
-                            if cmd_interpreter_wp_output=='help' or cmd_interpreter_wp_output=='?':
+                            if help_regx.search(cmd_interpreter_wp_output) or cmd_interpreter_wp_output=='?':
                                 Helpers._dorks_setdork_output_help()
-
-                    if cmd_interpreter_wp=='run':
+                            if history_regx.search(cmd_interpreter_wp_output):
+                                for i in range(len(history)):
+                                    print(" %s  %s"%(i+1,history[i-1]))
+                    if run_regx.search(cmd_interpreter_wp):
                         print('\n')
                         from modules.dorksEngine import Dorks as D
                         D.searchengine(Cli.getDork(cmd_interpreter),headers,output_dir,numberpage)
-                    if cmd_interpreter_wp=='back':
+                    if back_regx.search(cmd_interpreter_wp):
                         break
-                    if cmd_interpreter_wp=='help' or cmd_interpreter_wp=='?':
+                    if help_regx.search(cmd_interpreter_wp) or cmd_interpreter_wp=='?':
                         Helpers._dorks_setdork_help()
-                    if cmd_interpreter_wp=='clear' or cmd_interpreter_wp=='cls':
+                    if cls_regx.search(cmd_interpreter_wp) or cmd_interpreter_wp=='cls':
                         Cli._clearscreen()
-                    if cmd_interpreter_wp=='exit':
+                    if exit_regx.search(cmd_interpreter_wp) or cmd_interpreter_wp == 'quit':
                         sys.exit()
-
+                    if history_regx.search(cmd_interpreter_wp):
+                        for i in range(len(history)):
+                            print(" %s  %s"%(i+1,history[i-1]))
+    @staticmethod
+    def autoComplete_Global():
+        t = Cli()
+        t.createListCompleter(autocompleter_global)
+        readline.set_completer_delims('\t')
+        readline.parse_and_bind("tab: complete")
+        readline.set_completer(t.listCompleter)
 
 
     def send_commands(self,cmd):
-        reurl=re.compile(r'^set url .+')
-        redork=re.compile(r'^dork')
+
         while True:
+            Cli.autoComplete_Global()
             cmd = input("%s%svulnx%s > "% (bannerblue2,W_UL,end))
-            dork_command="dorks"
-            if reurl.search(cmd):
+
+            history.append(cmd)
+            if url_regx.search(cmd):
                 #url session
                 while True:
                     cmd_interpreter=input("%s%svulnx%s%s target(%s%s%s) > %s" %(bannerblue2,W_UL,end,W,R,self.getUrl(cmd),W,end))
+                    history.append(cmd_interpreter)
                     if cmd_interpreter == 'back':
                         break
                     elif cmd_interpreter == 'run exploit':
@@ -352,21 +460,27 @@ class Cli(object):
                         else:
                             url_root = 'http://'+url_root
                         self.__runExploits(url_root,headers)
-                    elif cmd_interpreter == 'help' or cmd_interpreter == '?':
+                    elif help_regx.search(cmd_interpreter) or cmd_interpreter == '?':
                         Helpers._url_action_help()
-                    elif cmd == 'quit' or cmd == 'exit':
+                    elif exit_regx.search(cmd_interpreter) or cmd_interpreter == 'quit':
                         sys.exit()
                     else:
                         print("you mean (cms info) or (web info) show more use help ?")
-            elif redork.search(cmd):
+            elif dork_regx.search(cmd):
                 #dork session
                 self.setdorkCLI(cmd)
-            elif cmd == 'quit' or cmd == 'exit':
+            elif exit_regx.search(cmd) or cmd == 'quit':
                 sys.exit()
-            elif cmd == 'help' or cmd == '?':
+            elif help_regx.search(cmd) or cmd == '?':
                 Helpers._general_help()
-            elif cmd == 'clear' or cmd == 'cls':
+            elif cls_regx.search(cmd) or cmd == 'cls':
                 Cli._clearscreen()
-
+            elif history_regx.search(cmd):
+                for i in range(len(history)):
+                    print(" %s  %s"%(i+1,history[i-1]))
+            elif exec_regx.search(cmd):
+                Cli._exec(cmd)
+            elif cmd == 'variable':
+                Cli.global_variables(dorkname,output_dir,numberpage,url,timeout)
             else:
-                print("you mean (cms info) or (web info) show more use help ?")
+                print("use (help) (?) to show man commands.")
