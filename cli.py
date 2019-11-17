@@ -1,4 +1,5 @@
 import sys
+
 import time
 import os
 import re
@@ -79,7 +80,7 @@ class Helpers():
         print("""
         Command                 Description
         --------                -------------
-        ?                       Help menu
+        help/?                  Show this help menu.
         timeout                 set timeout
         ports                   scan ports
         domain                  get domains & sub domains
@@ -87,6 +88,9 @@ class Helpers():
         web info                get web info
         dump dns                dump dns get sub domains [mx-server..]
         run exploit             run exploits corresponding to cms
+        clear/cls               clear the vulnx screen
+        history                 Display command-line most important history from the beginning.
+        variables               Prints all previously specified variables.
         back                    move back from current context
         """)
 
@@ -97,9 +101,12 @@ class Helpers():
         print("""
         Command                 Description
         --------                -------------
-        ?                       Help menu
+        help/?                  Show this help menu.
         list                    list dorks
         set dork                set exploit name
+        clear/cls               clear the vulnx screen
+        history                 Display command-line most important history from the beginning.
+        variables               Prints all previously specified variables.
         back                    move back from current context
         """)
 
@@ -108,10 +115,13 @@ class Helpers():
         print("""
         Command                 Description
         --------                -------------
-        ?                       Help menu
+        help/?                  Show this help menu.
         pages                   set num page
         output                  output file.
-        run                     search web with specified dork 
+        run                     search web with specified dork
+        clear/cls               clear the vulnx screen
+        history                 Display command-line most important history from the beginning.
+        variables               Prints all previously specified variables.
         back                    move back from current context
         """)
 
@@ -120,9 +130,12 @@ class Helpers():
         print("""
         Command                 Description
         --------                -------------
-        ?                       Help menu
+        help/?                  Show this help menu.
         output                  output file.
-        run                     search web with specified dork 
+        run                     search web with specified dork
+        clear/cls               clear the vulnx screen
+        history                 Display command-line most important history from the beginning.
+        variables               Prints all previously specified variables.
         back                    move back from current context
         """)
 
@@ -131,9 +144,12 @@ class Helpers():
         print("""
         Command                 Description
         --------                -------------
-        ?                       Help menu
+        help/?                  Show this help menu.
         pages                   set num page
-        run                     search web with specified dork 
+        run                     search web with specified dork
+        clear/cls               clear the vulnx screen
+        history                 Display command-line most important history from the beginning.
+        variables               Prints all previously specified variables.
         back                    move back from current context
         """)
 
@@ -142,8 +158,11 @@ class Helpers():
         print("""
         Command                 Description
         --------                -------------
-        ?                       Help menu
-        run                     search web with specified dork 
+        help/?                  Show this help menu.
+        run                     search web with specified dork
+        clear/cls               clear the vulnx screen
+        history                 Display command-line most important history from the beginning.
+        variables               Prints all previously specified variables.
         back                    move back from current context
         """)
 
@@ -187,6 +206,16 @@ class Cli(object):
         if page:
             return int(page)
 
+    @staticmethod
+    def setOutput(directory):
+        output=r'^output (\w+$)'
+        try:
+            rep=re.search(re.compile(output),directory).group(1)
+        except AttributeError:  # No match is found
+            rep=re.search(re.compile(output),directory)
+        if rep:
+            return rep
+
     @property
     def getUrl(self,pattern):
         url_search=r'^set url (.+)'
@@ -197,48 +226,109 @@ class Cli(object):
         if url:
             return url#ParseURL(url)
 
+    def variable(self):
+        print("a")
+
     def setdorkCLI(self,cmd_interpreter):
         
+        # REGEX
+
+        output=re.compile(r'^output \w+$')
+        page=re.compile(r'^page \d+$')
+        dorkname=re.compile(r'^set dork .+')
+        
         '''SET DORK VARIABLE'''
+        
         while True:
-            dorkname=re.compile(r'^set dork .+')
             cmd_interpreter=input("%s%svulnx%s%s (%sDorks%s)> %s" %(bannerblue2,W_UL,end,W,B,W,end))
             if cmd_interpreter == 'back':
                 break
             if cmd_interpreter == 'list':
             
                 '''SET DORK LIST'''
+
                 print('\n%s[*]%s Listing dorks name..' %(B,end))
                 from modules.dorksEngine import DorkList as DL
                 DL.dorkslist()
-            
+            if cmd_interpreter=='clear' or cmd_interpreter=='cls':
+                Cli._clearscreen()
+            if cmd_interpreter=='exit':
+                sys.exit()
+            if cmd_interpreter == 'help' or cmd_interpreter == '?':
+                Helpers._dorks_action_help()
+
                 '''SET DORK NAME.'''
-            elif dorkname.search(cmd_interpreter):
+
+            if dorkname.search(cmd_interpreter):
                 while True:
                     cmd_interpreter_wp=input("%s%svulnx%s%s (%sDorks-%s%s)> %s" %(bannerblue2,W_UL,end,W,B,Cli.getDork(cmd_interpreter),W,end))
-                    page=re.compile(r'^page \d+$')
-                    
+
                     '''SET PAGE VARIABLE.'''
+
                     if page.search(cmd_interpreter_wp):
                         while True:
                             cmd_interpreter_wp_page=input("%s%svulnx%s%s (%sDorks-%s-%s%s)> %s" %(bannerblue2,W_UL,end,W,B,Cli.getDork(cmd_interpreter),Cli.setPage(cmd_interpreter_wp),W,end))
+                            
+                            if output.search(cmd_interpreter_wp_page):
+                                while True:
+                                    cmd_interpreter_wp_page_output=input("%s%svulnx%s%s (%sDorks-%s-%s%s)> %s" %(bannerblue2,W_UL,end,W,B,Cli.getDork(cmd_interpreter),Cli.setPage(cmd_interpreter_wp),W,end))
+                                    
+                                    if cmd_interpreter_wp_page_output=='run':
+                                        print('\n')
+                                        from modules.dorksEngine import Dorks as D
+                                        D.searchengine(Cli.getDork(cmd_interpreter),headers,Cli.setOutput(cmd_interpreter_wp),Cli.setPage(cmd_interpreter_wp))
+                                    if cmd_interpreter_wp_page_output=='back':
+                                        break
+                                    if cmd_interpreter_wp_page_output=='help' or cmd_interpreter_wp_page_output=='?':
+                                        Helpers._dorks_setdork_page_output_help()
+                                    if cmd_interpreter_wp_page_output=='clear' or cmd_interpreter_wp_page_output=='cls':
+                                        Cli._clearscreen()
+                                    if cmd_interpreter_wp_page_output=='exit':
+                                        sys.exit()
+
                             if cmd_interpreter_wp_page=='run':
                                 print('\n')
                                 from modules.dorksEngine import Dorks as D
                                 D.searchengine(Cli.getDork(cmd_interpreter),headers,output_dir,Cli.setPage(cmd_interpreter_wp))
                             if cmd_interpreter_wp_page=='back':
                                 break
-            
+                            if cmd_interpreter_wp_page=='help' or cmd_interpreter_wp_page=='?':
+                                Helpers._dorks_setdork_page_help()
+                            if cmd_interpreter_wp_page=='clear' or cmd_interpreter_wp_page=='cls':
+                                Cli._clearscreen()
+                            if cmd_interpreter_wp_page=='exit':
+                                sys.exit()
+
+                    '''SET OUTPUT VARIABLE.'''
+
+                    if output.search(cmd_interpreter_wp):
+                        while True:
+                            cmd_interpreter_wp_output=input("%s%svulnx%s%s (%sDorks-%s%s)> %s" %(bannerblue2,W_UL,end,W,B,Cli.getDork(cmd_interpreter),W,end))
+                            if cmd_interpreter_wp_output=='run':
+                                print('\n')
+                                from modules.dorksEngine import Dorks as D
+                                D.searchengine(Cli.getDork(cmd_interpreter),headers,Cli.setOutput(cmd_interpreter_wp),numberpage)
+                            if cmd_interpreter_wp_output=='back':
+                                break
+                            if cmd_interpreter_wp_output=='clear' or cmd_interpreter_wp_output=='cls':
+                                Cli._clearscreen()
+                            if cmd_interpreter_wp_output=='exit':
+                                sys.exit()
+                            if cmd_interpreter_wp_output=='help' or cmd_interpreter_wp_output=='?':
+                                Helpers._dorks_setdork_output_help()
+
                     if cmd_interpreter_wp=='run':
                         print('\n')
                         from modules.dorksEngine import Dorks as D
                         D.searchengine(Cli.getDork(cmd_interpreter),headers,output_dir,numberpage)
-            
                     if cmd_interpreter_wp=='back':
                         break
-            
-            if cmd_interpreter == 'help' or cmd_interpreter == '?':
-                Helpers._dorks_action_help()
+                    if cmd_interpreter_wp=='help' or cmd_interpreter_wp=='?':
+                        Helpers._dorks_setdork_help()
+                    if cmd_interpreter_wp=='clear' or cmd_interpreter_wp=='cls':
+                        Cli._clearscreen()
+                    if cmd_interpreter_wp=='exit':
+                        sys.exit()
 
 
 
