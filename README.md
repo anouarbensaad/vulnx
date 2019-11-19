@@ -6,7 +6,7 @@
   <br>
 </h1>
 
-<h4 align="center">Vulnx 🕷️ is An Intelligent Bot Auto Shell Injector that detect vulnerabilities in multiple types of Cms </h4>
+<h4 align="center">Vulnx 🕷️ is An Intelligent Bot Auto Shell Injector that detects vulnerabilities in multiple types of Cms </h4>
 
 <p align="center">
    <a href="https://github.com/anouarbensaad/vulnx/releases">
