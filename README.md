@@ -6,7 +6,7 @@
   <br>
 </h1>
 
-<h4 align="center">Vulnx 🕷️ is An Intelligent Bot Auto Shell Injector that detect vulnerabilities in multiple types of Cms </h4>
+<h4 align="center">Vulnx 🕷️ is An Intelligent Bot Auto Shell Injector that detects vulnerabilities in multiple types of Cms </h4>
 
 <p align="center">
    <a href="https://github.com/anouarbensaad/vulnx/releases">
@@ -35,7 +35,7 @@ https://github.com/anouarbensaad/vulnx/archive/master.zip
   <a href="https://github.com/anouarbensaad/vulnx/wiki/Vulnx-Library">Library</a> •
 </p>
 
-**Vulnx** is An Intelligent Bot Auto [Shell Injector](https://github.com/anouarbensaad/vulnx/wiki/Usage#run-exploits) that detect vulnerabilities in multiple types of Cms, fast cms detection,informations gathering and vulnerabilitie Scanning of the target like subdomains, ipaddresses, country, org, timezone, region, ans and more ...
+**Vulnx** is An Intelligent Bot Auto [Shell Injector](https://github.com/anouarbensaad/vulnx/wiki/Usage#run-exploits) that detects vulnerabilities in multiple types of Cms, fast cms detection,informations gathering and vulnerabilitie Scanning of the target like subdomains, ipaddresses, country, org, timezone, region, ans and more ...
 
 Instead of injecting each and every shell manually like all the other tools do, VulnX analyses the target website checking the presence of a vulnerabilitie if so the shell will be Injected.searching urls with [dorks](https://github.com/anouarbensaad/vulnx/wiki/Usage#searching-dorks) Tool. 
 
@@ -43,7 +43,7 @@ Instead of injecting each and every shell manually like all the other tools do, 
 
 ### _🕷️ Features_
 
-- Detect cms (wordpress, joomla, prestashop, drupal, opencart, magento, lokomedia)
+- Detects cms (wordpress, joomla, prestashop, drupal, opencart, magento, lokomedia)
 - Target informations gatherings
 - Target Subdomains gathering
 - Multi-threading on demand
