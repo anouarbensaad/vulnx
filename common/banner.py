@@ -1,8 +1,9 @@
 import sys
-from common.colors import bannerblue , bannerblue2 ,W ,Y ,R,end
+from common.colors import bannerblue, bannerblue2, W, Y, R, end
+
 
 def banner():
-  print("""%s
+    print("""%s
                                                       
                     .:.        .:,                    
                    xM;           XK.                  
@@ -31,18 +32,18 @@ def banner():
                ;.                     :.   
 
     %s# Coded By Anouar Ben Saad -%s @anouarbensaad      
-                                           %s""" 
-% 
-(bannerblue,bannerblue2,
-W,bannerblue2,W,bannerblue2,W,bannerblue2,
-W,bannerblue2,W,bannerblue2,W,bannerblue2,
-W,bannerblue2,W,bannerblue2, 
-W,bannerblue2,W,bannerblue2,
-W,bannerblue2,W,bannerblue2,
-W,bannerblue2,W,bannerblue2,
-W,bannerblue2,
-W,bannerblue2,W,bannerblue2,
-W,bannerblue2,
-W,bannerblue2,
-W,Y,end
-))
+                                           %s"""
+          %
+          (bannerblue, bannerblue2,
+           W, bannerblue2, W, bannerblue2, W, bannerblue2,
+           W, bannerblue2, W, bannerblue2, W, bannerblue2,
+           W, bannerblue2, W, bannerblue2,
+           W, bannerblue2, W, bannerblue2,
+           W, bannerblue2, W, bannerblue2,
+           W, bannerblue2, W, bannerblue2,
+           W, bannerblue2,
+           W, bannerblue2, W, bannerblue2,
+           W, bannerblue2,
+           W, bannerblue2,
+           W, Y, end
+           ))

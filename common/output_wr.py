@@ -2,6 +2,7 @@
 import os
 import sys
 
+
 def writelogs(data, data_name, output_dir):
     """Write the results."""
     for data, data_name in zip(data, data_name):

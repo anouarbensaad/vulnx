@@ -2,9 +2,10 @@ import requests
 import re
 import base64
 import json
-from common.colors import red, green, bg, G, R, W, Y, G , good , bad , run , info , end , que , bannerblue
+from common.colors import red, green, bg, G, R, W, Y, G, good, bad, run, info, end, que, bannerblue
 from bs4 import BeautifulSoup
 from common.uriParser import parsing_url as hostd
+
 
 def results(table):
     res = []
@@ -35,6 +36,7 @@ def results(table):
             pass
     return res
 
+
 def text_record(table):
     res = []
     for td in table.findAll('td'):
@@ -49,14 +51,17 @@ def dnsdumper(url):
     soup = BeautifulSoup(response.text, 'html.parser')
     # If no match is found, the return object won't have group method, so check.
     try:
-        csrf_token = soup.findAll('input', attrs={'name': 'csrfmiddlewaretoken'})[0]['value']
+        csrf_token = soup.findAll(
+            'input', attrs={'name': 'csrfmiddlewaretoken'})[0]['value']
     except AttributeError:  # No match is found
-        csrf_token = soup.findAll('input', attrs={'name': 'csrfmiddlewaretoken'})[0]['value']
-    print (' %s Retrieved token: %s' % (info,csrf_token))
+        csrf_token = soup.findAll(
+            'input', attrs={'name': 'csrfmiddlewaretoken'})[0]['value']
+    print(' %s Retrieved token: %s' % (info, csrf_token))
     cookies = {'csrftoken': csrf_token}
     headers = {'Referer': 'https://dnsdumpster.com/'}
-    data = {'csrfmiddlewaretoken': csrf_token, 'targetip': domain }
-    response = requests.Session().post('https://dnsdumpster.com/',cookies=cookies, data=data, headers=headers)
+    data = {'csrfmiddlewaretoken': csrf_token, 'targetip': domain}
+    response = requests.Session().post('https://dnsdumpster.com/',
+                                       cookies=cookies, data=data, headers=headers)
     image = requests.get('https://dnsdumpster.com/static/map/%s.png' % domain)
     if response.status_code == 200:
         soup = BeautifulSoup(response.content, 'html.parser')
@@ -68,23 +73,30 @@ def dnsdumper(url):
         res['dns_records']['mx'] = results(tables[1])
         print(' %s Search for DNS Servers' % que)
         for entry in res['dns_records']['dns']:
-                print((" %s Host : {domain} \n %s IP : {ip} \n %s AS : {as} \n  %s----------------%s".format(**entry)% (good,good,good,bannerblue,end)))
+            print((" %s Host : {domain} \n %s IP : {ip} \n %s AS : {as} \n  %s----------------%s".format(
+                **entry) % (good, good, good, bannerblue, end)))
         print(' %s Search for MX Records ' % que)
         for entry in res['dns_records']['mx']:
-                print((" %s Host : {domain} \n %s IP : {ip} \n %s AS : {as} \n  %s----------------%s".format(**entry)% (good,good,good,bannerblue,end)))
+            print((" %s Host : {domain} \n %s IP : {ip} \n %s AS : {as} \n  %s----------------%s".format(
+                **entry) % (good, good, good, bannerblue, end)))
+
+
 def domain_info(url):
     domain = hostd(url)
     dnsdumpster_url = 'https://dnsdumpster.com/'
     response = requests.Session().get(dnsdumpster_url).text
     # If no match is found, the return object won't have group method, so check.
     try:
-        csrf_token = re.search(r"name='csrfmiddlewaretoken' value='(.*?)'", response).group(1)
+        csrf_token = re.search(
+            r"name='csrfmiddlewaretoken' value='(.*?)'", response).group(1)
     except AttributeError:  # No match is found
-        csrf_token = re.search(r"name='csrfmiddlewaretoken' value='(.*?)'", response)
+        csrf_token = re.search(
+            r"name='csrfmiddlewaretoken' value='(.*?)'", response)
     cookies = {'csrftoken': csrf_token}
     headers = {'Referer': 'https://dnsdumpster.com/'}
-    data = {'csrfmiddlewaretoken': csrf_token, 'targetip': domain }
-    response = requests.Session().post('https://dnsdumpster.com/',cookies=cookies, data=data, headers=headers)
+    data = {'csrfmiddlewaretoken': csrf_token, 'targetip': domain}
+    response = requests.Session().post('https://dnsdumpster.com/',
+                                       cookies=cookies, data=data, headers=headers)
     image = requests.get('https://dnsdumpster.com/static/map/%s.png' % domain)
     if response.status_code == 200:
         soup = BeautifulSoup(response.content, 'html.parser')
@@ -95,4 +107,5 @@ def domain_info(url):
         res['dns_records']['host'] = results(tables[3])
         print(' %s SubDomains' % que)
         for entry in res['dns_records']['host']:
-                print((" %s SubDomain : {domain} \n %s IP : {ip} \n %s----------------%s".format(**entry)% (good,good,bannerblue,end)))
+            print((" %s SubDomain : {domain} \n %s IP : {ip} \n %s----------------%s".format(
+                **entry) % (good, good, bannerblue, end)))
