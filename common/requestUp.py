@@ -7,6 +7,7 @@ from common.uriParser import parsing_url as hostd
 SESSION = requests.Session()
 SESSION.max_redirects = 2
 
+
 def random_UserAgent():
     useragents_rotate = [
         "Mozilla/4.0 (compatible; MSIE 6.0; MSIE 5.5; Windows NT 5.0) Opera 7.02 Bork-edition [en]",
@@ -31,42 +32,46 @@ def random_UserAgent():
     useragents_random = random.choice(useragents_rotate)
     return useragents_random
 
+
 def getrequest(
-        url,
-        headers,
-        timeout=3,
-    ):
+    url,
+    headers,
+    timeout=3,
+):
     """GetRequest without ssl verification"""
     headers = set()
+
     def get(url):
-            # Selecting a random user-agent
+        # Selecting a random user-agent
         response = SESSION.get(
-                    url,
-                    headers=headers,
-                    verify=False,
-                    timeout=timeout,
-                    stream=True,
+            url,
+            headers=headers,
+            verify=False,
+            timeout=timeout,
+            stream=True,
         )
         return response.text
     return get(url)
 
+
 def sendrequest(
-        url,
-        headers=None,
-        data=None,
-        timeout=3,
-    ):
+    url,
+    headers=None,
+    data=None,
+    timeout=3,
+):
     """GetRequest without ssl verification"""
     headers = set()
     data = set()
+
     def post(url):
         response = SESSION.post(
-                    url,
-                    data=data,
-                    headers=headers,
-                    verify=False,
-                    timeout=timeout,
-                    stream=True,
+            url,
+            data=data,
+            headers=headers,
+            verify=False,
+            timeout=timeout,
+            stream=True,
         )
         return response.text
     return post(url)
