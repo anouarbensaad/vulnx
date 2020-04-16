@@ -1,3 +1,5 @@
+#### v2.0
+- Add Module to get the operating system of target and web server name & version.
 #### v1.9
 - Add Vulnx−Mode `interactive mode`
 - Add Command Line Interface Class `cli`
