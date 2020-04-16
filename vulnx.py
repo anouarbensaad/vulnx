@@ -187,6 +187,338 @@ input_file = args.input_file
 warnings.filterwarnings('ignore')
 
 
+def joomlaMain(url,headers):
+    print('\n %s[%sTarget%s]%s => %s%s \n ' % (bannerblue2, W, bannerblue2, W, url, end))
+    print('------------------------------------------------')
+    print(' %s looking for cms' % (que))
+    print(' %s %sCMS :%s Joomla' % (good, W, end))
+    print('------------------------------------------------')
+
+    print(' %s Server Gathering' % (run))
+
+    getOS(url, headers)
+
+    if webinfo:
+        webhosting_info(hostinfo)
+
+    if domaininfo:
+        print(' %s Starting searching for Subdomains' % (run))
+        domain_info(url)
+
+    if cms == 'version':
+        print(' %s CMS informations gathering' % (run))
+        joo_version(url, headers)
+        print("-----------------------------------------------")
+
+    if cms == 'all':
+        print(' %s CMS informations gathering' % (run))
+        joo_version(url, headers)
+        joo_user(url, headers)
+        joo_template(url, headers)
+        print("-----------------------------------------------")
+
+    if scanports:
+        print(' %s Scanning Ports' % (run))
+        print(""" %s     PORTS                     %sSTATUS  %sPROTO""" % (W, W, W))
+        portscan(hostd(url), scanports)
+        print("-----------------------------------------------")
+
+    if dnsdump:
+        print(' %s Starting DNS dump' % (run))
+        dnsdumper(url)
+        print("-----------------------------------------------")
+
+    if exploit:
+        print(' %s Check Vulnerability' % (run))
+        print(""" %sNAME                      %sSTATUS  %sSHELL""" % (W, W, W))
+        com_jce(url, headers)
+        com_media(url, headers)
+        com_fabrika(url, headers)
+        com_fabrikb(url, headers)
+        com_foxcontact(url, headers)
+        com_adsmanager(url, headers)
+        com_blog(url, headers)
+        com_users(url, headers)
+        comweblinks(url, headers)
+        mod_simplefileupload(url, headers)
+        com_jbcatalog(url, headers)
+        com_sexycontactform(url, headers)
+        com_rokdownloads(url, headers)
+        com_extplorer(url, headers)
+        com_jwallpapers(url, headers)
+        com_facileforms(url, headers)
+
+def wordpressMain(url,headers):
+    print('\n %s[%sTarget%s]%s => %s%s \n ' % (bannerblue2, W, bannerblue2, W, url, end))
+    print('------------------------------------------------')
+    print(' %s looking for cms' % (que))
+    print(' %s %sCMS :%s Wordpress' % (good, W, end))
+    print('------------------------------------------------')
+
+    print(' %s Server Gathering' % (run))
+    getOS(url, headers)
+
+    if webinfo:
+        webhosting_info(hostinfo)
+    if domaininfo:
+        print(' %s Starting searching for Subdomains' % (run))
+        domain_info(url)
+    # wp_grab methods info from (folder)[./common/grapwp.py]
+    if cms == 'version':
+        print(' %s CMS informations gathering' % (run))
+        wp_version(url, headers, grabinfo)
+        print("-----------------------------------------------")
+    if cms == 'themes':
+        print(' %s CMS informations gathering' % (run))
+        wp_themes(url, headers, grabinfo)
+        print("-----------------------------------------------")
+    if cms == 'user':
+        print(' %s CMS informations gathering' % (run))
+        wp_user(url, headers, grabinfo)
+        print("-----------------------------------------------")
+    if cms == 'plugins':
+        print(' %s CMS informations gathering' % (run))
+        wp_plugin(url, headers, grabinfo)
+        print("-----------------------------------------------")
+    if cms == 'all':
+        print(' %s CMS informations gathering' % (run))
+        wp_version(url, headers, grabinfo)
+        wp_themes(url, headers, grabinfo)
+        wp_user(url, headers, grabinfo)
+        wp_plugin(url, headers, grabinfo)
+        print("-----------------------------------------------")
+        # port to scan
+    if scanports:
+        print(' %s Scanning Ports' % (run))
+        print(""" %sPORTS                     %sSTATUS  %sPROTO""" % (W, W, W))
+        portscan(hostd(url), scanports)
+        print("-----------------------------------------------")
+    if dnsdump:
+        print(' %s Starting DNS dump' % (run))
+        dnsdumper(url)
+        print("-----------------------------------------------")
+    # vulnx -u http://example.com -e | vulnx -u http://example --exploit
+    if exploit:
+        print(' %s Check Vulnerability\n' % (run))
+        print(""" %sNAME                      %sSTATUS  %sSHELL""" % (W, W, W))
+        # wp_exploit methods from (dolder)[./common/wp_exploits.py]
+        wp_wysija(url, headers, vulnresults)
+        wp_blaze(url, headers, vulnresults)
+        wp_synoptic(url, headers, vulnresults)
+        wp_catpro(url, headers, vulnresults)
+        wp_cherry(url, headers, vulnresults)
+        wp_dm(url, headers, vulnresults)
+        wp_fromcraft(url, headers, vulnresults)
+        wp_jobmanager(url, headers, vulnresults)
+        wp_showbiz(url, headers, vulnresults)
+        wp_shop(url, headers, vulnresults)
+        wp_powerzoomer(url, headers, vulnresults)
+        wp_revslider(url, headers, vulnresults)
+        wp_adsmanager(url, headers, vulnresults)
+        wp_inboundiomarketing(url, headers, vulnresults)
+        wp_adblockblocker(url, headers, vulnresults)
+        wp_levoslideshow(url, headers, vulnresults)
+        print("-----------------------------------------------")
+
+def drupalMain(url,headers):
+    print('\n %s[%sTarget%s]%s => %s%s \n ' % (bannerblue2, W, bannerblue2, W, url, end))
+    print('------------------------------------------------')
+    print(' %s looking for cms' % (que))
+    print(' %s CMS : Drupal' % (good))
+    print('------------------------------------------------')
+
+    print(' %s Server Gathering' % (run))
+
+    getOS(url, headers)
+
+    if webinfo:
+        webhosting_info(hostinfo)
+    # domain gatherinargument
+    if domaininfo:
+        print(' %s Starting searching for Subdomains' % (run))
+        domain_info(url)
+    if cms == 'version':
+        print(' %s CMS informations gathering' % (run))
+        drupal_version()
+    if scanports:
+        print(' %s Scanning Ports\n' % (run))
+        print(""" %s     PORTS                     %sSTATUS  %sPROTO""" % (W, W, W))
+        portscan(hostd(url), scanports)
+        print("-----------------------------------------------")
+    if dnsdump:
+        print(' %s Starting DNS dump ' % (run))
+        dnsdumper(url)
+        print("-----------------------------------------------")
+    if exploit:
+        print(' %s Check Vulnerability\n' % (run))
+        print(""" %sNAME                      %sSTATUS  %sSHELL""" % (W, W, W))
+
+def prestaMain(url,headers):
+    print('\n %s[%sTarget%s]%s => %s%s \n ' %
+            (bannerblue2, W, bannerblue2, W, url, end))
+    print('------------------------------------------------')
+    print(' %s looking for cms' % (que))
+    print(' %s %sCMS :%s Prestashop' % (good, W, end))
+    print('------------------------------------------------')
+
+    print(' %s Server Gathering' % (run))
+    getOS(url, headers)
+
+    if webinfo:
+        webhosting_info(hostinfo)
+    # domain gatherinargument
+    if domaininfo:
+        print(' %s Starting searching for Subdomains' % (run))
+        domain_info(url)
+    if cms == 'version':
+        print(' %s CMS informations gathering' % (run))
+        prestashop_version()
+    if scanports:
+        print(' %s Scanning Ports\n' % (run))
+        print(""" %s     PORTS                     %sSTATUS  %sPROTO""" % (W, W, W))
+        portscan(hostd(url), scanports)
+        print("-----------------------------------------------")
+    if dnsdump:
+        print(' %s Starting DNS dump ' % (run))
+        dnsdumper(url)
+        print("-----------------------------------------------")
+    if exploit:
+        print(' %s Check Vulnerability\n' % (run))
+        print(""" %sNAME                      %sSTATUS  %sSHELL""" % (W, W, W))
+        columnadverts(url, headers)
+        soopabanners(url, headers)
+        vtslide(url, headers)
+        simpleslideshow(url, headers)
+        productpageadverts(url, headers)
+        productpageadvertsb(url, headers)
+        jro_homepageadvertise(url, headers)
+        attributewizardpro(url, headers)
+        oneattributewizardpro(url, headers)
+        attributewizardpro_old(url, headers)
+        attributewizardpro_x(url, headers)
+        advancedslider(url, headers)
+        cartabandonmentpro(url, headers)
+        cartabandonmentpro_old(url, headers)
+        videostab(url, headers)
+        wg24themeadministration(url, headers)
+        fieldvmegamenu(url, headers)
+        wdoptionpanel(url, headers)
+        pk_flexmenu(url, headers)
+        nvn_export_orders(url, headers)
+        tdpsthemeoptionpanel(url, headers)
+        masseditproduct(url, headers)
+
+def opencartMain(url,headers):
+    print('\n %s[%sTarget%s]%s => %s%s \n ' %(bannerblue2, W, bannerblue2, W, url, end))
+    print('------------------------------------------------')
+    print(' %s looking for cms' % (que))
+    print(' %s CMS : OpenCart' % (good))
+    print('------------------------------------------------')
+
+    print(' %s Server Gathering' % (run))
+    getOS(url, headers)
+
+    if webinfo:
+        webhosting_info(hostinfo)
+    # domain gatherinargument
+    if domaininfo:
+        print(' %s Starting searching for Subdomains' % (run))
+        domain_info(url)
+    if cms == 'version':
+        print(' %s CMS informations gathering' % (run))
+    if scanports:
+        print(' %s Scanning Ports\n' % (run))
+        print(""" %s     PORTS                     %sSTATUS  %sPROTO""" % (W, W, W))
+        portscan(hostd(url), scanports)
+        print("-----------------------------------------------")
+    if dnsdump:
+        print(' %s Starting DNS dump ' % (run))
+        dnsdumper(url)
+        print("-----------------------------------------------")
+    if exploit:
+        print(' %s Check Vulnerability\n' % (run))
+        print(""" %sNAME                      %sSTATUS  %sSHELL""" % (W, W, W))
+
+def magentoMain(url,headers):
+    print('\n %s[%sTarget%s]%s => %s%s \n ' % (bannerblue2, W, bannerblue2, W, url, end))
+    print('------------------------------------------------')
+    print(' %s looking for cms' % (que))
+    print(' %s CMS : Magento' % (good))
+    print('------------------------------------------------')
+
+    print(' %s Server Gathering' % (run))
+    getOS(url, headers)
+
+    if webinfo:
+        webhosting_info(hostinfo)
+    # domain gatherinargument
+    if domaininfo:
+        print(' %s Starting searching for Subdomains' % (run))
+        domain_info(url)
+    if cms == 'version':
+        print(' %s CMS informations gathering' % (run))
+    if scanports:
+        print(' %s Scanning Ports\n' % (run))
+        print(""" %s     PORTS                     %sSTATUS  %sPROTO""" % (W, W, W))
+        portscan(hostd(url), scanports)
+        print("-----------------------------------------------")
+    if dnsdump:
+        print(' %s Starting DNS dump ' % (run))
+        dnsdumper(url)
+        print("-----------------------------------------------")
+    if exploit:
+        print(' %s Check Vulnerability' % (run))
+        print(""" %sNAME                      %sSTATUS  %sSHELL""" % (W, W, W))
+
+def lokomedia(url,headers):
+    print('\n %s[%sTarget%s]%s => %s%s \n ' %
+            (bannerblue2, W, bannerblue2, W, url, end))
+    print('------------------------------------------------')
+    print(' %s looking for cms' % (que))
+    print(' %s CMS : Lokomedia' % (good))
+    print('------------------------------------------------')
+
+    print(' %s Server Gathering' % (run))
+    getOS(url, headers)
+
+    if subdomains:
+        print(' %s Starting searching for Subdomains' % (run))
+        domain_info(url)
+    print('------------------------------------------------')
+    if scanports:
+        print(' %s Scanning Ports\n' % (run))
+        print(""" %s  PORTS                     %sSTATUS  %sPROTO""" % (W, W, W))
+        portscan(hostd(url), scanports)
+        print("-----------------------------------------------")
+    if dnsdump:
+        print(' %s Starting DNS dump ' % (run))
+        dnsdumper(url)
+        print("-----------------------------------------------")
+    print(' %s Check Vulnerability' % (run))
+    getOS(url, headers)
+
+def lokomedia2(url,headers):
+    print('\n %s[%sTarget%s]%s => %s%s \n ' % (bannerblue2, W, bannerblue2, W, url, end))
+    print('------------------------------------------------')
+    print(' %s looking for cms' % (que))
+    print(' %s CMS : Lokomedia' % (good))
+    print('------------------------------------------------')
+    if subdomains:
+        print(' %s Starting searching for Subdomains' % (run))
+        domain_info(url)
+    if scanports:
+        print(' %s Scanning Ports\n' % (run))
+        print(""" %s  PORTS                     %sSTATUS  %sPROTO""" % (W, W, W))
+        portscan(hostd(url), scanports)
+        print("-----------------------------------------------")
+    if dnsdump:
+        print(' %s Starting DNS dump ' % (run))
+        dnsdumper(url)
+        print("-----------------------------------------------")
+    print(' %s Check Vulnerability' % (run))
+    getOS(url, headers)
+
+
 def detect_cms():
     lm = url + '/smiley/1.gif'
     lm_content = requests.get(lm, headers).text
@@ -195,356 +527,29 @@ def detect_cms():
     content = requests.get(url, headers).text
 
     if re.search(re.compile(r'<script type=\"text/javascript\" src=\"/media/system/js/mootools.js\"></script>|/media/system/js/|com_content|Joomla!'), content):
-        print('\n %s[%sTarget%s]%s => %s%s \n ' %
-              (bannerblue2, W, bannerblue2, W, url, end))
-        print('------------------------------------------------')
-        print(' %s looking for cms' % (que))
-        print(' %s %sCMS :%s Joomla' % (good, W, end))
-        print('------------------------------------------------')
-
-        print(' %s Server Gathering' % (run))
-
-        getOS(url, headers)
-
-        # webinfo gathering argument
-        if webinfo:
-            webhosting_info(hostinfo)
-
-        # domain gatherinargument
-        if domaininfo:
-            print(' %s Starting searching for Subdomains' % (run))
-            domain_info(url)
-
-        if cms == 'version':
-            print(' %s CMS informations gathering' % (run))
-            joo_version(url, headers)
-            print("-----------------------------------------------")
-        if cms == 'all':
-            print(' %s CMS informations gathering' % (run))
-            joo_version(url, headers)
-            joo_user(url, headers)
-            joo_template(url, headers)
-            print("-----------------------------------------------")
-        # port to scan
-        if scanports:
-            print(' %s Scanning Ports' % (run))
-            print(""" %s     PORTS                     %sSTATUS  %sPROTO""" % (W, W, W))
-            portscan(hostd(url), scanports)
-            print("-----------------------------------------------")
-        if dnsdump:
-            print(' %s Starting DNS dump' % (run))
-            dnsdumper(url)
-            print("-----------------------------------------------")
-        # joomla_exploits imported from folder[./common/joomla_exploits.py]
-        if exploit:
-            print(' %s Check Vulnerability' % (run))
-            print(""" %sNAME                      %sSTATUS  %sSHELL""" % (W, W, W))
-            com_jce(url, headers)
-            com_media(url, headers)
-            # com_jdownloads(url,headers)
-#            com_jdownloadsb(url,headers)
-            com_fabrika(url, headers)
-            com_fabrikb(url, headers)
-            com_foxcontact(url, headers)
-            com_adsmanager(url, headers)
-            com_blog(url, headers)
-            com_users(url, headers)
-            comweblinks(url, headers)
-            mod_simplefileupload(url, headers)
-            com_jbcatalog(url, headers)
-            com_sexycontactform(url, headers)
-            com_rokdownloads(url, headers)
-            com_extplorer(url, headers)
-            com_jwallpapers(url, headers)
-            com_facileforms(url, headers)
-
-        #         Wordpress        #
-    # wordpress searching content to detect.
+        joomlaMain(url,headers)
+    
     elif re.search(re.compile(r'wp-content|wordpress|xmlrpc.php'), content):
-        print('\n %s[%sTarget%s]%s => %s%s \n ' %
-              (bannerblue2, W, bannerblue2, W, url, end))
-        print('------------------------------------------------')
-        print(' %s looking for cms' % (que))
-        print(' %s %sCMS :%s Wordpress' % (good, W, end))
-        print('------------------------------------------------')
-
-        print(' %s Server Gathering' % (run))
-        getOS(url, headers)
-
-        if webinfo:
-            webhosting_info(hostinfo)
-        if domaininfo:
-            print(' %s Starting searching for Subdomains' % (run))
-            domain_info(url)
-        # wp_grab methods info from (folder)[./common/grapwp.py]
-        if cms == 'version':
-            print(' %s CMS informations gathering' % (run))
-            wp_version(url, headers, grabinfo)
-            print("-----------------------------------------------")
-        if cms == 'themes':
-            print(' %s CMS informations gathering' % (run))
-            wp_themes(url, headers, grabinfo)
-            print("-----------------------------------------------")
-        if cms == 'user':
-            print(' %s CMS informations gathering' % (run))
-            wp_user(url, headers, grabinfo)
-            print("-----------------------------------------------")
-        if cms == 'plugins':
-            print(' %s CMS informations gathering' % (run))
-            wp_plugin(url, headers, grabinfo)
-            print("-----------------------------------------------")
-        if cms == 'all':
-            print(' %s CMS informations gathering' % (run))
-            wp_version(url, headers, grabinfo)
-            wp_themes(url, headers, grabinfo)
-            wp_user(url, headers, grabinfo)
-            wp_plugin(url, headers, grabinfo)
-            print("-----------------------------------------------")
-            # port to scan
-        if scanports:
-            print(' %s Scanning Ports' % (run))
-            print(""" %sPORTS                     %sSTATUS  %sPROTO""" % (W, W, W))
-            portscan(hostd(url), scanports)
-            print("-----------------------------------------------")
-        if dnsdump:
-            print(' %s Starting DNS dump' % (run))
-            dnsdumper(url)
-            print("-----------------------------------------------")
-        # vulnx -u http://example.com -e | vulnx -u http://example --exploit
-        if exploit:
-            print(' %s Check Vulnerability\n' % (run))
-            print(""" %sNAME                      %sSTATUS  %sSHELL""" % (W, W, W))
-            # wp_exploit methods from (dolder)[./common/wp_exploits.py]
-            wp_wysija(url, headers, vulnresults)
-            wp_blaze(url, headers, vulnresults)
-            wp_synoptic(url, headers, vulnresults)
-            wp_catpro(url, headers, vulnresults)
-            wp_cherry(url, headers, vulnresults)
-            wp_dm(url, headers, vulnresults)
-            wp_fromcraft(url, headers, vulnresults)
-            wp_jobmanager(url, headers, vulnresults)
-            wp_showbiz(url, headers, vulnresults)
-            wp_shop(url, headers, vulnresults)
-            wp_powerzoomer(url, headers, vulnresults)
-            wp_revslider(url, headers, vulnresults)
-            wp_adsmanager(url, headers, vulnresults)
-            wp_inboundiomarketing(url, headers, vulnresults)
-            wp_adblockblocker(url, headers, vulnresults)
-            wp_levoslideshow(url, headers, vulnresults)
-            print("-----------------------------------------------")
-
-        #          Drupal          #
-    # drupal searching content to detect.
+        wordpressMain(url,headers)
+    
     elif re.search(re.compile(r'Drupal|drupal|sites/all|drupal.org'), content):
-        print('\n %s[%sTarget%s]%s => %s%s \n ' %
-              (bannerblue2, W, bannerblue2, W, url, end))
-        print('------------------------------------------------')
-        print(' %s looking for cms' % (que))
-        print(' %s CMS : Drupal' % (good))
-        print('------------------------------------------------')
+        drupalMain(url,headers)
 
-        print(' %s Server Gathering' % (run))
-
-        getOS(url, headers)
-
-        if webinfo:
-            webhosting_info(hostinfo)
-        # domain gatherinargument
-        if domaininfo:
-            print(' %s Starting searching for Subdomains' % (run))
-            domain_info(url)
-        if cms == 'version':
-            print(' %s CMS informations gathering' % (run))
-            drupal_version()
-        if scanports:
-            print(' %s Scanning Ports\n' % (run))
-            print(""" %s     PORTS                     %sSTATUS  %sPROTO""" % (W, W, W))
-            portscan(hostd(url), scanports)
-            print("-----------------------------------------------")
-        if dnsdump:
-            print(' %s Starting DNS dump ' % (run))
-            dnsdumper(url)
-            print("-----------------------------------------------")
-        if exploit:
-            print(' %s Check Vulnerability\n' % (run))
-            print(""" %sNAME                      %sSTATUS  %sSHELL""" % (W, W, W))
-
-        #        Prestashop        #
-    # prestashop searching content to detect.
     elif re.search(re.compile(r'Prestashop|prestashop'), content):
-        print('\n %s[%sTarget%s]%s => %s%s \n ' %
-              (bannerblue2, W, bannerblue2, W, url, end))
-        print('------------------------------------------------')
-        print(' %s looking for cms' % (que))
-        print(' %s %sCMS :%s Prestashop' % (good, W, end))
-        print('------------------------------------------------')
+        prestaMain(url,headers)
 
-        print(' %s Server Gathering' % (run))
-        getOS(url, headers)
-
-        if webinfo:
-            webhosting_info(hostinfo)
-        # domain gatherinargument
-        if domaininfo:
-            print(' %s Starting searching for Subdomains' % (run))
-            domain_info(url)
-        if cms == 'version':
-            print(' %s CMS informations gathering' % (run))
-            prestashop_version()
-        if scanports:
-            print(' %s Scanning Ports\n' % (run))
-            print(""" %s     PORTS                     %sSTATUS  %sPROTO""" % (W, W, W))
-            portscan(hostd(url), scanports)
-            print("-----------------------------------------------")
-        if dnsdump:
-            print(' %s Starting DNS dump ' % (run))
-            dnsdumper(url)
-            print("-----------------------------------------------")
-        if exploit:
-            print(' %s Check Vulnerability\n' % (run))
-            print(""" %sNAME                      %sSTATUS  %sSHELL""" % (W, W, W))
-            columnadverts(url, headers)
-            soopabanners(url, headers)
-            vtslide(url, headers)
-            simpleslideshow(url, headers)
-            productpageadverts(url, headers)
-            productpageadvertsb(url, headers)
-            jro_homepageadvertise(url, headers)
-            attributewizardpro(url, headers)
-            oneattributewizardpro(url, headers)
-            attributewizardpro_old(url, headers)
-            attributewizardpro_x(url, headers)
-            advancedslider(url, headers)
-            cartabandonmentpro(url, headers)
-            cartabandonmentpro_old(url, headers)
-            videostab(url, headers)
-            wg24themeadministration(url, headers)
-            fieldvmegamenu(url, headers)
-            wdoptionpanel(url, headers)
-            pk_flexmenu(url, headers)
-            nvn_export_orders(url, headers)
-            tdpsthemeoptionpanel(url, headers)
-            masseditproduct(url, headers)
-
-        #          OpenCart        #
-    # opencart searching content to detect.
     elif re.search(re.compile(r'route=product|OpenCart|route=common|catalog/view/theme'), content):
-        print('\n %s[%sTarget%s]%s => %s%s \n ' %
-              (bannerblue2, W, bannerblue2, W, url, end))
-        print('------------------------------------------------')
-        print(' %s looking for cms' % (que))
-        print(' %s CMS : OpenCart' % (good))
-        print('------------------------------------------------')
+        opencartMain(url,headers)
 
-        print(' %s Server Gathering' % (run))
-        getOS(url, headers)
-
-        if webinfo:
-            webhosting_info(hostinfo)
-        # domain gatherinargument
-        if domaininfo:
-            print(' %s Starting searching for Subdomains' % (run))
-            domain_info(url)
-        if cms == 'version':
-            print(' %s CMS informations gathering' % (run))
-        if scanports:
-            print(' %s Scanning Ports\n' % (run))
-            print(""" %s     PORTS                     %sSTATUS  %sPROTO""" % (W, W, W))
-            portscan(hostd(url), scanports)
-            print("-----------------------------------------------")
-        if dnsdump:
-            print(' %s Starting DNS dump ' % (run))
-            dnsdumper(url)
-            print("-----------------------------------------------")
-        if exploit:
-            print(' %s Check Vulnerability\n' % (run))
-            print(""" %sNAME                      %sSTATUS  %sSHELL""" % (W, W, W))
-
-        #          Magento         #
-    # magento searching content to detect.
     elif re.search(re.compile(r'Log into Magento Admin Page|name=\"dummy\" id=\"dummy\"|Magento'), content):
-        print('\n %s[%sTarget%s]%s => %s%s \n ' %
-              (bannerblue2, W, bannerblue2, W, url, end))
-        print('------------------------------------------------')
-        print(' %s looking for cms' % (que))
-        print(' %s CMS : Magento' % (good))
-        print('------------------------------------------------')
+        magentoMain(url,headers)
 
-        print(' %s Server Gathering' % (run))
-        getOS(url, headers)
-
-        if webinfo:
-            webhosting_info(hostinfo)
-        # domain gatherinargument
-        if domaininfo:
-            print(' %s Starting searching for Subdomains' % (run))
-            domain_info(url)
-        if cms == 'version':
-            print(' %s CMS informations gathering' % (run))
-        if scanports:
-            print(' %s Scanning Ports\n' % (run))
-            print(""" %s     PORTS                     %sSTATUS  %sPROTO""" % (W, W, W))
-            portscan(hostd(url), scanports)
-            print("-----------------------------------------------")
-        if dnsdump:
-            print(' %s Starting DNS dump ' % (run))
-            dnsdumper(url)
-            print("-----------------------------------------------")
-        if exploit:
-            print(' %s Check Vulnerability' % (run))
-            print(""" %sNAME                      %sSTATUS  %sSHELL""" % (W, W, W))
-
-        #         Lokomedia        #
-    # lokomedia searching content to detect.
-        print(' %s Check Vulnerability' % (run))
     elif re.search(re.compile(r'image/gif'), lm_content):
-        print('\n %s[%sTarget%s]%s => %s%s \n ' %
-              (bannerblue2, W, bannerblue2, W, url, end))
-        print('------------------------------------------------')
-        print(' %s looking for cms' % (que))
-        print(' %s CMS : Lokomedia' % (good))
-        print('------------------------------------------------')
+        lokomedia(url,headers)
 
-        print(' %s Server Gathering' % (run))
-        getOS(url, headers)
-
-        if subdomains:
-            print(' %s Starting searching for Subdomains' % (run))
-            domain_info(url)
-        print('------------------------------------------------')
-        if scanports:
-            print(' %s Scanning Ports\n' % (run))
-            print(""" %s  PORTS                     %sSTATUS  %sPROTO""" % (W, W, W))
-            portscan(hostd(url), scanports)
-            print("-----------------------------------------------")
-        if dnsdump:
-            print(' %s Starting DNS dump ' % (run))
-            dnsdumper(url)
-            print("-----------------------------------------------")
-        print(' %s Check Vulnerability' % (run))
     elif re.search(re.compile(r'lokomedia'), lm2_content):
-        print('\n %s[%sTarget%s]%s => %s%s \n ' %
-              (bannerblue2, W, bannerblue2, W, url, end))
-        print('------------------------------------------------')
-        print(' %s looking for cms' % (que))
-        print(' %s CMS : Lokomedia' % (good))
-        print('------------------------------------------------')
-        if subdomains:
-            print(' %s Starting searching for Subdomains' % (run))
-            domain_info(url)
-        if scanports:
-            print(' %s Scanning Ports\n' % (run))
-            print(""" %s  PORTS                     %sSTATUS  %sPROTO""" % (W, W, W))
-            portscan(hostd(url), scanports)
-            print("-----------------------------------------------")
-        if dnsdump:
-            print(' %s Starting DNS dump ' % (run))
-            dnsdumper(url)
-            print("-----------------------------------------------")
-        print(' %s Check Vulnerability' % (run))
+        lokomedia2(url,headers)
 
-        #          Unknown         #
-    # no cms detect
     else:
         print('\n %s[%sTarget%s]%s => %s%s \n ' %
               (bannerblue2, W, bannerblue2, W, url, end))
@@ -552,6 +557,7 @@ def detect_cms():
         print(' %s looking for cms' % (que))
         print(' %s CMS : Unknown' % (bad))
         print('------------------------------------------------')
+        getOS(url, headers)
         if webinfo:
             webhosting_info(hostinfo)
         # domain gatherinargument
@@ -563,11 +569,7 @@ def detect_cms():
             print(' %s Starting DNS dump ' % (run))
             dnsdumper(url)
             print("-----------------------------------------------")
-#    except Exception as e:
-#        print ('%s\n\n error : %s%s' % (R,e,W))
-
-# drupal Version
-
+            
 
 def drupal_version():
     response = requests.get(url, headers).text
