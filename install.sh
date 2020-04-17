@@ -85,8 +85,8 @@ function debianOS(){
     sudo cp -r "./shell" "/usr/share/vulnx/"
     sudo chmod +x /usr/share/vulnx/update.sh
     sudo cp "vulnx.py" "/usr/share/vulnx"
-    sudo cp "config/vulnxicon.png" "/usr/share/icons"
-    sudo cp "config/vulnx.desktop" "/usr/share/applications"
+    sudo cp "bin/vulnxicon.png" "/usr/share/icons"
+    sudo cp "bin/vulnx.desktop" "/usr/share/applications"
     sudo cp "vulnx" "/usr/local/bin/"
     rm "vulnx";
     if [ -d "/usr/share/vulnx" ] ;

@@ -6,7 +6,7 @@ from common.colors import B, W, G, good, bad
 # searching for the wordpress version
 
 
-def wp_version(url, headers, grabinfo):
+def wp_version(url, headers):
     ep = url
     getversion = requests.get(ep, headers).text
     # searching version content from the http response. \d{:digit} version form 0.0.0
@@ -15,11 +15,10 @@ def wp_version(url, headers, grabinfo):
     if matches:
         version = matches.group(1)
         return print(' %s Version : %s' % (good, version))
-        grabinfo.add('Version - ' + version)
 # searching for the wordpress themes
 
 
-def wp_themes(url, headers, grabinfo):
+def wp_themes(url, headers):
     ep = url
     themes_array = []
     getthemes = requests.get(ep, headers).text
@@ -34,19 +33,18 @@ def wp_themes(url, headers, grabinfo):
 # searching for the wordpress user
 
 
-def wp_user(url, headers, grabinfo):
+def wp_user(url, headers):
     ep = url + '/?author=1'
     getuser = requests.get(ep, headers).text
     matches = re.search(re.compile(r'author/(\w+)?/'), getuser)
     if matches:
         user = matches.group(1)
         return print(' %s User : %s' % (good, user))
-        grabinfo.add('user - ' + user)
 
 # searching for the wordpress plugins
 
 
-def wp_plugin(url, headers, grabinfo):
+def wp_plugin(url, headers):
     plugins_array = []
     ep = url
     getplugin = requests.get(ep, headers).text
