@@ -11,25 +11,30 @@ class GatherHost():
         self.headers = headers
 
     def match_info(self,regex,data):
-        match = re.search(regex, data)
-        if match:
-            return dict(
-                data=match.group(1)
-            )
+
+            match = re.search(regex, data)
+            if match:
+                return dict(
+                    data=match.group(1)
+                )
+
     def match_printer(self,to_match,match):
         if match['data']:
-            print(' {} {} : {}'.format(good,to_match,match))
+            print(' {0} {1} : {2}'.format(good,to_match,match['data']))
 
     def os_server(self):
+        print(' {0} OS / Server Information'.format(run))
         response = requests.get(self.url, headers=self.headers).headers
         try:
-            if response["server"]:
                 regx = re.compile(r"(.+) \((.+)\)")
                 data = regx.search(response["server"])
-                print(' {} {}Server :{} {}' .format(good, W, end, data.group(1)))
-                print(' {} {}OS :{} {}' .format(good, W, end, data.group(2)))
+                try:
+                    print(' {0} {1}Server :{2} {3}' .format(good, W, end, data.group(1)))
+                    print(' {0} {1}OS :{2} {3}' .format(good, W, end, data.group(2)))
+                except AttributeError:
+                    print(' {0} Cannot Find OS & HostingServer ' .format(bad))
         except KeyError:
-            print(' {} Cannot Match the server headers ' .format(bad))
+            print(' {0} Cannot Find the server headers ' .format(bad))
 
     def web_host(self):
         urldate = "https://input.payapi.io/v1/api/fraud/domain/age/" + hostd(self.url)
@@ -38,23 +43,20 @@ class GatherHost():
         regex_date = re.compile(regex_date)
         matches = re.search(regex_date, getinfo)
         
-        print(' {} Web Hosting Information'.format(run))
-        
-        if matches:
-            print(' {} Domain Created on : {}'.format(good, matches.group(1)))
+        print(' {0} Web Hosting Information'.format(run))
         try:
-            ip = socket.gethostbyname(hostd(self.url))
-            print(' {} CloudFlare IP : {}'.format(good, ip))
-            ipinfo = "http://ipinfo.io/" + ip + "/json"
-            gather = requests.get(ipinfo, self.headers).text
+            if matches:
+                print(' {0} Domain Created on : {1}'.format(good, matches.group(1)))
+                ip = socket.gethostbyname(hostd(self.url))
+                print(' {0} CloudFlare IP : {1}'.format(good, ip))
+                ipinfo = "http://ipinfo.io/" + ip + "/json"
+                gather = requests.get(ipinfo, self.headers).text
 
-            self.match_printer('Country',self.match_info(r'country\": \"(.+?)\"',gather))
-            self.match_printer('Region',self.match_info(r'region\": \"(.+?)\"',gather))
-            self.match_printer('Latitude',self.match_info(r'latitude: (.+?)',gather))
-            self.match_printer('Longitude',self.match_info(r'longitude\": \"(.+?)\"',gather))
-            self.match_printer('Timezone',self.match_info(r'timezone\": \"(.+?)\"',gather))
-            self.match_printer('Ans',self.match_info(r'ans\": \"(.+?)\"',gather))
-            self.match_printer('Org',self.match_info(r'org\": \"(.+?)\"',gather))
-
-        except Exception as parsing_error:
-            print(' %s Parsing error : %s' % (bad, str(parsing_error)))
+                self.match_printer('Country',self.match_info(r'country\": \"(.+?)\"',gather))
+                self.match_printer('Region',self.match_info(r'region\": \"(.+?)\"',gather))
+                self.match_printer('Timezone',self.match_info(r'timezone\": \"(.+?)\"',gather))
+                self.match_printer('Postal',self.match_info(r'postal\": \"(.+?)\"',gather))
+                self.match_printer('Org',self.match_info(r'org\": \"(.+?)\"',gather))
+                self.match_printer('Location',self.match_info(r'loc\": \"(.+?)\"',gather))
+        except Exception as err:
+            print(' {0} Parse Error : {1}' .format(bad,err))

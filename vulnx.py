@@ -86,15 +86,12 @@ args = parse_args()
 url = args.url
 # interactive arugment
 cli = args.cli
-# run exploit
-exploit = args.exploit
 # input_file
 input_file = args.input_file
 # Disable SSL related warnings
 warnings.filterwarnings('ignore')
 
 def detection():
-
     instance = CMS(
         url,
         headers=headers,
@@ -109,7 +106,6 @@ def detection():
     instance.instanciate()
 
 def dork_engine():
-
     if args.dorks:
         DEngine = Dork(
             exploit=args.dorks,
@@ -119,13 +115,14 @@ def dork_engine():
         DEngine.search()
 
 def dorks_manual():
-
     if args.dorkslist:
         DManual = DorkManual(
             select=args.dorkslist
             )
         DManual.list()
 
+def interactive_cli():
+    print('a')
 
 def signal_handler(signal, frame):
     print("%s(ID: {}) Cleaning up...\n Exiting...".format(signal) % (W))
@@ -142,44 +139,15 @@ if __name__ == "__main__":
         'Accept-Language': 'en-US,en;q=0.5',
         'Connection': 'keep-alive',
     }
-
-    if input_file:
-        with open(input_file, 'r') as urls:
-            u_array = [url.strip('\n') for url in urls]
-            try:
-                for url in u_array:
-                    root = url
-                # url condition entrypoint
-                    if root.startswith('http'):
-                        url = root
-                    else:
-                        url = 'http://'+root
-                    # default headers.
-                    detection()
-                    urls.close()
-            except Exception as error_:
-                print('UKNOWN ERROR : ' + str(error_))
-
     dork_engine()
     dorks_manual()
     if url:
-        # url condition entrypoint
         root = url
-        if root.startswith('http'):
+        if root.startswith('http://'):
             url = root
-            print(url)
-        elif root.startswith('https'):
-            url=root.replace('https','http')
-            
-            print(url)
+        elif root.startswith('https://'):
+            url=root.replace('https://','http://')
         else:
             url = 'http://'+root
             print(url)
-        # default headers.
-        headers = {
-            'User-Agent': random_UserAgent(),
-            'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8',
-            'Accept-Language': 'en-US,en;q=0.5',
-            'Connection': 'keep-alive',
-        }
         detection()
