@@ -1,3 +1,8 @@
+
+#!/usr/bin/env python
+
+from __future__ import (absolute_import, division, print_function)
+
 '''
 Dorks Engine Module.
 github Repository : http://github.com/anouarbensaad/findorks
@@ -10,14 +15,13 @@ import random
 import os
 from common.colors import run, W, end, good, bad, que, info, bannerblue
 from common.uriParser import parsing_url as parsify
-filename = time.strftime("%Y-%m-%d-%H%M%S-Dorks")
 output_dirdorks = 'logs'+'/Dorks'
 
-if not os.path.exists(output_dirdorks):  # if the directory doesn't exist
-    os.mkdir(output_dirdorks)  # create a new directory
-    export = open('%s/%s.txt' % (output_dirdorks, filename), 'w')
-else:
-    export = open('%s/%s.txt' % (output_dirdorks, filename), 'w')
+#if not os.path.exists(output_dirdorks):  # if the directory doesn't exist
+#    os.mkdir(output_dirdorks)  # create a new directory
+#    export = open('%s/%s.txt' % (output_dirdorks, filename), 'w')
+#else:
+#    export = open('%s/%s.txt' % (output_dirdorks, filename), 'w')
 
 
 wp_contentdorks = {
@@ -83,253 +87,168 @@ prestashop = {
 }
 
 
-class Dorks:
+class Dork:
 
-    @staticmethod
-    def getdorksbyname(exploitname):
-        if exploitname in wp_contentdorks:
-            return wp_contentdorks[exploitname]
-        elif exploitname in wp_admindorks:
-            return wp_admindorks[exploitname]
-        elif exploitname in wpajx:
-            return wpajx[exploitname]
-        elif exploitname in wpindex:
-            return wpindex[exploitname]
-        elif exploitname in joomla:
-            return joomla[exploitname]
-        elif exploitname in prestashop:
-            return prestashop[exploitname]
+    def __init__(self,headers=None,exploit=None,pages=1):
+        self.headers = headers
+        self.exploit = exploit
+        self.pages = pages
 
-    @staticmethod
-    def searchengine(exploitname, headers, output_dir, numberpage):
+    def __setdork__(self):
+
+        '''
+        this method to set the right dork from the exploit name.
+        '''
+        if self.exploit is None:
+            return dict(
+                message='This exploit not valid'
+            )
+        else:
+            if self.exploit in wp_contentdorks:
+                return dict(
+                    dork=wp_contentdorks[self.exploit]
+                )
+            if self.exploit in wp_admindorks:
+                return dict(
+                    dork=wp_admindorks[self.exploit]
+                )
+            if self.exploit in wpajx:
+                return dict(
+                    dork=wpajx[self.exploit]
+                )
+            if self.exploit in wpindex:
+                return dict(
+                    dork=wpindex[self.exploit]
+                )
+            if self.exploit in joomla:
+                return dict(
+                    dork=joomla[self.exploit]
+                )
+            if self.exploit in prestashop:
+                return dict(
+                    dork=prestashop[self.exploit]
+                )
+
+    def __finddork__(self,content):
+        webs = []
+        if self.exploit in wp_contentdorks:
+            dorks = re.findall(re.compile(
+                r'https?://+?\w+?[a-zA-Z0-9-_.]+?[a-zA-Z0-9-_.]?\w+\.\w+/?/wp-content/plugins/\w+'), content)
+            if len(dorks) > 0:
+                for web in dorks:
+                    if web not in webs:
+                        webs.append(web)
+                for i in range(len(webs)):
+                    domains = parsify(webs[i])
+                    print(' {0} URL   : {1} ' .format(good, webs[i]))
+                    print(' {0} DOMAIN: {1} ' .format(good, domains))
+        elif self.exploit in wp_admindorks:
+            dorks = re.findall(re.compile(
+                r'https?://+?\w+?[a-zA-Z0-9-_.]+?[a-zA-Z0-9-_.]?\w+\.\w+/?/wp-admin/\w+'), content)
+            if len(dorks) > 0:
+                for web in dorks:
+                    if web not in webs:
+                        webs.append(web)
+                for i in range(len(webs)):
+                    domains = parsify(webs[i])
+                    print(' {0} URL   : {1} ' .format(good, webs[i]))
+                    print(' {0} DOMAIN: {1} ' .format(good, domains))
+        elif self.exploit in wpajx:
+            dorks = re.findall(re.compile(
+                r'https?://+?\w+?[a-zA-Z0-9-_.]+?[a-zA-Z0-9-_.]?\w+\.\w+/?/jm-ajax/upload_file/'), content)
+            if len(dorks) > 0:
+                for web in dorks:
+                    if web not in webs:
+                        webs.append(web)
+                for i in range(len(webs)):
+                    domains = parsify(webs[i])
+                    print(' {0} URL   : {1} ' .format(good, webs[i]))
+                    print(' {0} DOMAIN: {1} ' .format(good, domains))
+        elif self.exploit in wpindex:
+            dorks = re.findall(re.compile(
+                r'https?://+?\w+?[a-zA-Z0-9-_.]+?[a-zA-Z0-9-_.]?\w+\.\w+/index.php/wp-json/wp/'), content)
+            if len(dorks) > 0:
+                for web in dorks:
+                    if web not in webs:
+                        webs.append(web)
+                for i in range(len(webs)):
+                    domains = parsify(webs[i])
+                    print(' {0} URL   : {1} ' .format(good, webs[i]))
+                    print(' {0} DOMAIN: {1} ' .format(good, domains))
+        elif self.exploit in joomla:
+            dorks = re.findall(re.compile(
+                r'https?://+?\w+?[a-zA-Z0-9-_.]+?[a-zA-Z0-9-_.]?\w+\.\w+/index.php?option=com_jce'), content)
+            if len(dorks) > 0:
+                for web in dorks:
+                    if web not in webs:
+                        webs.append(web)
+                for i in range(len(webs)):
+                    domains = parsify(webs[i])
+                    print(' {0} URL   : {1} ' .format(good, webs[i]))
+                    print(' {0} DOMAIN: {1} ' .format(good, domains))
+        elif self.exploit in prestashop:
+            dorks = re.findall(re.compile(
+                r'https?://+?\w+?[a-zA-Z0-9-_.]+?[a-zA-Z0-9-_.]?\w+\.\w+/?/modules/\w+'), content)
+            if len(dorks) > 0:
+                for web in dorks:
+                    if web not in webs:
+                        webs.append(web)
+                for i in range(len(webs)):
+                    domains = parsify(webs[i])
+                    print(' {0} URL   : {1} ' .format(good, webs[i]))
+                    print(' {0} DOMAIN: {1} ' .format(good, domains))
+
+
+    def detect_captcha(self,content):
+
+        '''
+        this method to detect if there is a captcha or not.
+        - randomize the time of query
+        - randomize the header and user-agent. to skip the detection.
+        '''
+        if (re.findall(re.compile(r'CAPTCHA'), content)):
+            return True
+        else:
+            return False
+
+    def _google_singlepage_(self):
+
+        print(' {0} Page N° 1 '.format(info))
+        set_dork = self.__setdork__()
+        google_query = 'https://www.google.com/search?q=' + set_dork['dork']
+        print(' {0} searching for : {1}' .format(que, google_query))
+        response = requests.get(google_query,headers=self.headers).text
+        return response
+
+    def _google_multipage_(self,num_p):
+
+        print(' {0} Page n° {1} ' .format(info, num_p/10+1))
+        set_dork = self.__setdork__()
+        google_query = 'https://www.google.com/search?q=' + set_dork['dork']+'&start='+str(num_p)
+        print(' %s searching for : %s' % (que, google_query))
+        response = requests.get(google_query, headers=self.headers).text
+        return response
+
+    def search(self):
+        pages = self.pages*10
         try:
-            print(' %s Searching for %s dork url' % (run, exploitname))
-            numberpage = numberpage*10
-            for np in range(0, numberpage, 10):
-                starty = time.time()
-                if np == 0:
-                    time.sleep(random.randint(1, 2))
-                    print(' %s Page n° 1 ' % (info))
-                    googlequery = 'https://www.google.com/search?q=' + \
-                        Dorks.getdorksbyname(exploitname)
-                    print(' %s searching for : %s' % (que, googlequery))
-                    res = requests.get(googlequery, headers).text
-                    if (re.findall(re.compile(r'CAPTCHA'), res)):
-                        print(' %s Bot Detected The block will expire shortly' % bad)
+            for number_page in range(0,pages,10):
+                init_time = time.time()
+                if number_page == 0:
+                    time.sleep(random.randint(1,2))
+                    if self.detect_captcha(self._google_singlepage_()):
+                        print(' {0} Bot Detected The block will expire shortly' .format(bad))
                     else:
-                        Dorks.WP_dorksconditions(exploitname, res, output_dir)
-                        print('------------------------------------------------')
+                        self.__finddork__(self._google_singlepage_())
                 else:
-                    time.sleep(random.randint(3, 5))
-                    print(' %s Page n° %i ' % (info, np/10+1))
-                    googlequery = 'https://www.google.com/search?q=' + \
-                        Dorks.getdorksbyname(exploitname)+'&start='+str(np)
-                    res = requests.get(googlequery, headers).text
-                    print(' %s searching for : %s' % (que, googlequery))
-                    if (re.findall(re.compile(r'CAPTCHA'), res)):
-                        print(' %s Bot Detected The block will expire shortly' % bad)
+                    time.sleep(random.randint(3,5))
+                    if self.detect_captcha(self._google_multipage_(number_page)):
+                        print(' {0} Bot Detected The block will expire shortly' .format(bad))
                     else:
-                        Dorks.WP_dorksconditions(exploitname, res, output_dir)
-                        print('------------------------------------------------')
-                endy = time.time()
-                elapsed = endy - starty
-                print(' %s Elapsed Time : %.2f seconds' % (info, elapsed))
-                print("%s----------------%s" % (bannerblue, end))
-            export.close()
+                        self.__finddork__(self._google_multipage_(number_page))
+                end_time = time.time()
+                elapsed_time = end_time - init_time
+                print(' %s Elapsed Time : %.2f seconds' % (info, elapsed_time))
         except Exception as msg:
             print(' %s exploitname %s ' % (bad, msg))
-        np = +10
-
-    @staticmethod
-    def WP_dorksconditions(exploitname, response, output_dir):
-        webs = []
-        if exploitname in wp_contentdorks:
-            dorks = re.findall(re.compile(
-                r'https?://+?\w+?[a-zA-Z0-9-_.]+?[a-zA-Z0-9-_.]?\w+\.\w+/?/wp-content/plugins/\w+'), response)
-            if len(dorks) > 0:
-                for web in dorks:
-                    if web not in webs:
-                        webs.append(web)
-                for i in range(len(webs)):
-                    domains = parsify(webs[i])
-                    print(' %s URL   : %s ' % (good, webs[i]))
-                    print(' %s DOMAIN: %s ' % (good, domains))
-                    export.write(domains)
-                    export.write('\n')
-        elif exploitname in wp_admindorks:
-            dorks = re.findall(re.compile(
-                r'https?://+?\w+?[a-zA-Z0-9-_.]+?[a-zA-Z0-9-_.]?\w+\.\w+/?/wp-admin/\w+'), response)
-            if len(dorks) > 0:
-                for web in dorks:
-                    if web not in webs:
-                        webs.append(web)
-                for i in range(len(webs)):
-                    domains = parsify(webs[i])
-                    print(' %s URL   : %s ' % (good, webs[i]))
-                    print(' %s DOMAIN: %s ' % (good, domains))
-                    export.write(domains)
-                    export.write('\n')
-        elif exploitname in wpajx:
-            dorks = re.findall(re.compile(
-                r'https?://+?\w+?[a-zA-Z0-9-_.]+?[a-zA-Z0-9-_.]?\w+\.\w+/?/jm-ajax/upload_file/'), response)
-            if len(dorks) > 0:
-                for web in dorks:
-                    if web not in webs:
-                        webs.append(web)
-                for i in range(len(webs)):
-                    domains = parsify(webs[i])
-                    print(' %s URL   : %s ' % (good, webs[i]))
-                    print(' %s DOMAIN: %s ' % (good, domains))
-                    export.write(domains)
-                    export.write('\n')
-        elif exploitname in wpindex:
-            dorks = re.findall(re.compile(
-                r'https?://+?\w+?[a-zA-Z0-9-_.]+?[a-zA-Z0-9-_.]?\w+\.\w+/index.php/wp-json/wp/'), response)
-            if len(dorks) > 0:
-                for web in dorks:
-                    if web not in webs:
-                        webs.append(web)
-                for i in range(len(webs)):
-                    domains = parsify(webs[i])
-                    print(' %s URL   : %s ' % (good, webs[i]))
-                    print(' %s DOMAIN: %s ' % (good, domains))
-                    export.write(domains)
-                    export.write('\n')
-        elif exploitname in joomla:
-            dorks = re.findall(re.compile(
-                r'https?://+?\w+?[a-zA-Z0-9-_.]+?[a-zA-Z0-9-_.]?\w+\.\w+/index.php?option=com_jce'), response)
-            if len(dorks) > 0:
-                for web in dorks:
-                    if web not in webs:
-                        webs.append(web)
-                for i in range(len(webs)):
-                    domains = parsify(webs[i])
-                    print(' %s URL   : %s ' % (good, webs[i]))
-                    print(' %s DOMAIN: %s ' % (good, domains))
-                    export.write(domains)
-                    export.write('\n')
-        elif exploitname in prestashop:
-            dorks = re.findall(re.compile(
-                r'https?://+?\w+?[a-zA-Z0-9-_.]+?[a-zA-Z0-9-_.]?\w+\.\w+/?/modules/\w+'), response)
-            if len(dorks) > 0:
-                for web in dorks:
-                    if web not in webs:
-                        webs.append(web)
-                for i in range(len(webs)):
-                    domains = parsify(webs[i])
-                    print(' %s URL   : %s ' % (good, webs[i]))
-                    print(' %s DOMAIN: %s ' % (good, domains))
-                    export.write(domains)
-                    export.write('\n')
-
-
-class DorkList():
-
-    @staticmethod
-    def dorkslist():
-        print("""
-        %sWordPress          Joomla               Prestashop
-        ---------          ------               -----------%s
-        blaze              comjce               columnadverts          
-        catpro             comfabrik            soopabanners           
-        cherry             comjdownloads        vtslide                
-        dm                 comfoxcontact        simpleslideshow        
-        fromcraft                               productpageadverts     
-        synoptic                                productpageadvertsb    
-        shop                                    jro_homepageadvertise  
-        revslider                               attributewizardpro     
-        adsmanager                              oneattributewizardpro  
-        inboundiomarketing                      attributewizardpro_old 
-        wysija                                  attributewizardpro_x   
-        powerzoomer                             advancedslider         
-        showbiz                                 cartabandonmentpro     
-        jobmanager                              cartabandonmentpro_old 
-        injection                               videostab              
-        thumbslider                             wg24themeadministration
-                                                fieldvmegamenu         
-                                                wdoptionpanel          
-                                                pk_flexmenu            
-                                                pk_vertflexmenu        
-                                                nvn_export_orders      
-                                                tdpsthemeoptionpanel   
-                                                masseditproduct
-""" % (W, end))
-
-    @staticmethod
-    def wp_dorkTable():
-        print("""
-        WordPress          
-        ---------          
-        blaze              
-        catpro             
-        cherry             
-        dm                 
-        fromcraft          
-        synoptic           
-        shop               
-        revslider          
-        adsmanager         
-        inboundiomarketing 
-        wysija             
-        powerzoomer        
-        showbiz            
-        jobmanager         
-        injection          
-        thumbslider        
-                """)
-
-    @staticmethod
-    def joo_dorkTable():
-        print("""
-        Joomla       
-        ------       
-        comjce       
-        comfabrik    
-        comjdownloads
-        comfoxcontact
-                 """)
-
-    @staticmethod
-    def ps_dorkTable():
-
-        print("""
-        Prestashop
-        -----------
-        columnadverts          
-        soopabanners           
-        vtslide                
-        simpleslideshow        
-        productpageadverts     
-        productpageadvertsb    
-        jro_homepageadvertise  
-        attributewizardpro     
-        oneattributewizardpro  
-        attributewizardpro_old 
-        attributewizardpro_x   
-        advancedslider         
-        cartabandonmentpro     
-        cartabandonmentpro_old 
-        videostab              
-        wg24themeadministration
-        fieldvmegamenu         
-        wdoptionpanel          
-        pk_flexmenu            
-        pk_vertflexmenu        
-        nvn_export_orders      
-        tdpsthemeoptionpanel   
-        masseditproduct
-                """)
-
-    @staticmethod
-    def loko_dorkTable():
-        print("""
-        Lokomedia       
-        ------              
-                """)
-
-    @staticmethod
-    def dru_dorkTable():
-        print("""
-        Drupal       
-        ------              
-                """)
+        number_page = +10

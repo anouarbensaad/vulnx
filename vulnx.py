@@ -12,6 +12,8 @@ See the file 'LICENSE' for copying permission
 """
 
 from modules.detector import CMS
+from modules.dorks.engine import Dork
+from modules.dorks.helpers import DorkManual
 from common.colors import red, green, bg, G, R, W, Y, G, good, bad, run, info, end, que, bannerblue2
 
 from common.requestUp import random_UserAgent
@@ -27,7 +29,6 @@ import common
 import warnings
 import signal
 import requests
-from common.threading import threads
 
 
 warnings.filterwarnings(
@@ -54,14 +55,9 @@ def parse_args():
         '-D', '--dorks', help='search webs with dorks', dest='dorks', type=str)
     parser.add_argument(
         '-o', '--output', help='specify output directory', required=False)
-    parser.add_argument(
-        '-t', '--timeout', help='http requests timeout', dest='timeout', type=float)
-    parser.add_argument('--threads', help="number of threads",
-                        dest='numthread', type=float)
     parser.add_argument('-n', '--number-pages',
                         help='search dorks number page limit', dest='numberpage', type=int)
-    parser.add_argument(
-        '-i', '--input', help='specify input file of domains to scan', dest='input_file', required=False)
+    parser.add_argument('-i', '--input', help='specify input file of domains to scan', dest='input_file', required=False)
     parser.add_argument('-l', '--dork-list', help='list names of dorks exploits', dest='dorkslist',
                         choices=['wordpress', 'prestashop', 'joomla', 'lokomedia', 'drupal', 'all'])
     parser.add_argument('-p',  '--ports', help='ports to scan',
@@ -92,23 +88,12 @@ url = args.url
 cli = args.cli
 # run exploit
 exploit = args.exploit
-# cms gathering args
-cms = args.cms
-# dorks search.
-dorks = args.dorks
-dorkslist = args.dorkslist
-# timeout
-timeout = args.timeout or 3
-# thread
-numthread = args.numthread or 1
-# numberpage
-numberpage = args.numberpage or 1
 # input_file
 input_file = args.input_file
 # Disable SSL related warnings
 warnings.filterwarnings('ignore')
 
-def detect_cms():
+def detection():
 
     instance = CMS(
         url,
@@ -123,11 +108,24 @@ def detect_cms():
             )
     instance.instanciate()
 
-# output
-output_dir = args.output or 'logs'
+def dork_engine():
 
-if not os.path.exists(output_dir):  # if the directory doesn't exist
-    os.mkdir(output_dir)  # create a new directory
+    if args.dorks:
+        DEngine = Dork(
+            exploit=args.dorks,
+            headers=headers,
+            pages=(args.numberpage or 1)
+            )
+        DEngine.search()
+
+def dorks_manual():
+
+    if args.dorkslist:
+        DManual = DorkManual(
+            select=args.dorkslist
+            )
+        DManual.list()
+
 
 def signal_handler(signal, frame):
     print("%s(ID: {}) Cleaning up...\n Exiting...".format(signal) % (W))
@@ -136,6 +134,14 @@ def signal_handler(signal, frame):
 signal.signal(signal.SIGINT, signal_handler)
 
 if __name__ == "__main__":
+
+    headers = {
+        'User-Agent': random_UserAgent(),
+        'Content-type' : '*/*',
+        'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8',
+        'Accept-Language': 'en-US,en;q=0.5',
+        'Connection': 'keep-alive',
+    }
 
     if input_file:
         with open(input_file, 'r') as urls:
@@ -149,17 +155,13 @@ if __name__ == "__main__":
                     else:
                         url = 'http://'+root
                     # default headers.
-                    headers = {
-                        'User-Agent': random_UserAgent(),
-                        'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8',
-                        'Accept-Language': 'en-US,en;q=0.5',
-                        'Connection': 'keep-alive',
-                    }
-                    detect_cms()
+                    detection()
                     urls.close()
             except Exception as error_:
                 print('UKNOWN ERROR : ' + str(error_))
 
+    dork_engine()
+    dorks_manual()
     if url:
         # url condition entrypoint
         root = url
@@ -180,4 +182,4 @@ if __name__ == "__main__":
             'Accept-Language': 'en-US,en;q=0.5',
             'Connection': 'keep-alive',
         }
-        detect_cms()
+        detection()
