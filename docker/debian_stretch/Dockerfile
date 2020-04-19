@@ -47,7 +47,7 @@ USER vulnx
 WORKDIR vulnx
 
 # Install Python3 & Pip 3
-RUN apt-get -qq update \
+RUN apt-get update -qq && \
     apt-get install -qq -y --no-install-recommends \
         python3        \
         python3-pip && \

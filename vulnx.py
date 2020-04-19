@@ -14,6 +14,7 @@ See the file 'LICENSE' for copying permission
 from modules.detector import CMS
 from modules.dorks.engine import Dork
 from modules.dorks.helpers import DorkManual
+from modules.cli.cli import CLI
 from common.colors import red, green, bg, G, R, W, Y, G, good, bad, run, info, end, que, bannerblue2
 
 from common.requestUp import random_UserAgent
@@ -84,8 +85,6 @@ def parse_args():
 args = parse_args()
 # url arg
 url = args.url
-# interactive arugment
-cli = args.cli
 # input_file
 input_file = args.input_file
 # Disable SSL related warnings
@@ -122,7 +121,9 @@ def dorks_manual():
         DManual.list()
 
 def interactive_cli():
-    print('a')
+    if args.cli:
+        cli = CLI(headers=headers)
+        cli.general("")
 
 def signal_handler(signal, frame):
     print("%s(ID: {}) Cleaning up...\n Exiting...".format(signal) % (W))
@@ -141,6 +142,7 @@ if __name__ == "__main__":
     }
     dork_engine()
     dorks_manual()
+    interactive_cli()
     if url:
         root = url
         if root.startswith('http://'):

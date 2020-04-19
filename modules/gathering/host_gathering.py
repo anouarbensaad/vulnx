@@ -23,7 +23,7 @@ class GatherHost():
             print(' {0} {1} : {2}'.format(good,to_match,match['data']))
 
     def os_server(self):
-        print(' {0} OS / Server Information'.format(run))
+
         response = requests.get(self.url, headers=self.headers).headers
         try:
                 regx = re.compile(r"(.+) \((.+)\)")
@@ -42,8 +42,6 @@ class GatherHost():
         regex_date = r'Date: (.+?)-(.+?)'
         regex_date = re.compile(regex_date)
         matches = re.search(regex_date, getinfo)
-        
-        print(' {0} Web Hosting Information'.format(run))
         try:
             if matches:
                 print(' {0} Domain Created on : {1}'.format(good, matches.group(1)))

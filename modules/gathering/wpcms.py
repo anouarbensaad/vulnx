@@ -1,7 +1,7 @@
 """ WordPress Information Gathering """
 import re
 import requests
-from common.colors import B, W, G, good, bad
+from common.colors import B, W, G, good, bad,run
 
 # searching for the wordpress version
 
@@ -16,7 +16,6 @@ def wp_version(url, headers):
         version = matches.group(1)
         return print(' %s Version : %s' % (good, version))
 # searching for the wordpress themes
-
 
 def wp_themes(url, headers):
     ep = url

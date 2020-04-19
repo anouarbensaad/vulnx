@@ -3,6 +3,7 @@
 
 from __future__ import (absolute_import, division, print_function)
 
+from common.colors import W,B,good,end,run
 from modules.executor.Wordpress import Wordpress
 from modules.executor.Magento import Magento
 from modules.executor.Prestashop import Prestashop
@@ -134,15 +135,27 @@ class CMS(object):
         cms = self.serialize()
         if cms['name']:
             instance = eval(cms['name'])(self.url,self.headers)
-            print(' CMS : {}'.format(cms['name']))
+            print ('\n {0}[{1}Target{2}]{3} => {4}{5} \n '.format(B,W,B, W, self.url, end))
+            print ("{0} −−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−".format(W))
+            print (' {0} looking for cms' .format(run))
+            print (' {0} CMS : {1}' .format(good , cms['name']))
             if cms['exploit']:
+                print ("{0} −−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−".format(W))
+                print(' {0} Exploits Scan'.format(run))
                 instance.exploit()
             if cms['webinfo']:
+                print ("{0} −−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−".format(W))
+                print(' {0} OS / Server Information'.format(run))
                 instance.webinfo()
             if cms['serveros']:
+                print ("{0} −−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−".format(W))
+                print(' {0} Web Hosting Information'.format(run))
                 instance.serveros()
             if cms['cmsinfo']:
+                print ("{0} −−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−".format(W))
+                print(' {0} CMS Information Gathering'.format(run))
                 instance.cmsinfo()
+                print ("{0} −−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−".format(W))
             if cms['dnsdump']:
                 instance.dnsdump()
             if cms['domain']:
