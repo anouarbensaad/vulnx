@@ -44,14 +44,14 @@ class CMS(object):
     
     def __getlmcontent__(self):
         lm_content = self.url + '/smiley/1.gif'
-        return requests.get(lm_content, self.headers).text
+        return requests.get(lm_content, headers=self.headers,verify=False).text
 
     def __getlm2content__(self):
         lm2_content = self.url + '/rss.xml'
-        return requests.get(lm2_content, self.headers).text
+        return requests.get(lm2_content, headers=self.headers,verify=False).text
     
     def __getcontent__(self):
-        return requests.get(self.url, self.headers).text
+        return requests.get(self.url, headers=self.headers,verify=False).text
 
     def __getexploit__(self):
         if self.exploit:
