@@ -3,6 +3,7 @@
 
 from __future__ import (absolute_import, division, print_function)
 
+from common.colors import bad
 from modules.gathering.host_gathering import GatherHost
 from modules.dns_dump import dnsdumper,domain_info
 from modules.scan_ports import ScanPort
@@ -23,6 +24,10 @@ class Uknown(object):
         # port to scan
         self.port = port
 
+    def exploit(self):
+        return print(' This is uknown cms error while scanning exploits from cms.')
+
+
     def webinfo(self):
         web = GatherHost(self.url,self.headers)
         web.web_host()
@@ -30,6 +35,9 @@ class Uknown(object):
     def serveros(self):
         os = GatherHost(self.url,self.headers)
         os.os_server()
+
+    def cmsinfo(self):
+        return print(' This is uknown cms error while dumping info from cms.')
 
     def dnsdump(self):
         return dnsdumper(self.url)
