@@ -3,7 +3,7 @@
 
 from __future__ import (absolute_import, division, print_function)
 
-from common.colors import W,B,good,end,run
+from common.colors import W,B,Y,good,end,run,info
 from modules.executor.Wordpress import Wordpress
 from modules.executor.Magento import Magento
 from modules.executor.Prestashop import Prestashop
@@ -14,7 +14,7 @@ from modules.executor.Joomla import Joomla
 from modules.executor.Uknown import Uknown
 from modules.executor.Opencart import Opencart
 
-import re,requests
+import re,requests,time
 
 
 class CMS(object):
@@ -132,6 +132,7 @@ class CMS(object):
         return result
 
     def instanciate(self):
+        init_time = time.time()
         cms = self.serialize()
         if cms['name']:
             instance = eval(cms['name'])(self.url,self.headers)
@@ -162,3 +163,6 @@ class CMS(object):
                 instance.domaininfo()
             if cms['port']:
                 instance.ports(cms['port'])
+        end_time = time.time()
+        elapsed_time = end_time - init_time
+        print('\n %s[%s Elapsed Time %s]%s => %.2f seconds ' % (Y,W,Y,W,elapsed_time))
