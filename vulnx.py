@@ -31,6 +31,13 @@ import warnings
 import signal
 import requests
 
+HEADERS = {
+    'User-Agent': random_UserAgent(),
+    'Content-type' : '*/*',
+    'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8',
+    'Accept-Language': 'en-US,en;q=0.5',
+    'Connection': 'keep-alive',
+}
 
 warnings.filterwarnings(
     action="ignore", message=".*was already imported", category=UserWarning)
@@ -93,7 +100,7 @@ warnings.filterwarnings('ignore')
 def detection():
     instance = CMS(
         url,
-        headers=headers,
+        headers=HEADERS,
         exploit=args.exploit,
         domain=args.subdomains,
         webinfo=args.webinfo,
@@ -108,7 +115,7 @@ def dork_engine():
     if args.dorks:
         DEngine = Dork(
             exploit=args.dorks,
-            headers=headers,
+            headers=HEADERS,
             pages=(args.numberpage or 1)
             )
         DEngine.search()
@@ -122,7 +129,7 @@ def dorks_manual():
 
 def interactive_cli():
     if args.cli:
-        cli = CLI(headers=headers)
+        cli = CLI(headers=HEADERS)
         cli.general("")
 
 def signal_handler(signal, frame):
@@ -133,13 +140,6 @@ signal.signal(signal.SIGINT, signal_handler)
 
 if __name__ == "__main__":
 
-    headers = {
-        'User-Agent': random_UserAgent(),
-        'Content-type' : '*/*',
-        'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8',
-        'Accept-Language': 'en-US,en;q=0.5',
-        'Connection': 'keep-alive',
-    }
     dork_engine()
     dorks_manual()
     interactive_cli()
@@ -153,3 +153,19 @@ if __name__ == "__main__":
             url = 'http://'+root
             print(url)
         detection()
+
+    if input_file:
+        with open(input_file,'r') as urls:
+            u_array = [url.strip('\n') for url in urls]
+            try:
+                for url in u_array:
+                    root = url
+                #url condition entrypoint
+                    if root.startswith('http'):
+                        url = root
+                    else:
+                        url = 'http://'+root
+                    detection()
+                    urls.close()
+            except Exception as error:
+                print('error : '+error)
