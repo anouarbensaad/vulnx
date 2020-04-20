@@ -51,6 +51,19 @@ def text_record(table):
 
 
 def dnsdumper(url):
+
+    '''
+    For DNS Dump you retrieve token from dnsdumpster.
+    V   T    X
+    |  / |  /
+    | /  | /
+    U -> N
+    |  /    Parsing data from records
+    | /     MX , Domains , DNS , MAILS 
+    L
+    Schema V, returns set of (U, L, N, T, X)
+    '''
+    
     domain = hostd(url)
     dnsdumpster_url = 'https://dnsdumpster.com/'
     response = requests.Session().get(dnsdumpster_url)

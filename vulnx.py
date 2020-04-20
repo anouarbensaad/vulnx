@@ -98,6 +98,7 @@ input_file = args.input_file
 warnings.filterwarnings('ignore')
 
 def detection():
+
     instance = CMS(
         url,
         headers=HEADERS,
@@ -143,6 +144,7 @@ if __name__ == "__main__":
     dork_engine()
     dorks_manual()
     interactive_cli()
+    
     if url:
         root = url
         if root.startswith('http://'):
