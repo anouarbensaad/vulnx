@@ -38,7 +38,7 @@ wp_contentdorks = {
     'thumbslider': 'inurl:"/wp-content/plugins/wp-responsive-thumbnail-slider"',
 }
 wp_admindorks = {
-    'wysija': 'inurl":/wp-admin/admin-post.php?page=wysija_campaigns"',
+    'wysija': 'inurl:"/wp-admin/admin-post.php?page=wysija_campaigns"',
     'powerzoomer': 'inurl:"/wp-admin/admin.php?page=powerzoomer_manage"',
     'showbiz': 'inurl:"/wp-admin/admin-ajax.php"',
 }
@@ -54,36 +54,36 @@ wpindex = {
 
 
 joomla = {
-    'comjce': 'inurl":index.php?option=com_jce"',
-    'comfabrik': 'inurl":index.php?option=com_fabrik"',
-    'comjdownloads': 'inurl":index.php?option=com_fabrik"',
-    'comfoxcontact': 'inurl":index.php?option=com_foxcontact"',
+    'comjce': 'inurl:"index.php?option=com_jce"',
+    'comfabrik': 'inurl:"index.php?option=com_fabrik"',
+    'comjdownloads': 'inurl:"index.php?option=com_fabrik"',
+    'comfoxcontact': 'inurl:"index.php?option=com_foxcontact"',
 }
 
 prestashop = {
-    'columnadverts': 'inurl":/modules/columnadverts/"',
-    'soopabanners': 'inurl":/modules/soopabanners/"',
-    'vtslide': 'inurl":/modules/soopabanners/"',
-    'simpleslideshow': 'inurl":/modules/simpleslideshow/"',
-    'productpageadverts': 'inurl":/modules/productpageadverts/"',
-    'productpageadvertsb': 'inurl":/modules/homepageadvertise2/"',
-    'jro_homepageadvertise': 'inurl":/modules/jro_homepageadvertise/"',
-    'attributewizardpro': 'inurl":/modules/attributewizardpro/"',
-    'oneattributewizardpro': 'inurl":/modules/1attributewizardpro/"',
-    'attributewizardpro_old': 'inurl":/modules/attributewizardpro.OLD/"',
-    'attributewizardpro_x': 'inurl":/modules/attributewizardpro_x/"',
-    'advancedslider': 'inurl":/modules/advancedslider/"',
-    'cartabandonmentpro': 'inurl":/modules/cartabandonmentpro/"',
-    'cartabandonmentpro_old': 'inurl":/modules/cartabandonmentproOld/"',
-    'videostab': 'inurl":/modules/videostab/"',
-    'wg24themeadministration': 'inurl":/modules//wg24themeadministration/"',
-    'fieldvmegamenu': 'inurl":/modules/fieldvmegamenu/"',
-    'wdoptionpanel': 'inurl":/modules/wdoptionpanel/"',
-    'pk_flexmenu': 'inurl":/modules/pk_flexmenu/"',
-    'pk_vertflexmenu': 'inurl":/modules/pk_vertflexmenu/"',
-    'nvn_export_orders': 'inurl":/modules/nvn_export_orders/"',
-    'tdpsthemeoptionpanel': 'inurl":/modules/tdpsthemeoptionpanel/"',
-    'masseditproduct': 'inurl":/modules/lib/redactor/"',
+    'columnadverts': 'inurl:"/modules/columnadverts/"',
+    'soopabanners': 'inurl:"/modules/soopabanners/"',
+    'vtslide': 'inurl:"/modules/soopabanners/"',
+    'simpleslideshow': 'inurl:"/modules/simpleslideshow/"',
+    'productpageadverts': 'inurl:"/modules/productpageadverts/"',
+    'productpageadvertsb': 'inurl:"/modules/homepageadvertise2/"',
+    'jro_homepageadvertise': 'inurl:"/modules/jro_homepageadvertise/"',
+    'attributewizardpro': 'inurl:"/modules/attributewizardpro/"',
+    'oneattributewizardpro': 'inurl:"/modules/1attributewizardpro/"',
+    'attributewizardpro_old': 'inurl:"/modules/attributewizardpro.OLD/"',
+    'attributewizardpro_x': 'inurl:"/modules/attributewizardpro_x/"',
+    'advancedslider': 'inurl:"/modules/advancedslider/"',
+    'cartabandonmentpro': 'inurl:"/modules/cartabandonmentpro/"',
+    'cartabandonmentpro_old': 'inurl:"/modules/cartabandonmentproOld/"',
+    'videostab': 'inurl:"/modules/videostab/"',
+    'wg24themeadministration': 'inurl:"/modules//wg24themeadministration/"',
+    'fieldvmegamenu': 'inurl:"/modules/fieldvmegamenu/"',
+    'wdoptionpanel': 'inurl:"/modules/wdoptionpanel/"',
+    'pk_flexmenu': 'inurl:"/modules/pk_flexmenu/"',
+    'pk_vertflexmenu': 'inurl:"/modules/pk_vertflexmenu/"',
+    'nvn_export_orders': 'inurl:"/modules/nvn_export_orders/"',
+    'tdpsthemeoptionpanel': 'inurl:"/modules/tdpsthemeoptionpanel/"',
+    'masseditproduct': 'inurl:"/modules/lib/redactor/"',
 }
 
 
