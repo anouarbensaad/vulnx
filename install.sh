@@ -4,10 +4,12 @@ red="\e[0;31m"
 blue="\e[0;94m"
 green="\e[0;32m"
 off="\e[0m"
+
 #vulnx install function for Android. termux
 function banner(){
     echo -e "===== VULNX INSTALL ====="
 }
+
 function termuxOS() {
     echo -e "$red [$green+$red]$off Installing Python ...";
     pkg install python
@@ -52,6 +54,7 @@ function termuxOS() {
         exit
     fi
 }
+
 #vulnx install function for debian operating system. linux.
 function debianOS(){
     echo -e "$red [$green+$red]$off Installing python3... ";
@@ -80,9 +83,9 @@ function debianOS(){
     sudo mkdir "/usr/share/vulnx"
     sudo cp "install.sh" "/usr/share/vulnx"
     sudo cp "update.sh" "/usr/share/vulnx"
-    sudo cp -r "./common" "/usr/share/vulnx/"
-    sudo cp -r "./modules" "/usr/share/vulnx/"
-    sudo cp -r "./shell" "/usr/share/vulnx/"
+    for rep in common modules shell; do
+        cp -r $rep /usr/share/vulnx/
+    done
     sudo chmod +x /usr/share/vulnx/update.sh
     sudo cp "vulnx.py" "/usr/share/vulnx"
     sudo cp "bin/vulnxicon.png" "/usr/share/icons"
