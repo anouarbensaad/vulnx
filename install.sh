@@ -104,6 +104,7 @@ function debianOS(){
     fi 
 }
 #main
+if [[ $UID -eq 0 ]]; then
 if [ -d "/data/data/com.termux/files/usr/" ]; then
     banner
     echo -e "$red [$green+$red]$off Vulnx Will Be Installed In Your System";
@@ -115,4 +116,7 @@ elif [ -d "/usr/bin/" ];then
 else
     echo -e "$red [$green✘$red]$off Tool Cannot Be Installed On Your System! Use It As Portable !";
     exit
+fi
+else
+    echo "You must run as root..."
 fi
