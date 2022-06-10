@@ -80,7 +80,9 @@ function debianOS(){
     echo -e "#!/bin/bash
     python3 /usr/share/vulnx/vulnx.py" '${1+"$@"}' > "vulnx";
     chmod +x "vulnx";
+    if [[ ! -d "/usr/share/vulnx" ]];then
     sudo mkdir "/usr/share/vulnx"
+    fi
     sudo cp "install.sh" "/usr/share/vulnx"
     sudo cp "update.sh" "/usr/share/vulnx"
     sudo cp -r "./common" "/usr/share/vulnx/"
