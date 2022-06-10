@@ -24,7 +24,7 @@ class GatherHost():
 
     def os_server(self):
 
-        response = requests.get(self.url, headers=self.headers).headers
+        response = requests.get(self.url, headers=self.headers,verify=False).headers
         try:
                 regx = re.compile(r"(.+) \((.+)\)")
                 data = regx.search(response["server"])
@@ -38,7 +38,7 @@ class GatherHost():
 
     def web_host(self):
         urldate = "https://input.payapi.io/v1/api/fraud/domain/age/" + hostd(self.url)
-        getinfo = requests.get(urldate, self.headers).text
+        getinfo = requests.get(urldate, self.headers,verify=False).text
         regex_date = r'Date: (.+?)-(.+?)'
         regex_date = re.compile(regex_date)
         matches = re.search(regex_date, getinfo)

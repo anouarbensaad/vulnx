@@ -150,9 +150,10 @@ if __name__ == "__main__":
         if root.startswith('http://'):
             url = root
         elif root.startswith('https://'):
-            url=root.replace('https://','http://')
+            url = root
+            # url=root.replace('https://','http://')
         else:
-            url = 'http://'+root
+            url = 'https://'+root
             print(url)
         detection()
 
@@ -166,7 +167,7 @@ if __name__ == "__main__":
                     if root.startswith('http'):
                         url = root
                     else:
-                        url = 'http://'+root
+                        url = 'https://'+root
                     detection()
                     urls.close()
             except Exception as error:
