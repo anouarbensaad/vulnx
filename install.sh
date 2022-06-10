@@ -1,5 +1,11 @@
 #!/bin/bash
 
+printf 'WARNING: %s\n' \
+    "This is a terrible script that hasn't been peer-reviewd or tested and the changes that are made to the system can't be easily removed or quaranteed to not break the system" "Are you sure that you want to continue? (y/n)"
+read -r sanityCheck
+
+[ "$sanityCheck" = y ] || exit 1
+
 red="\e[0;31m"
 blue="\e[0;94m"
 green="\e[0;32m"
