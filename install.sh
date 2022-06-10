@@ -80,7 +80,9 @@ function debianOS(){
     echo -e "#!/bin/bash
     python3 /usr/share/vulnx/vulnx.py" '${1+"$@"}' > "vulnx";
     chmod +x "vulnx";
+    if [[ ! -d "/usr/share/vulnx" ]];then
     sudo mkdir "/usr/share/vulnx"
+    fi
     sudo cp "install.sh" "/usr/share/vulnx"
     sudo cp "update.sh" "/usr/share/vulnx"
     sudo cp -r "./common" "/usr/share/vulnx/"
@@ -104,6 +106,7 @@ function debianOS(){
     fi 
 }
 #main
+if [[ $UID -eq 0 ]]; then
 if [ -d "/data/data/com.termux/files/usr/" ]; then
     banner
     echo -e "$red [$green+$red]$off Vulnx Will Be Installed In Your System";
@@ -115,4 +118,7 @@ elif [ -d "/usr/bin/" ];then
 else
     echo -e "$red [$green✘$red]$off Tool Cannot Be Installed On Your System! Use It As Portable !";
     exit
+fi
+else
+    echo "You must run as root..."
 fi
