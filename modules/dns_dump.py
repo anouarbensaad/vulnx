@@ -78,7 +78,7 @@ def dnsdumper(url):
     print(' %s Retrieved token: %s' % (info, csrf_token))
     cookies = {'csrftoken': csrf_token}
     headers = {'Referer': 'https://dnsdumpster.com/'}
-    data = {'csrfmiddlewaretoken': csrf_token, 'targetip': domain}
+    data = {'csrfmiddlewaretoken': csrf_token, 'targetip': domain, 'user': 'free'}
     response = requests.Session().post('https://dnsdumpster.com/',
                                        cookies=cookies, data=data, headers=headers)
     image = requests.get('https://dnsdumpster.com/static/map/%s.png' % domain)
