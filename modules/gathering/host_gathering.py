@@ -37,24 +37,18 @@ class GatherHost():
             print(' {0} Cannot Find the server headers ' .format(bad))
 
     def web_host(self):
-        urldate = "https://input.payapi.io/v1/api/fraud/domain/age/" + hostd(self.url)
-        getinfo = requests.get(urldate, self.headers,verify=False).text
-        regex_date = r'Date: (.+?)-(.+?)'
-        regex_date = re.compile(regex_date)
-        matches = re.search(regex_date, getinfo)
         try:
-            if matches:
-                print(' {0} Domain Created on : {1}'.format(good, matches.group(1)))
-                ip = socket.gethostbyname(hostd(self.url))
-                print(' {0} CloudFlare IP : {1}'.format(good, ip))
-                ipinfo = "http://ipinfo.io/" + ip + "/json"
-                gather = requests.get(ipinfo, self.headers).text
+            ip = socket.gethostbyname(hostd(self.url))
+            print(' {0} CloudFlare IP : {1}'.format(good, ip))
+            ipinfo = "http://ipinfo.io/" + ip + "/json"
+            gather = requests.get(ipinfo, self.headers).text
 
-                self.match_printer('Country',self.match_info(r'country\": \"(.+?)\"',gather))
-                self.match_printer('Region',self.match_info(r'region\": \"(.+?)\"',gather))
-                self.match_printer('Timezone',self.match_info(r'timezone\": \"(.+?)\"',gather))
-                self.match_printer('Postal',self.match_info(r'postal\": \"(.+?)\"',gather))
-                self.match_printer('Org',self.match_info(r'org\": \"(.+?)\"',gather))
-                self.match_printer('Location',self.match_info(r'loc\": \"(.+?)\"',gather))
+            self.match_printer('Hostname',self.match_info(r'hostname\": \"(.+?)\"',gather))
+            self.match_printer('City',self.match_info(r'city\": \"(.+?)\"',gather))
+            self.match_printer('Region',self.match_info(r'region\": \"(.+?)\"',gather))
+            self.match_printer('Country',self.match_info(r'country\": \"(.+?)\"',gather))
+            self.match_printer('Timezone',self.match_info(r'timezone\": \"(.+?)\"',gather))
+            self.match_printer('Org',self.match_info(r'org\": \"(.+?)\"',gather))
+            self.match_printer('Location',self.match_info(r'loc\": \"(.+?)\"',gather))
         except Exception as err:
             print(' {0} Parse Error : {1}' .format(bad,err))
