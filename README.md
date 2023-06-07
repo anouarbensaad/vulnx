@@ -228,7 +228,7 @@ VOLUME [ "$PATH" ]
 
 ```bash
 $ git clone https://github.com/anouarbensaad/vulnx.git
-$ cd VulnX
+$ cd vulnx
 $ chmod +x install.sh
 $ ./install.sh
 ```
